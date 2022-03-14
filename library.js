@@ -8,6 +8,9 @@ function LearnJS() {
 
     const obj = {}
     let numberOfObjectives=0
+    let currentPopupID = 0
+
+    let descriptions = [];
 
     //Create list
     
@@ -15,7 +18,11 @@ function LearnJS() {
         const container = document.createElement('div');
         container.id = "list";
         //containerr.appendChild(document.createTextNode('Body Div'));
-        container.style = 'width: 90px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid;';
+        container.style = 'width: 90px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
+
+        //for landing page, use "elementBefore"
+
+
         document.body.appendChild(container)
     }
 
@@ -30,7 +37,14 @@ function LearnJS() {
         objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 15px; text-align: center; margin-right:15px;';
         numberOfObjectives++
         objective.id = numberOfObjectives
+
+        
+
+        //Also a popup box.
+ 
+        
         list.appendChild(objective)
+       
         return numberOfObjectives
     }
 
@@ -47,8 +61,39 @@ function LearnJS() {
         //if red, turn to blue.
     }
 
-    obj.showPopup = function(objectiveNumber) {
+    obj.showPopup = function(objectiveNumber, on) {
+        //delete previous popup from DOM.
+        if (currentPopupID != 0) {
+            let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+            elem.parentNode.removeChild(elem)
+        }
+
+        if (on == 0) {
+            currentPopupID = 0
+            return 0
+        }
+        //create popup.
+        let objectiveEdit = document.getElementById(objectiveNumber)
+        let descriptorParent = document.createElement("div")
+        descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
         
+        let descriptor = document.createElement('span')
+        descriptor.innerText = descriptions[objectiveNumber-1]
+        descriptor.id = objectiveNumber.toString() + "descriptor"
+        descriptorParent.appendChild(descriptor)
+        document.body.appendChild(descriptorParent)
+    
+        let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
+        let popupText  = document.getElementById(objectiveNumber.toString() + "descriptor")
+
+        let marginTop = (objectiveNumber-1) * 100
+        
+        popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; "
+        popup.style.marginTop = marginTop.toString() + "px"
+        popupText.style = "text-align: center;"
+
+        currentPopupID = objectiveNumber
+        return currentPopupID
 
     }
 
@@ -101,8 +146,10 @@ function LearnJS() {
 
     }
 
-    obj.editDescription = function(objectiveNumber, description) {
+    obj.addDescription = function(objectiveNumber, description) {
 
+        //store the text relating to this objective number.
+        descriptions.push(description)
 
     }
 
