@@ -26,35 +26,87 @@ function LearnJS() {
         const list = document.getElementById("list")
         log(list)
         const objective = document.createElement('div')
-        objective.style = 'width: 60px; height: 60px;border-radius: 50%; background-color: Aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 15px; margin-right:15px;';
-        list.appendChild(objective)
+        
+        objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 15px; text-align: center; margin-right:15px;';
         numberOfObjectives++
+        objective.id = numberOfObjectives
+        list.appendChild(objective)
         return numberOfObjectives
-
     }
 
-    obj.clickObjective = function(objective){
+    obj.clickObjective = function(objectiveNumber){
+        //if blue, turn to red  
 
-
+        const element = document.getElementById(objectiveNumber)
+        log("COLOR")
+    
+        if (element.style.backgroundColor == "aqua")
+            element.style.background = "lime"
+        else
+            element.style.background="aqua"
+        //if red, turn to blue.
     }
 
-    obj.showPopup = function(objective) {
-
-
-    }
-
-
-    obj.deleteObjective = function(objective) {
-
-
-    }
-
-    obj.editObjective = function(objective) {
-
+    obj.showPopup = function(objectiveNumber) {
+        
 
     }
 
 
+    obj.deleteObjective = function(objectiveNumber) {
+
+        let list = document.getElementById("list")
+
+        let objectiveDelete = document.getElementById(objectiveNumber)
+
+        if (objectiveDelete == null){
+            return -1
+        }
+
+        let removedElement = list.removeChild(objectiveDelete)
+
+        //Change all previous IDs -1.
+
+        for (let i=objectiveNumber+1; i<numberOfObjectives+1; i++) {
+            let objective = document.getElementById(i)
+            objective.id = i-1
+        }
+        numberOfObjectives--;
+
+        return numberOfObjectives;
+
+    }
+
+    obj.editTitle= function(objectiveNumber, title) {
+
+        //edit html inside the objective.
+        
+        let objectiveEdit = document.getElementById(objectiveNumber)
+
+        if (title == null)
+            return null
+        //see if title child exists.    
+        
+
+        if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
+            objectiveEdit.firstElementChild.innerText = title
+            return title
+        }
+
+        let text = document.createElement("p")
+        text.innerText = title
+        text.style = "font-size: 10px; padding: 2px; text-align: center;"
+        text.id = objectiveNumber.toString() + "title"
+        objectiveEdit.appendChild(text)
+
+    }
+
+    obj.editDescription = function(objectiveNumber, description) {
+
+
+    }
+
+  
 
     return obj
 
