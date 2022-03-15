@@ -6,6 +6,7 @@ const log = console.log
 
 
 
+
 function LearnJS() {
 
 
@@ -33,22 +34,22 @@ function LearnJS() {
 
         const addButton = document.createElement('div');
         addButton.id = "addButton";
-
         addButton.style = 'margin-bottom: 15px; text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; '
-
         let textElem = document.createTextNode("+")
-
-      
         addButton.appendChild(textElem)
 
-
-
-    
+        //add event listener for adding an objective.
+     
 
         parentContainer.appendChild(container)
         parentContainer.appendChild(addButton)
-
+   
         document.body.appendChild(parentContainer)
+
+        let e = document.getElementById("addButton") 
+        log(e)
+        e.addEventListener('click', addEventAdd)
+    
         
     }
 
@@ -61,7 +62,7 @@ function LearnJS() {
         //if blue, turn to red  
 
         const element = document.getElementById(objectiveNumber)
-        log("COLOR")
+       
     
         if (element.style.backgroundColor == "aqua")
             element.style.background = "lime"
@@ -73,7 +74,7 @@ function LearnJS() {
 
     obj.addObjective = function() {
         const list = document.getElementById("list")
-        log(list)
+        
         const objective = document.createElement('div')
         
         objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
@@ -81,16 +82,25 @@ function LearnJS() {
         objective.id = numberOfObjectives
 
         
-
-
-
-        
-
- 
-        
-        
+    
 
         list.appendChild(objective)
+        let e = document.getElementById(objective.id)
+        log("HEY")
+        e.addEventListener('click', addEventClick)
+        
+
+        //Add an X button.
+
+        const closeButton = document.createElement('div')
+        
+        const textNode = document.createElement('p')
+        textNode.innerText = "X"
+        
+        list.appendChild(closeButton)
+
+
+
     
         return numberOfObjectives
     }
@@ -197,5 +207,31 @@ function LearnJS() {
 
 
 
+
+}
+
+
+function addEventClick(e) {
+
+    let element = document.getElementById(e.target.id)
+    if (element.style.backgroundColor == "aqua")
+        element.style.background = "lime"
+    else
+        element.style.background="aqua"
+
+}
+
+function addEventDelete(e) {
+
+
+
+}
+
+function addEventAdd(e) {
+
+    let element = document.getElementById(e.target.id)
+
+
+    
 
 }
