@@ -2,17 +2,30 @@
 
 const log = console.log
 
-//Event listeners
+//Helper functions
+
+function helperAddObjective() {
+    
+
+}
+
+function helperDeleteObjective() {
 
 
+}
 
+function helperClickObjective() {
+
+
+}
+
+
+let numberOfObjectives=0
 
 function LearnJS() {
 
-
-
     const obj = {}
-    let numberOfObjectives=0
+  
     let currentPopupID = 0
 
     let descriptions = [];
@@ -22,41 +35,26 @@ function LearnJS() {
     obj.addList = function() {
 
         const parentContainer = document.createElement('div')
-
         const container = document.createElement('div');
         container.id = "list";
-        //containerr.appendChild(document.createTextNode('Body Div'));
         parentContainer.style = 'width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
-
-        //for landing page, use "elementBefore"
-
-        //need an add button right below the list itself.
-
         const addButton = document.createElement('div');
         addButton.id = "addButton";
-        addButton.style = 'margin-bottom: 15px; text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; '
+        addButton.style = 'text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; '
         let textElem = document.createTextNode("+")
         addButton.appendChild(textElem)
 
-        //add event listener for adding an objective.
-     
-
         parentContainer.appendChild(container)
         parentContainer.appendChild(addButton)
-   
         document.body.appendChild(parentContainer)
 
         let e = document.getElementById("addButton") 
-        log(e)
         e.addEventListener('click', addEventAdd)
-    
-        
     }
 
     /*Plan: Store all these objectives into a list to access easily*/
 
     /*Return an ID which signifies which objective*/
-    
 
     obj.clickObjective = function(objectiveNumber){
         //if blue, turn to red  
@@ -76,32 +74,37 @@ function LearnJS() {
         const list = document.getElementById("list")
         
         const objective = document.createElement('div')
-        
-        objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
+        objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-left: 14px; text-align: center;';
         numberOfObjectives++
         objective.id = numberOfObjectives
 
-        
-    
-
         list.appendChild(objective)
+
         let e = document.getElementById(objective.id)
-        log("HEY")
         e.addEventListener('click', addEventClick)
-        
 
         //Add an X button.
 
-        const closeButton = document.createElement('div')
+        const  closeButton = document.createElement('div')
+        closeButton.id = numberOfObjectives.toString() + "closeButton"
+        closeButton.style = "position: relative; bottom: 8px;"
+
+        const textNode  = document.createElement('p')
+        textNode.innerText = "Delete"
+        textNode.style = "text-align: center; font-size: 10px; text-decoration: underline; color: blue;"
+        closeButton.appendChild(textNode)
+
+        //add event listner.
+
         
-        const textNode = document.createElement('p')
-        textNode.innerText = "X"
-        
+    
         list.appendChild(closeButton)
 
+        e = document.getElementById(closeButton.id)
+        e.addEventListener('click', addEventDelete)
 
 
-    
+       
         return numberOfObjectives
     }
 
@@ -187,7 +190,7 @@ function LearnJS() {
         text.innerText = title
         text.style = "font-size: 10px; padding: 2px; text-align: center;"
         text.id = objectiveNumber.toString() + "title"
-        objectiveEdit.appendChild(text)
+        objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
 
     }
 
@@ -213,7 +216,7 @@ function LearnJS() {
 
 function addEventClick(e) {
 
-    let element = document.getElementById(e.target.id)
+    let element = document.getElementById(e.currentTarget.id)
     if (element.style.backgroundColor == "aqua")
         element.style.background = "lime"
     else
@@ -223,15 +226,65 @@ function addEventClick(e) {
 
 function addEventDelete(e) {
 
+    let list = document.getElementById("list")
 
+    let deleteButton= document.getElementById(e.currentTarget.id)
+    let objectiveDeleteID = deleteButton.id[0]
+    let objDelete = document.getElementById(objectiveDeleteID)
+
+
+    list.removeChild(objDelete)
+    list.removeChild(deleteButton)
+    
+    //Change all previous IDs -1.
+
+    for (let i=objectiveDeleteID+1; i<numberOfObjectives+1; i++) {
+        let objective = document.getElementById(i)
+        objective.id = i-1
+    }
+    numberOfObjectives--;
+
+    return numberOfObjectives;
 
 }
 
 function addEventAdd(e) {
 
-    let element = document.getElementById(e.target.id)
+    const list = document.getElementById("list")
+        
+    const objective = document.createElement('div')
+    
+    objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
+    numberOfObjectives++
+    objective.id = numberOfObjectives
 
+    list.appendChild(objective)
+    let ev = document.getElementById(objective.id)
+    ev.addEventListener('click', addEventClick)
+    //Add an X button.
+    
+    const  closeButton = document.createElement('div')
+    closeButton.id = numberOfObjectives.toString() + "closeButton"
+    closeButton.style = "position: relative; bottom: 8px;"
+
+    const textNode  = document.createElement('p')
+    textNode.innerText = "Delete"
+    textNode.style = "text-align: center; font-size: 10px; text-decoration: underline; color: blue;"
+    closeButton.appendChild(textNode)
+
+    list.append(closeButton)
+
+    e = document.getElementById(closeButton.id)
+    e.addEventListener('click', addEventDelete)
+    
+    log(numberOfObjectives)
 
     
+
+}
+
+function addEventPopup(e) {
+
+
 
 }
