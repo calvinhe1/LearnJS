@@ -2,6 +2,10 @@
 
 const log = console.log
 
+//Event listeners
+
+
+
 function LearnJS() {
 
 
@@ -15,38 +19,43 @@ function LearnJS() {
     //Create list
     
     obj.addList = function() {
+
+        const parentContainer = document.createElement('div')
+
         const container = document.createElement('div');
         container.id = "list";
         //containerr.appendChild(document.createTextNode('Body Div'));
-        container.style = 'width: 90px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
+        parentContainer.style = 'width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
 
         //for landing page, use "elementBefore"
 
+        //need an add button right below the list itself.
 
-        document.body.appendChild(container)
+        const addButton = document.createElement('div');
+        addButton.id = "addButton";
+
+        addButton.style = 'margin-bottom: 15px; text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; '
+
+        let textElem = document.createTextNode("+")
+
+      
+        addButton.appendChild(textElem)
+
+
+
+    
+
+        parentContainer.appendChild(container)
+        parentContainer.appendChild(addButton)
+
+        document.body.appendChild(parentContainer)
+        
     }
 
     /*Plan: Store all these objectives into a list to access easily*/
 
     /*Return an ID which signifies which objective*/
-    obj.addObjective = function() {
-        const list = document.getElementById("list")
-        log(list)
-        const objective = document.createElement('div')
-        
-        objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 15px; text-align: center; margin-right:15px;';
-        numberOfObjectives++
-        objective.id = numberOfObjectives
-
-        
-
-        //Also a popup box.
- 
-        
-        list.appendChild(objective)
-       
-        return numberOfObjectives
-    }
+    
 
     obj.clickObjective = function(objectiveNumber){
         //if blue, turn to red  
@@ -59,7 +68,33 @@ function LearnJS() {
         else
             element.style.background="aqua"
         //if red, turn to blue.
+
     }
+
+    obj.addObjective = function() {
+        const list = document.getElementById("list")
+        log(list)
+        const objective = document.createElement('div')
+        
+        objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
+        numberOfObjectives++
+        objective.id = numberOfObjectives
+
+        
+
+
+
+        
+
+ 
+        
+        
+
+        list.appendChild(objective)
+    
+        return numberOfObjectives
+    }
+
 
     obj.showPopup = function(objectiveNumber, on) {
         //delete previous popup from DOM.
