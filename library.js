@@ -197,6 +197,88 @@ function LearnJS() {
 
     }
 
+    obj.addForm = function(objectiveNumber) {
+        if (currentPopupID != 0) {
+            let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+            elem.parentNode.removeChild(elem)
+        }
+
+
+        //create popup.
+        let descriptorParent = document.createElement("div")
+        descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
+        
+
+        let form = document.createElement('form')
+        let labelTitle = document.createElement('label')
+        let input = document.createElement('input')
+        let labelDescription = document.createElement('label')
+        let textarea = document.createElement('textarea')
+        let titleText = document.createElement('p')
+        let descriptionText = document.createElement('p')
+        let labelSubmit = document.createElement('button')
+    
+        labelSubmit.innerHTML = "Submit"
+        labelSubmit.style = "position: relative; bottom: 30px; height: 15px; font-size: 10px; text-align: center; "
+
+
+        
+
+        titleText.innerHTML = "Title: "
+        descriptionText.innerHTML = "Description: "
+
+        labelTitle.style ="font-size: 12px; position: relative; bottom: 10px; "
+        input.style = "height: 12px; position: relative; bottom: 20px; font-size: 10px; width: 140px;"
+
+        if (titles[objectiveNumber-1] != 'undefined')
+            input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
+        
+
+    
+      
+        log(input.style)
+
+        labelTitle.appendChild(titleText)
+        labelDescription.appendChild(descriptionText)
+        form.appendChild(labelTitle)
+        form.appendChild(input)
+        
+        labelDescription.style = "font-size: 12px; position: relative; bottom: 25px; "
+        textarea.style = "height: 20px; position: relative; bottom: 30px; width: 141px; height: 100px; font-size: 10px; "
+
+
+        if (descriptions[objectiveNumber-1] != 'undefined')
+            textarea.appendChild(document.createTextNode(descriptions[objectiveNumber-1]))//get innerHTML/.
+
+    
+    
+        form.appendChild(labelDescription)
+        form.appendChild(textarea)
+
+        form.appendChild(labelSubmit)
+
+        descriptorParent.appendChild(form)
+        document.body.appendChild(descriptorParent)
+
+        //Add event listener, where if you click submit, takes those submissions registers into the circles, then deletes form from DOM.
+
+
+        
+        let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
+        let popupText  = document.getElementById(objectiveNumber.toString() + "descriptor")
+
+        let marginTop = (objectiveNumber-1) * 100
+        
+        popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; max-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-height: 195px; "
+        popup.style.marginTop = marginTop.toString() + "px"
+        //popupText.style = "text-align: center;"
+
+        currentPopupID = objectiveNumber
+        return currentPopupID
+
+
+    }
+
     return obj
 
 }
