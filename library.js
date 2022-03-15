@@ -2,36 +2,81 @@
 
 const log = console.log
 
-//Helper functions
-
-function helperAddObjective() {
-    
-
-}
-
-function helperDeleteObjective() {
-
-
-}
-
-function helperClickObjective() {
-
-
-}
-
-
 let numberOfObjectives=0
 
-function LearnJS() {
-
-    const obj = {}
-  
-    let currentPopupID = 0
-
-    let descriptions = [];
-
-    //Create list
+//Helper functions
+function helperAddObjective() {
     
+    const list = document.getElementById("list")
+    const objective = document.createElement('div')
+    objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
+    numberOfObjectives++
+    objective.id = numberOfObjectives
+    list.appendChild(objective)
+    let ev = document.getElementById(objective.id)
+    ev.addEventListener('click', addEventClick)
+    //Add an X button.
+
+    const  closeButton = document.createElement('div')
+    closeButton.id = numberOfObjectives.toString() + "closeButton"
+    closeButton.style = "position: relative; bottom: 8px;"
+
+    const textNode  = document.createElement('p')
+    textNode.innerText = "Delete"
+    textNode.style = "text-align: center; font-size: 10px; text-decoration: underline; color: blue;"
+    closeButton.appendChild(textNode)
+
+    list.append(closeButton)
+
+    let e = document.getElementById(closeButton.id)
+    e.addEventListener('click', addEventDelete)
+
+    //add a mouseover event for the description.
+
+    
+    log(numberOfObjectives)
+}
+
+function helperDeleteObjective(deleteObjective, deleteButton) {
+    let list = document.getElementById("list")
+
+    let id = deleteObjective.id
+
+    list.removeChild(deleteObjective)
+    list.removeChild(deleteButton)
+    
+    //Change all previous IDs -1.
+    for (let i=id+1; i<numberOfObjectives+1; i++) {
+        let objective = document.getElementById(i)
+        objective.id = i-1
+    }
+    numberOfObjectives--;
+    return numberOfObjectives;
+
+}
+
+function helperClickObjective(e) {
+
+
+    let element = document.getElementById(e)
+    if (element.style.backgroundColor == "aqua")
+        element.style.background = "lime"
+    else
+        element.style.background="aqua"
+
+
+
+}
+
+function helperHoverObjective(e) {
+}
+
+function LearnJS() {
+    const obj = {}
+    let currentPopupID = 0
+    let descriptions = [];
+    let titles = [];
+    //Create list
     obj.addList = function() {
 
         const parentContainer = document.createElement('div')
@@ -47,7 +92,6 @@ function LearnJS() {
         parentContainer.appendChild(container)
         parentContainer.appendChild(addButton)
         document.body.appendChild(parentContainer)
-
         let e = document.getElementById("addButton") 
         e.addEventListener('click', addEventAdd)
     }
@@ -55,59 +99,18 @@ function LearnJS() {
     /*Plan: Store all these objectives into a list to access easily*/
 
     /*Return an ID which signifies which objective*/
-
     obj.clickObjective = function(objectiveNumber){
         //if blue, turn to red  
 
-        const element = document.getElementById(objectiveNumber)
-       
-    
-        if (element.style.backgroundColor == "aqua")
-            element.style.background = "lime"
-        else
-            element.style.background="aqua"
+        helperClickObjective()
         //if red, turn to blue.
 
     }
 
     obj.addObjective = function() {
-        const list = document.getElementById("list")
-        
-        const objective = document.createElement('div')
-        objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-left: 14px; text-align: center;';
-        numberOfObjectives++
-        objective.id = numberOfObjectives
-
-        list.appendChild(objective)
-
-        let e = document.getElementById(objective.id)
-        e.addEventListener('click', addEventClick)
-
-        //Add an X button.
-
-        const  closeButton = document.createElement('div')
-        closeButton.id = numberOfObjectives.toString() + "closeButton"
-        closeButton.style = "position: relative; bottom: 8px;"
-
-        const textNode  = document.createElement('p')
-        textNode.innerText = "Delete"
-        textNode.style = "text-align: center; font-size: 10px; text-decoration: underline; color: blue;"
-        closeButton.appendChild(textNode)
-
-        //add event listner.
-
-        
-    
-        list.appendChild(closeButton)
-
-        e = document.getElementById(closeButton.id)
-        e.addEventListener('click', addEventDelete)
-
-
-       
+        helperAddObjective()
         return numberOfObjectives
     }
-
 
     obj.showPopup = function(objectiveNumber, on) {
         //delete previous popup from DOM.
@@ -121,13 +124,14 @@ function LearnJS() {
             return 0
         }
         //create popup.
-        let objectiveEdit = document.getElementById(objectiveNumber)
+      
         let descriptorParent = document.createElement("div")
         descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
         
         let descriptor = document.createElement('span')
         descriptor.innerText = descriptions[objectiveNumber-1]
         descriptor.id = objectiveNumber.toString() + "descriptor"
+
         descriptorParent.appendChild(descriptor)
         document.body.appendChild(descriptorParent)
     
@@ -140,6 +144,7 @@ function LearnJS() {
         popup.style.marginTop = marginTop.toString() + "px"
         popupText.style = "text-align: center;"
 
+
         currentPopupID = objectiveNumber
         return currentPopupID
 
@@ -147,45 +152,29 @@ function LearnJS() {
 
 
     obj.deleteObjective = function(objectiveNumber) {
-
         let list = document.getElementById("list")
-
         let objectiveDelete = document.getElementById(objectiveNumber)
-
-        if (objectiveDelete == null){
-            return -1
-        }
-
-        let removedElement = list.removeChild(objectiveDelete)
-
-        //Change all previous IDs -1.
-
-        for (let i=objectiveNumber+1; i<numberOfObjectives+1; i++) {
-            let objective = document.getElementById(i)
-            objective.id = i-1
-        }
-        numberOfObjectives--;
-
-        return numberOfObjectives;
+        //need to also get the delete button.
+        //pass into helper: the id and the id+closeButton
+        let deleteButton = document.getElementById(objectiveNumber.toString() + "closeButton")
+        return helperDeleteObjective(objectiveDelete, deleteButton)
 
     }
 
-    obj.editTitle= function(objectiveNumber, title) {
+    obj.addTitle= function(objectiveNumber, title) {
 
         //edit html inside the objective.
-        
+
         let objectiveEdit = document.getElementById(objectiveNumber)
 
-        if (title == null)
-            return null
         //see if title child exists.    
-        
-
         if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
             objectiveEdit.firstElementChild.innerText = title
+            titles[objectiveNumber-1] = title
             return title
         }
 
+        titles.push(title)
         let text = document.createElement("p")
         text.innerText = title
         text.style = "font-size: 10px; padding: 2px; text-align: center;"
@@ -197,94 +186,45 @@ function LearnJS() {
     obj.addDescription = function(objectiveNumber, description) {
 
         //store the text relating to this objective number.
+
+        //check if already exists.
+        if (descriptions[objectiveNumber-1] != 'undefined') {
+            descriptions[objectiveNumber-1] = description
+            return
+        }
+
         descriptions.push(description)
 
     }
 
-  
-
     return obj
-
-
-
-
-
-
 
 }
 
 
 function addEventClick(e) {
-
-    let element = document.getElementById(e.currentTarget.id)
-    if (element.style.backgroundColor == "aqua")
-        element.style.background = "lime"
-    else
-        element.style.background="aqua"
-
+    helperClickObjective(e.currentTarget.id)
 }
 
 function addEventDelete(e) {
-
-    let list = document.getElementById("list")
 
     let deleteButton= document.getElementById(e.currentTarget.id)
     let objectiveDeleteID = deleteButton.id[0]
     let objDelete = document.getElementById(objectiveDeleteID)
 
-
-    list.removeChild(objDelete)
-    list.removeChild(deleteButton)
+    helperDeleteObjective(objDelete, deleteButton)
     
-    //Change all previous IDs -1.
-
-    for (let i=objectiveDeleteID+1; i<numberOfObjectives+1; i++) {
-        let objective = document.getElementById(i)
-        objective.id = i-1
-    }
-    numberOfObjectives--;
-
-    return numberOfObjectives;
 
 }
 
 function addEventAdd(e) {
 
-    const list = document.getElementById("list")
-        
-    const objective = document.createElement('div')
-    
-    objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
-    numberOfObjectives++
-    objective.id = numberOfObjectives
-
-    list.appendChild(objective)
-    let ev = document.getElementById(objective.id)
-    ev.addEventListener('click', addEventClick)
-    //Add an X button.
-    
-    const  closeButton = document.createElement('div')
-    closeButton.id = numberOfObjectives.toString() + "closeButton"
-    closeButton.style = "position: relative; bottom: 8px;"
-
-    const textNode  = document.createElement('p')
-    textNode.innerText = "Delete"
-    textNode.style = "text-align: center; font-size: 10px; text-decoration: underline; color: blue;"
-    closeButton.appendChild(textNode)
-
-    list.append(closeButton)
-
-    e = document.getElementById(closeButton.id)
-    e.addEventListener('click', addEventDelete)
-    
-    log(numberOfObjectives)
-
-    
+    helperAddObjective()
 
 }
 
 function addEventPopup(e) {
 
-
+    helperHoverObjective()
 
 }
