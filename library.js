@@ -3,10 +3,12 @@
 const log = console.log
 
 let numberOfObjectives=0
+let currentPopupID = 0
+let descriptions = [];
+let titles = [];
 
 //Helper functions
 function helperAddObjective() {
-    
     const list = document.getElementById("list")
     const objective = document.createElement('div')
     objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
@@ -30,6 +32,14 @@ function helperAddObjective() {
 
     let e = document.getElementById(closeButton.id)
     e.addEventListener('click', addEventDelete)
+
+
+    //add a right click mouse event to show the form.
+
+    ev.addEventListener('contextmenu', )
+
+
+
 
     //add a mouseover event for the description.
 
@@ -71,11 +81,15 @@ function helperClickObjective(e) {
 function helperHoverObjective(e) {
 }
 
+function helperShowForm(e) {
+
+    
+}
+
 function LearnJS() {
     const obj = {}
-    let currentPopupID = 0
-    let descriptions = [];
-    let titles = [];
+   
+ 
     //Create list
     obj.addList = function() {
 
@@ -198,6 +212,7 @@ function LearnJS() {
     }
 
     obj.addForm = function(objectiveNumber) {
+        
         if (currentPopupID != 0) {
             let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
             elem.parentNode.removeChild(elem)
@@ -220,24 +235,21 @@ function LearnJS() {
     
         labelSubmit.innerHTML = "Submit"
         labelSubmit.style = "position: relative; bottom: 30px; height: 15px; font-size: 10px; text-align: center; "
+        labelSubmit.id = objectiveNumber.toString() + "submit"
 
-
-        
+        //set attribute
+        labelSubmit.setAttribute("type", 'button')
 
         titleText.innerHTML = "Title: "
         descriptionText.innerHTML = "Description: "
 
         labelTitle.style ="font-size: 12px; position: relative; bottom: 10px; "
         input.style = "height: 12px; position: relative; bottom: 20px; font-size: 10px; width: 140px;"
+        input.id = 'input'
 
         if (titles[objectiveNumber-1] != 'undefined')
             input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
         
-
-    
-      
-        log(input.style)
-
         labelTitle.appendChild(titleText)
         labelDescription.appendChild(descriptionText)
         form.appendChild(labelTitle)
@@ -245,12 +257,10 @@ function LearnJS() {
         
         labelDescription.style = "font-size: 12px; position: relative; bottom: 25px; "
         textarea.style = "height: 20px; position: relative; bottom: 30px; width: 141px; height: 100px; font-size: 10px; "
-
+        textarea.id = "textarea"
 
         if (descriptions[objectiveNumber-1] != 'undefined')
-            textarea.appendChild(document.createTextNode(descriptions[objectiveNumber-1]))//get innerHTML/.
-
-    
+            textarea.innerText = descriptions[objectiveNumber-1] //get innerHTML/.
     
         form.appendChild(labelDescription)
         form.appendChild(textarea)
@@ -259,9 +269,13 @@ function LearnJS() {
 
         descriptorParent.appendChild(form)
         document.body.appendChild(descriptorParent)
-
         //Add event listener, where if you click submit, takes those submissions registers into the circles, then deletes form from DOM.
 
+        let e = document.getElementById(objectiveNumber.toString() + 'submit')
+        e.addEventListener("click", clickedSubmit)
+        
+
+        //retrieve the data.
 
         
         let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
@@ -308,5 +322,58 @@ function addEventAdd(e) {
 function addEventPopup(e) {
 
     helperHoverObjective()
+
+}
+
+function clickedSubmit(e) {
+    log('hello')
+
+    log(e.currentTarget.id)
+ 
+    //get data.
+    let objectiveNumber = e.currentTarget.id[0]
+    log(objectiveNumber)
+
+    let input = document.getElementById('input')
+    log(input.value)
+
+    let textbox = document.getElementById('textarea')
+    log(textbox.value)
+
+    //change the title and the description itself.
+
+
+    let objectiveEdit = document.getElementById(objectiveNumber)
+
+    //edit title
+    if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
+        objectiveEdit.firstElementChild.innerText = input.value
+        titles[objectiveNumber-1] = input.value
+      
+    }
+    else {
+        titles.push(input.value)
+        let text = document.createElement("p")
+        text.innerText = input.value
+        text.style = "font-size: 10px; padding: 2px; text-align: center;"
+        text.id = objectiveNumber.toString() + "title"
+        objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
+    }
+
+    //edit description
+    if (descriptions[objectiveNumber-1] != 'undefined') {
+        descriptions[objectiveNumber-1] = textbox.value
+        
+    }
+    else   
+        descriptions.push(textbox.value)
+
+
+    //close DOM box.
+    if (currentPopupID != 0) {
+        let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+        elem.parentNode.removeChild(elem)
+    }
+
 
 }
