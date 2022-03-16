@@ -1,12 +1,10 @@
 "use strict"
 
 const log = console.log
-
 let numberOfObjectives=0
 let currentPopupID = 0
 let descriptions = [];
 let titles = [];
-
 let popupOpen = false
 
 //Helper functions
@@ -85,7 +83,10 @@ function helperHoverObjective(e) {
     descriptorParent.id = e.toString() +"descriptorParent"
     
     let descriptor = document.createElement('span')
-    descriptor.innerText = descriptions[e-1]
+
+    if (descriptions[e-1] != undefined)
+        descriptor.innerText = descriptions[e-1]
+
     descriptor.id = e.toString() + "descriptor"
 
     descriptorParent.appendChild(descriptor)
@@ -353,8 +354,8 @@ function addEventAdd(e) {
 function addEventPopup(e) {
 
     //Check if already shown.
-
-    helperHoverObjective(e.currentTarget.id)
+    if (!popupOpen)
+        helperHoverObjective(e.currentTarget.id)
 
 }
 
@@ -374,6 +375,9 @@ function addEventForm(e) {
 
 
     log("FORM")
+
+    if (popupOpen == true)
+        return
 
     //disable hover.
     let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
