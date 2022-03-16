@@ -2,7 +2,7 @@
 
 const log = console.log
 let numberOfObjectives=0
-let currentPopupID = 0
+let currentPopupID = -1
 let descriptions = [];
 let titles = [];
 let popupOpen = false
@@ -33,9 +33,7 @@ function helperAddObjective() {
     let e = document.getElementById(closeButton.id)
     e.addEventListener('click', addEventDelete)
 
-
     //add a right click mouse event to show the form.
-
     ev.addEventListener('contextmenu', addEventForm)
     log(ev)
    
@@ -48,7 +46,6 @@ function helperAddObjective() {
 
 function helperDeleteObjective(deleteObjective, deleteButton) {
     let list = document.getElementById("list")
-
     let id = deleteObjective.id
 
     list.removeChild(deleteObjective)
@@ -65,16 +62,11 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
 }
 
 function helperClickObjective(e) {
-
-
     let element = document.getElementById(e)
     if (element.style.backgroundColor == "aqua")
         element.style.background = "lime"
     else
         element.style.background="aqua"
-
-
-
 }
 
 function helperHoverObjective(e) {
@@ -95,7 +87,7 @@ function helperHoverObjective(e) {
     let popup = document.getElementById(e.toString() + "descriptorParent")
     let popupText  = document.getElementById(e.toString() + "descriptor")
 
-    let marginTop = (e-1) * 100
+    let marginTop = (e-1) * 104
     
     popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; "
     popup.style.marginTop = marginTop.toString() + "px"
@@ -110,10 +102,6 @@ function helperHoverObjective(e) {
 
 //pass in the objective number.
 function helperShowForm(objectiveNumber) {
-
-    
-    log("POPUP", currentPopupID)
-  
 
     //create popup.
     let descriptorParent = document.createElement("div")
@@ -145,7 +133,6 @@ function helperShowForm(objectiveNumber) {
 
     if (titles[objectiveNumber-1] != undefined) {
         input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
-        log("SHULD NOT")
     }
   
     labelTitle.appendChild(titleText)
@@ -174,8 +161,6 @@ function helperShowForm(objectiveNumber) {
     
 
     //retrieve the data.
-
-    
     let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
     let popupText  = document.getElementById(objectiveNumber.toString() + "descriptor")
 
@@ -187,9 +172,6 @@ function helperShowForm(objectiveNumber) {
 
     currentPopupID = objectiveNumber
     return currentPopupID
-
-
-
 }
 
 function LearnJS() {
@@ -216,15 +198,9 @@ function LearnJS() {
         e.addEventListener('click', addEventAdd)
     }
 
-    /*Plan: Store all these objectives into a list to access easily*/
-
     /*Return an ID which signifies which objective*/
     obj.clickObjective = function(objectiveNumber){
-        //if blue, turn to red  
-
-        helperClickObjective()
-        //if red, turn to blue.
-
+        helperClickObjective(objectiveNumber)
     }
 
     obj.addObjective = function() {
@@ -233,41 +209,27 @@ function LearnJS() {
     }
 
     obj.showPopup = function(objectiveNumber, on) {
-        //delete previous popup from DOM.
-        if (currentPopupID != 0) {
-            let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
-            elem.parentNode.removeChild(elem)
-        }
+
+        
+        //only control if no other hovers or popups
+
+        if (currentPopupID != objectiveNumber && currentPopupID != -1)
+            return
+
 
         if (on == 0) {
-            currentPopupID = 0
-            return 0
+            let elem = document.getElementById(objectiveNumber.toString() + "descriptorParent")
+            elem.parentNode.removeChild(elem)
+            popupOpen = false
+            currentPopupID = -1
+            
         }
-        //create popup.
-      
-        let descriptorParent = document.createElement("div")
-        descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
-        
-        let descriptor = document.createElement('span')
-        descriptor.innerText = descriptions[objectiveNumber-1]
-        descriptor.id = objectiveNumber.toString() + "descriptor"
-
-        descriptorParent.appendChild(descriptor)
-        document.body.appendChild(descriptorParent)
-    
-        let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
-        let popupText  = document.getElementById(objectiveNumber.toString() + "descriptor")
-
-        let marginTop = (objectiveNumber-1) * 100
-        
-        popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; "
-        popup.style.marginTop = marginTop.toString() + "px"
-        popupText.style = "text-align: center;"
-
-
-        currentPopupID = objectiveNumber
-        return currentPopupID
-
+        else {
+            popupOpen = true
+            currentPopupID = objectiveNumber
+            return helperHoverObjective(objectiveNumber)
+           
+        }
     }
 
 
@@ -282,18 +244,13 @@ function LearnJS() {
     }
 
     obj.addTitle= function(objectiveNumber, title) {
-
-        //edit html inside the objective.
-
         let objectiveEdit = document.getElementById(objectiveNumber)
-
         //see if title child exists.    
         if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
             objectiveEdit.firstElementChild.innerText = title
             titles[objectiveNumber-1] = title
             return title
         }
-
         titles.push(title)
         let text = document.createElement("p")
         text.innerText = title
@@ -304,29 +261,43 @@ function LearnJS() {
     }
 
     obj.addDescription = function(objectiveNumber, description) {
-
-        //store the text relating to this objective number.
-
-        //check if already exists.
         if (descriptions[objectiveNumber-1] != 'undefined') {
             descriptions[objectiveNumber-1] = description
             return
         }
-
         descriptions.push(description)
-
     }
 
-    obj.addForm = function(objectiveNumber) {
-        helperShowForm(objectiveNumber)
+    obj.addForm = function(objectiveNumber, on) {
+
         
+        //only display if no other hovers or popups.
 
-  
+        //check if this popup matches your id.
+       
+        if (currentPopupID != objectiveNumber && currentPopupID != -1)
+            return
 
+        if (on) {
+         
+            popupOpen = true
+            currentPopupID = objectiveNumber
+            helperShowForm(objectiveNumber)
+            
+        }
+        
+        else {
+            log("off")
+            popupOpen = false
+            currentPopupID = -1
+
+            let elem = document.getElementById(objectiveNumber.toString() + "descriptorParent")
+            elem.parentNode.removeChild(elem)
+            
+        }
+        
     }
-
     return obj
-
 }
 
 
@@ -341,82 +312,47 @@ function addEventDelete(e) {
     let objDelete = document.getElementById(objectiveDeleteID)
 
     helperDeleteObjective(objDelete, deleteButton)
-    
-
 }
 
 function addEventAdd(e) {
-    
     helperAddObjective()
-
 }
 
 function addEventPopup(e) {
-
     //Check if already shown.
     if (!popupOpen)
         helperHoverObjective(e.currentTarget.id)
 
 }
 
-function addEventRemovePopup(e) {
-    
+function addEventRemovePopup(e) { 
     //should be turned off if popup is open.
-
     if (!popupOpen)  {
         let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
         elem.parentNode.removeChild(elem)
     }
-
 }
 
 function addEventForm(e) {
     e.preventDefault()
-
-
-    log("FORM")
-
     if (popupOpen == true)
         return
-
     //disable hover.
     let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
     elem.parentNode.removeChild(elem)
-
 
     if (popupOpen == false) {
         helperShowForm(e.currentTarget.id)
         popupOpen = true
     }
-    log("HERE")
-    //readd the hover.
-    
-
-
-    
 
 }
 
 function clickedSubmit(e) {
     
-    log('hello')
-
-    log(e.currentTarget.id)
- 
-    //get data.
-   
     let input = document.getElementById('input')
-    log(input.value)
-
     let textbox = document.getElementById('textarea')
-    log(textbox.value)
-    
-    //change the title and the description itself.
-    
-
     let objectiveNumber = e.currentTarget.id[0]
-    log(objectiveNumber)
-
     let objectiveEdit = document.getElementById(objectiveNumber)
 
     //edit title
@@ -441,7 +377,6 @@ function clickedSubmit(e) {
     }
     else   
         descriptions.push(textbox.value)
-
 
     //close form popup.
     let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
