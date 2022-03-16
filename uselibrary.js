@@ -4,9 +4,12 @@
 
 const objecter = LearnJS()
 
+
 objecter.addList()
 
 objecter.addObjective()
+
+/*
 objecter.deleteObjective(1)  
 
 
@@ -22,13 +25,13 @@ objecter.clickObjective(3)
 
 
 objecter.addTitle(2, "HEy")
-objecter.addTitle(2, "213")
+objecter.addTitle(2, "LEARN HTML")
 
 
 objecter.addDescription(2, "HEY")
 
-
-objecter.addForm(2,1)
+*/
+//objecter.addForm(2,1)
 
 
 

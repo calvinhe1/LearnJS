@@ -9,9 +9,12 @@ let popupOpen = false
 
 //Helper functions
 function helperAddObjective() {
+    if (popupOpen)
+        return
+
     const list = document.getElementById("list")
     const objective = document.createElement('div')
-    objective.style = 'overflow: auto; word-wrap: break-word; width: 50px; height: 50px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
+    objective.style = 'word-wrap: break-word; font-weight: bold; width: 50px; height: 50px; border: 1px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
     numberOfObjectives++
     objective.id = numberOfObjectives
     list.appendChild(objective)
@@ -35,33 +38,76 @@ function helperAddObjective() {
 
     //add a right click mouse event to show the form.
     ev.addEventListener('contextmenu', addEventForm)
-    log(ev)
+
    
     ev.addEventListener('mouseover', addEventPopup)
     ev.addEventListener('mouseout', addEventRemovePopup)
 
     //add a mouseover event for the description.
-    log(numberOfObjectives)
+   
 }
 
 function helperDeleteObjective(deleteObjective, deleteButton) {
+
+
+    //disable deleting when popup is open
+
+    if (popupOpen)
+        return
+
     let list = document.getElementById("list")
     let id = deleteObjective.id
 
+    log("DELETING ID", id)
     list.removeChild(deleteObjective)
     list.removeChild(deleteButton)
+
+    //also delete from arrays.
+
+    descriptions.splice(parseInt(id)-1, 1)
+    titles.splice(parseInt(id)-1, 1)
     
     //Change all previous IDs -1.
-    for (let i=id+1; i<numberOfObjectives+1; i++) {
+  
+    for (let i=parseInt(id)+1; i<numberOfObjectives+1; i++) {
+     
         let objective = document.getElementById(i)
         objective.id = i-1
+
+        //also change data.
+
+      
+   
+ 
     }
+
+  
+
     numberOfObjectives--;
+
+    
+    
+    //delete popup box IF IT'S OPEN
+    if (currentPopupID == id && popupOpen == true) {
+        let elem = document.getElementById(id.toString() + "descriptorParent")
+        elem.parentNode.removeChild(elem)
+        popupOpen = false
+
+        
+        log("DELETING POPUP BOX", currentPopupID)
+
+        currentPopupID = -1
+
+
+    }
     return numberOfObjectives;
 
 }
 
 function helperClickObjective(e) {
+    if (popupOpen)
+        return
+
     let element = document.getElementById(e)
     if (element.style.backgroundColor == "aqua")
         element.style.background = "lime"
@@ -87,7 +133,7 @@ function helperHoverObjective(e) {
     let popup = document.getElementById(e.toString() + "descriptorParent")
     let popupText  = document.getElementById(e.toString() + "descriptor")
 
-    let marginTop = (e-1) * 104
+    let marginTop = (e-1) * 108
     
     popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; "
     popup.style.marginTop = marginTop.toString() + "px"
@@ -254,7 +300,7 @@ function LearnJS() {
         titles.push(title)
         let text = document.createElement("p")
         text.innerText = title
-        text.style = "font-size: 10px; padding: 2px; text-align: center;"
+        text.style = "font-size: 12px; padding: 2px; text-align: center;"
         text.id = objectiveNumber.toString() + "title"
         objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
 
@@ -312,6 +358,7 @@ function addEventDelete(e) {
     let objDelete = document.getElementById(objectiveDeleteID)
 
     helperDeleteObjective(objDelete, deleteButton)
+
 }
 
 function addEventAdd(e) {
@@ -335,6 +382,9 @@ function addEventRemovePopup(e) {
 
 function addEventForm(e) {
     e.preventDefault()
+
+    log("TESTING", e.currentTarget.id)
+
     if (popupOpen == true)
         return
     //disable hover.
