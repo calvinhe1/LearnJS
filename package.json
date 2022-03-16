@@ -1,0 +1,22 @@
+{
+  "name": "js-library-hecalvi1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-winter-2022/js-library-hecalvi1.git"
+  },
+  "author": "Calvin He",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-winter-2022/js-library-hecalvi1/issues"
+  },
+  "homepage": "https://github.com/csc309-winter-2022/js-library-hecalvi1#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
