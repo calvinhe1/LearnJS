@@ -11,9 +11,14 @@ let popupOpen = false
 function helperAddObjective() {
     if (popupOpen)
         return
+    
 
+    
     const list = document.getElementById("list")
     const objective = document.createElement('div')
+    log("objective object ", objective)
+
+
     objective.style = 'word-wrap: break-word; font-weight: bold; width: 50px; height: 50px; border: 1px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
     numberOfObjectives++
     objective.id = numberOfObjectives
@@ -74,11 +79,9 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
         let objective = document.getElementById(i)
         objective.id = i-1
 
-        //also change data.
+        let closeObjective = document.getElementById(i.toString() + "closeButton")
+        closeObjective.id = (i-1).toString() + "closeButton"
 
-      
-   
- 
     }
 
   
@@ -107,7 +110,7 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
 function helperClickObjective(e) {
     if (popupOpen)
         return
-
+    
     let element = document.getElementById(e)
     if (element.style.backgroundColor == "aqua")
         element.style.background = "lime"
@@ -135,7 +138,7 @@ function helperHoverObjective(e) {
 
     let marginTop = (e-1) * 108
     
-    popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; "
+    popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;  "
     popup.style.marginTop = marginTop.toString() + "px"
     popupText.style = "text-align: center;"
 
@@ -212,7 +215,7 @@ function helperShowForm(objectiveNumber) {
 
     let marginTop = (objectiveNumber-1) * 100
     
-    popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; max-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-height: 195px; "
+    popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; max-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-height: 195px; "
     popup.style.marginTop = marginTop.toString() + "px"
     //popupText.style = "text-align: center;"
 
@@ -239,7 +242,17 @@ function LearnJS() {
 
         parentContainer.appendChild(container)
         parentContainer.appendChild(addButton)
-        document.body.appendChild(parentContainer)
+
+        //Make the sidebar FIXED.
+        const test = document.createElement('div')
+        test.style = "position: absolute; top: 50px; right: 50px; "
+        test.appendChild(parentContainer)
+  
+
+
+        document.body.appendChild(test)
+
+
         let e = document.getElementById("addButton") 
         e.addEventListener('click', addEventAdd)
     }
@@ -354,6 +367,9 @@ function addEventClick(e) {
 function addEventDelete(e) {
 
     let deleteButton= document.getElementById(e.currentTarget.id)
+
+    log(e.currentTarget.id)
+
     let objectiveDeleteID = deleteButton.id[0]
     let objDelete = document.getElementById(objectiveDeleteID)
 
