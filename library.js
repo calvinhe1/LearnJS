@@ -7,6 +7,8 @@ let currentPopupID = 0
 let descriptions = [];
 let titles = [];
 
+let popupOpen = false
+
 //Helper functions
 function helperAddObjective() {
     const list = document.getElementById("list")
@@ -36,14 +38,13 @@ function helperAddObjective() {
 
     //add a right click mouse event to show the form.
 
-    ev.addEventListener('contextmenu', )
-
-
-
+    ev.addEventListener('contextmenu', addEventForm)
+    log(ev)
+   
+    ev.addEventListener('mouseover', addEventPopup)
+    ev.addEventListener('mouseout', addEventRemovePopup)
 
     //add a mouseover event for the description.
-
-    
     log(numberOfObjectives)
 }
 
@@ -79,11 +80,115 @@ function helperClickObjective(e) {
 }
 
 function helperHoverObjective(e) {
+
+    let descriptorParent = document.createElement("div")
+    descriptorParent.id = e.toString() +"descriptorParent"
+    
+    let descriptor = document.createElement('span')
+    descriptor.innerText = descriptions[e-1]
+    descriptor.id = e.toString() + "descriptor"
+
+    descriptorParent.appendChild(descriptor)
+    document.body.appendChild(descriptorParent)
+
+    let popup = document.getElementById(e.toString() + "descriptorParent")
+    let popupText  = document.getElementById(e.toString() + "descriptor")
+
+    let marginTop = (e-1) * 100
+    
+    popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; "
+    popup.style.marginTop = marginTop.toString() + "px"
+    popupText.style = "text-align: center;"
+
+
+    currentPopupID = e
+    return currentPopupID
+
 }
 
-function helperShowForm(e) {
+
+//pass in the objective number.
+function helperShowForm(objectiveNumber) {
 
     
+    log("POPUP", currentPopupID)
+  
+
+    //create popup.
+    let descriptorParent = document.createElement("div")
+    descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
+
+    let form = document.createElement('form')
+    let labelTitle = document.createElement('label')
+    let input = document.createElement('input')
+    let labelDescription = document.createElement('label')
+    let textarea = document.createElement('textarea')
+    let titleText = document.createElement('p')
+    let descriptionText = document.createElement('p')
+    let labelSubmit = document.createElement('button')
+
+    labelSubmit.innerHTML = "Submit"
+    labelSubmit.style = "position: relative; bottom: 30px; height: 15px; font-size: 10px; text-align: center; "
+    labelSubmit.id = objectiveNumber.toString() + "submit"
+
+    //set attribute
+    labelSubmit.setAttribute("type", 'button')
+
+    titleText.innerHTML = "Title: "
+    descriptionText.innerHTML = "Description: "
+
+    labelTitle.style ="font-size: 12px; position: relative; bottom: 10px; "
+    input.style = "height: 12px; position: relative; bottom: 20px; font-size: 10px; width: 140px;"
+    input.id = 'input'
+
+
+    if (titles[objectiveNumber-1] != undefined) {
+        input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
+        log("SHULD NOT")
+    }
+  
+    labelTitle.appendChild(titleText)
+    labelDescription.appendChild(descriptionText)
+    form.appendChild(labelTitle)
+    form.appendChild(input)
+    
+    labelDescription.style = "font-size: 12px; position: relative; bottom: 25px; "
+    textarea.style = "height: 20px; position: relative; bottom: 30px; width: 141px; height: 100px; font-size: 10px; "
+    textarea.id = "textarea"
+
+    if (descriptions[objectiveNumber-1] != undefined)
+        textarea.innerText = descriptions[objectiveNumber-1] //get innerHTML/.
+
+
+    form.appendChild(labelDescription)
+    form.appendChild(textarea)
+    form.appendChild(labelSubmit)
+
+    descriptorParent.appendChild(form)
+    document.body.appendChild(descriptorParent)
+    //Add event listener, where if you click submit, takes those submissions registers into the circles, then deletes form from DOM.
+
+    let eve = document.getElementById(objectiveNumber.toString() + 'submit')
+    eve.addEventListener("click", clickedSubmit)
+    
+
+    //retrieve the data.
+
+    
+    let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
+    let popupText  = document.getElementById(objectiveNumber.toString() + "descriptor")
+
+    let marginTop = (objectiveNumber-1) * 100
+    
+    popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; max-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-height: 195px; "
+    popup.style.marginTop = marginTop.toString() + "px"
+    //popupText.style = "text-align: center;"
+
+    currentPopupID = objectiveNumber
+    return currentPopupID
+
+
+
 }
 
 function LearnJS() {
@@ -212,84 +317,10 @@ function LearnJS() {
     }
 
     obj.addForm = function(objectiveNumber) {
-        
-        if (currentPopupID != 0) {
-            let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
-            elem.parentNode.removeChild(elem)
-        }
-
-
-        //create popup.
-        let descriptorParent = document.createElement("div")
-        descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
+        helperShowForm(objectiveNumber)
         
 
-        let form = document.createElement('form')
-        let labelTitle = document.createElement('label')
-        let input = document.createElement('input')
-        let labelDescription = document.createElement('label')
-        let textarea = document.createElement('textarea')
-        let titleText = document.createElement('p')
-        let descriptionText = document.createElement('p')
-        let labelSubmit = document.createElement('button')
-    
-        labelSubmit.innerHTML = "Submit"
-        labelSubmit.style = "position: relative; bottom: 30px; height: 15px; font-size: 10px; text-align: center; "
-        labelSubmit.id = objectiveNumber.toString() + "submit"
-
-        //set attribute
-        labelSubmit.setAttribute("type", 'button')
-
-        titleText.innerHTML = "Title: "
-        descriptionText.innerHTML = "Description: "
-
-        labelTitle.style ="font-size: 12px; position: relative; bottom: 10px; "
-        input.style = "height: 12px; position: relative; bottom: 20px; font-size: 10px; width: 140px;"
-        input.id = 'input'
-
-        if (titles[objectiveNumber-1] != 'undefined')
-            input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
-        
-        labelTitle.appendChild(titleText)
-        labelDescription.appendChild(descriptionText)
-        form.appendChild(labelTitle)
-        form.appendChild(input)
-        
-        labelDescription.style = "font-size: 12px; position: relative; bottom: 25px; "
-        textarea.style = "height: 20px; position: relative; bottom: 30px; width: 141px; height: 100px; font-size: 10px; "
-        textarea.id = "textarea"
-
-        if (descriptions[objectiveNumber-1] != 'undefined')
-            textarea.innerText = descriptions[objectiveNumber-1] //get innerHTML/.
-    
-        form.appendChild(labelDescription)
-        form.appendChild(textarea)
-
-        form.appendChild(labelSubmit)
-
-        descriptorParent.appendChild(form)
-        document.body.appendChild(descriptorParent)
-        //Add event listener, where if you click submit, takes those submissions registers into the circles, then deletes form from DOM.
-
-        let e = document.getElementById(objectiveNumber.toString() + 'submit')
-        e.addEventListener("click", clickedSubmit)
-        
-
-        //retrieve the data.
-
-        
-        let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
-        let popupText  = document.getElementById(objectiveNumber.toString() + "descriptor")
-
-        let marginTop = (objectiveNumber-1) * 100
-        
-        popup.style="border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; max-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-height: 195px; "
-        popup.style.marginTop = marginTop.toString() + "px"
-        //popupText.style = "text-align: center;"
-
-        currentPopupID = objectiveNumber
-        return currentPopupID
-
+  
 
     }
 
@@ -314,34 +345,73 @@ function addEventDelete(e) {
 }
 
 function addEventAdd(e) {
-
+    
     helperAddObjective()
 
 }
 
 function addEventPopup(e) {
 
-    helperHoverObjective()
+    //Check if already shown.
+
+    helperHoverObjective(e.currentTarget.id)
+
+}
+
+function addEventRemovePopup(e) {
+    
+    //should be turned off if popup is open.
+
+    if (!popupOpen)  {
+        let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+        elem.parentNode.removeChild(elem)
+    }
+
+}
+
+function addEventForm(e) {
+    e.preventDefault()
+
+
+    log("FORM")
+
+    //disable hover.
+    let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+    elem.parentNode.removeChild(elem)
+
+
+    if (popupOpen == false) {
+        helperShowForm(e.currentTarget.id)
+        popupOpen = true
+    }
+    log("HERE")
+    //readd the hover.
+    
+
+
+    
 
 }
 
 function clickedSubmit(e) {
+    
     log('hello')
 
     log(e.currentTarget.id)
  
     //get data.
-    let objectiveNumber = e.currentTarget.id[0]
-    log(objectiveNumber)
-
+   
     let input = document.getElementById('input')
     log(input.value)
 
     let textbox = document.getElementById('textarea')
     log(textbox.value)
-
+    
     //change the title and the description itself.
+    
 
+    let objectiveNumber = e.currentTarget.id[0]
+    log(objectiveNumber)
 
     let objectiveEdit = document.getElementById(objectiveNumber)
 
@@ -369,11 +439,10 @@ function clickedSubmit(e) {
         descriptions.push(textbox.value)
 
 
-    //close DOM box.
-    if (currentPopupID != 0) {
-        let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
-        elem.parentNode.removeChild(elem)
-    }
-
+    //close form popup.
+    let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+    elem.parentNode.removeChild(elem)
+    
+    popupOpen = false
 
 }
