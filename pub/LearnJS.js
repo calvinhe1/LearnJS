@@ -85,7 +85,6 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     }
 
   
-
     numberOfObjectives--;
 
     
