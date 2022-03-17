@@ -12,12 +12,9 @@ function helperAddObjective() {
     if (popupOpen)
         return
     
-
-    
     const list = document.getElementById("list")
     const objective = document.createElement('div')
     log("objective object ", objective)
-
 
     objective.style = 'word-wrap: break-word; font-weight: bold; width: 50px; height: 50px; border: 1px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
     numberOfObjectives++
@@ -25,7 +22,6 @@ function helperAddObjective() {
     list.appendChild(objective)
     let ev = document.getElementById(objective.id)
     ev.addEventListener('click', addEventClick)
-    //Add an X button.
 
     const  closeButton = document.createElement('div')
     closeButton.id = numberOfObjectives.toString() + "closeButton"
@@ -39,23 +35,17 @@ function helperAddObjective() {
     list.append(closeButton)
 
     let e = document.getElementById(closeButton.id)
+
+    //add event listeners
     e.addEventListener('click', addEventDelete)
-
-    //add a right click mouse event to show the form.
     ev.addEventListener('contextmenu', addEventForm)
-
-   
     ev.addEventListener('mouseover', addEventPopup)
     ev.addEventListener('mouseout', addEventRemovePopup)
 
-    //add a mouseover event for the description.
    
 }
 
 function helperDeleteObjective(deleteObjective, deleteButton) {
-
-
-    //disable deleting when popup is open
 
     if (popupOpen)
         return
@@ -63,7 +53,6 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     let list = document.getElementById("list")
     let id = deleteObjective.id
 
-    log("DELETING ID", id)
     list.removeChild(deleteObjective)
     list.removeChild(deleteButton)
 
@@ -73,7 +62,7 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     titles.splice(parseInt(id)-1, 1)
     
     //Change all previous IDs -1.
-  
+
     for (let i=parseInt(id)+1; i<numberOfObjectives+1; i++) {
      
         let objective = document.getElementById(i)
@@ -88,16 +77,11 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     numberOfObjectives--;
 
     
-    
-    //delete popup box IF IT'S OPEN
+
     if (currentPopupID == id && popupOpen == true) {
         let elem = document.getElementById(id.toString() + "descriptorParent")
         elem.parentNode.removeChild(elem)
         popupOpen = false
-
-        
-        log("DELETING POPUP BOX", currentPopupID)
-
         currentPopupID = -1
 
 
@@ -193,7 +177,7 @@ function helperShowForm(objectiveNumber) {
     textarea.id = "textarea"
 
     if (descriptions[objectiveNumber-1] != undefined)
-        textarea.innerText = descriptions[objectiveNumber-1] //get innerHTML/.
+        textarea.innerText = descriptions[objectiveNumber-1] 
 
 
     form.appendChild(labelDescription)
@@ -202,11 +186,10 @@ function helperShowForm(objectiveNumber) {
 
     descriptorParent.appendChild(form)
     document.body.appendChild(descriptorParent)
-    //Add event listener, where if you click submit, takes those submissions registers into the circles, then deletes form from DOM.
 
+ 
     let eve = document.getElementById(objectiveNumber.toString() + 'submit')
     eve.addEventListener("click", clickedSubmit)
-    
 
     //retrieve the data.
     let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
@@ -216,7 +199,7 @@ function helperShowForm(objectiveNumber) {
     
     popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; max-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-height: 195px; "
     popup.style.marginTop = marginTop.toString() + "px"
-    //popupText.style = "text-align: center;"
+
 
     currentPopupID = objectiveNumber
     return currentPopupID
@@ -248,7 +231,6 @@ function LearnJS() {
         test.appendChild(parentContainer)
   
 
-
         document.body.appendChild(test)
 
 
@@ -268,9 +250,7 @@ function LearnJS() {
 
     obj.showPopup = function(objectiveNumber, on) {
 
-        
         //only control if no other hovers or popups
-
         if (currentPopupID != objectiveNumber && currentPopupID != -1)
             return
 
@@ -328,11 +308,9 @@ function LearnJS() {
 
     obj.addForm = function(objectiveNumber, on) {
 
-        
         //only display if no other hovers or popups.
-
         //check if this popup matches your id.
-       
+    
         if (currentPopupID != objectiveNumber && currentPopupID != -1)
             return
 

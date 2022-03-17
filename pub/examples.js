@@ -28,16 +28,16 @@ objecter.deleteObjective(4)
 //fill in the form to populate the learning objective, and click "submit" to populate objective.
 objecter.addForm(3,1)
 
-/* Need to turn off form before opening another form.
-objecter.addForm(3,0)
-*/
+// Need to turn off form before opening something else.
+//objecter.addForm(3,0)
 
-/* Can display the description/summary of objective when the mouse is hovered over the objective.
-objecter.popupShow(2,1)
+
+//Show pop up of description information of objective.
+//objecter.showPopup(2,1)
 
 //turn off popup.
-objecter.popupShow(2,0)
-*/
+//objecter.showPopup(2,0)
+
 
 
 
