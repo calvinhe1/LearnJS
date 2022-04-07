@@ -4,6 +4,8 @@
 const objecter = LearnJS()
 objecter.addList()
 
+
+/*
 //Add learning goals/objectives to the list to keep track of what learning objectives are in this webpage.
 objecter.addObjective()
 
@@ -38,7 +40,7 @@ objecter.addForm(3,1)
 //turn off popup.
 //objecter.showPopup(2,0)
 
-
+*/
 
 
 

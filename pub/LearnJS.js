@@ -6,6 +6,8 @@ let currentPopupID = -1
 let descriptions = [];
 let titles = [];
 let popupOpen = false
+let justAddedObjective = true
+
 
 //Helper functions
 function helperAddObjective() {
@@ -42,7 +44,21 @@ function helperAddObjective() {
     ev.addEventListener('mouseover', addEventPopup)
     ev.addEventListener('mouseout', addEventRemovePopup)
 
+    return objective.id
+
    
+}
+
+function helperDeleteJustAddedObjective(deleteObjective) {
+
+    console.log("ARE WE DELETING?", deleteObjective)
+    let list = document.getElementById("list")
+    list.removeChild(document.getElementById(deleteObjective))
+    list.removeChild(document.getElementById(deleteObjective.toString() + "closeButton"))
+      
+    numberOfObjectives--;
+
+    return numberOfObjectives;
 }
 
 function helperDeleteObjective(deleteObjective, deleteButton) {
@@ -135,10 +151,8 @@ function helperHoverObjective(e) {
 //pass in the objective number.
 function helperShowForm(objectiveNumber) {
 
-    //create popup.
+    //declarations
     let descriptorParent = document.createElement("div")
-    descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
-
     let form = document.createElement('form')
     let labelTitle = document.createElement('label')
     let input = document.createElement('input')
@@ -147,21 +161,28 @@ function helperShowForm(objectiveNumber) {
     let titleText = document.createElement('p')
     let descriptionText = document.createElement('p')
     let labelSubmit = document.createElement('button')
+    let closeForm = document.createElement("div")
 
+    closeForm.innerHTML = "X"
+    closeForm.className = "closePopup"
+    closeForm.id = objectiveNumber.toString() + "closeForm"
+
+
+
+    
+    descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
+    
     labelSubmit.innerHTML = "Submit"
-    labelSubmit.style = "position: relative; bottom: 30px; height: 15px; font-size: 10px; text-align: center; "
+    labelSubmit.className ="labelSubmit"
     labelSubmit.id = objectiveNumber.toString() + "submit"
-
-    //set attribute
     labelSubmit.setAttribute("type", 'button')
+
 
     titleText.innerHTML = "Title: "
     descriptionText.innerHTML = "Description: "
-
-    labelTitle.style ="font-size: 12px; position: relative; bottom: 10px; "
-    input.style = "height: 12px; position: relative; bottom: 20px; font-size: 10px; width: 140px;"
+    labelTitle.className = "labelTitle"
+    input.className = "formInput";
     input.id = 'input'
-
 
     if (titles[objectiveNumber-1] != undefined) {
         input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
@@ -169,40 +190,47 @@ function helperShowForm(objectiveNumber) {
   
     labelTitle.appendChild(titleText)
     labelDescription.appendChild(descriptionText)
-    form.appendChild(labelTitle)
-    form.appendChild(input)
-    
-    labelDescription.style = "font-size: 12px; position: relative; bottom: 25px; "
-    textarea.style = "height: 20px; position: relative; bottom: 30px; width: 141px; height: 100px; font-size: 10px; "
+    labelDescription.className = "labelDescription"
+    textarea.className = "textarea"
     textarea.id = "textarea"
 
     if (descriptions[objectiveNumber-1] != undefined)
         textarea.innerText = descriptions[objectiveNumber-1] 
 
-
+    form.className = "form"
+    form.appendChild(closeForm)
+    form.appendChild(labelTitle)
+    form.appendChild(input)
     form.appendChild(labelDescription)
     form.appendChild(textarea)
     form.appendChild(labelSubmit)
 
+
     descriptorParent.appendChild(form)
     document.body.appendChild(descriptorParent)
 
+    let close = document.getElementById(objectiveNumber.toString() + 'closeForm')
+    close.addEventListener("click", clickedCloseForm)
+    
+    
  
     let eve = document.getElementById(objectiveNumber.toString() + 'submit')
     eve.addEventListener("click", clickedSubmit)
 
+    
+
     //retrieve the data.
     let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
-    let popupText  = document.getElementById(objectiveNumber.toString() + "descriptor")
+ 
 
     let marginTop = (objectiveNumber-1) * 100
     
-    popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; max-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-height: 195px; "
+    popup.className ="popupform"
     popup.style.marginTop = marginTop.toString() + "px"
-
 
     currentPopupID = objectiveNumber
     return currentPopupID
+
 }
 
 function LearnJS() {
@@ -218,7 +246,10 @@ function LearnJS() {
         parentContainer.style = 'width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
         const addButton = document.createElement('div');
         addButton.id = "addButton";
-        addButton.style = 'text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; '
+
+        addButton.className = "addButton";
+
+        //addButton.style = 'text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; '
         let textElem = document.createTextNode("+")
         addButton.appendChild(textElem)
 
@@ -355,8 +386,15 @@ function addEventDelete(e) {
 }
 
 function addEventAdd(e) {
-    helperAddObjective()
+    let newObjectiveId = helperAddObjective()
+    //addEventForm(newObjectiveId)
+    //addEventForm() //with the new.
+    //show new form.
+    justAddedObjective = true
+    helperShowForm(newObjectiveId)
+    popupOpen = true
 }
+
 
 function addEventPopup(e) {
     //Check if already shown.
@@ -376,8 +414,6 @@ function addEventRemovePopup(e) {
 function addEventForm(e) {
     e.preventDefault()
 
-    log("TESTING", e.currentTarget.id)
-
     if (popupOpen == true)
         return
     //disable hover.
@@ -388,6 +424,23 @@ function addEventForm(e) {
         helperShowForm(e.currentTarget.id)
         popupOpen = true
     }
+
+}
+
+function clickedCloseForm(e) {
+
+
+    let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+    elem.parentNode.removeChild(elem)
+
+    popupOpen = false;
+
+    if (justAddedObjective) {
+        helperDeleteJustAddedObjective(currentPopupID)
+    }
+
+    //if the popup is...
+
 
 }
 
@@ -426,5 +479,8 @@ function clickedSubmit(e) {
     elem.parentNode.removeChild(elem)
     
     popupOpen = false
+
+    justAddedObjective = false
+
 
 }
