@@ -1,0 +1,65 @@
+.objective {
+    word-wrap: break-word; 
+    font-weight: bold; 
+    width: 50px; 
+    height: 50px; 
+    border: 1px; 
+    border-radius: 50%; 
+    background-color: aqua; 
+    border-style: solid; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    margin-left: 14px;
+    text-align: center;
+}
+
+.closeButton {
+    position: relative; bottom: 8px;
+
+}
+
+.closeButtonText {
+    text-align: center; font-size: 10px; text-decoration: underline; color: blue;
+}
+
+
+.popup {
+
+    position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;
+
+}
+
+.labelSubmit {
+
+    position: relative; bottom: 30px; height: 15px; font-size: 10px; text-align: center; 
+}
+
+.labelTitle {
+    font-size: 12px; position: relative; bottom: 10px;
+
+}
+
+.formInput {
+
+    height: 12px; position: relative; bottom: 20px; font-size: 10px; width: 140px;
+}
+
+.listContainer {
+    width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;
+}
+.addButton {
+    text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; 
+}
+
+.test {
+    position: absolute; top: 50px; right: 50px;
+}
+
+.objectiveTitle {
+    font-size: 12px; padding: 2px; text-align: center;
+}
+
+.textTitleSubmit {
+
+    font-size: 10px; padding: 2px; text-align: center;
+}
