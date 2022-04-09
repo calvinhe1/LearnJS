@@ -13,7 +13,7 @@
     text-align: center;
 }
 
-.squircleObjective {
+.intermediateObjective {
     word-wrap: break-word; 
     font-weight: bold; 
     width: 50px; 
@@ -31,7 +31,7 @@
 
 }
 
-.squareObjective {
+.hardObjective {
 
     word-wrap: break-word; 
     font-weight: bold; 
@@ -80,7 +80,7 @@
 }
 
 .listContainer {
-    width: 80px; height:100%; background-color: Bisque; float: right; margin-right: 25px; border-style: solid; right:25px;
+    width: 80px; height:100%; background-color: Bisque; float: right; margin-right: 0px; border-style: solid; right:25px;
 }
 .addButton {
     text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; 
@@ -134,7 +134,7 @@
     border: 2px solid black;
     word-wrap:break-word; 
     padding: 2px;
-    height: 300px;
+    height: 350px;
     max-width: 150px; 
     float: right; 
     margin-right: 20px; 

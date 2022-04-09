@@ -28,10 +28,7 @@ function helperAddObjective() {
 
     numberOfObjectives++
     objective.id = numberOfObjectives
-
- 
     objective.className = "objective"
-   
  
     list.appendChild(objective)
     let ev = document.getElementById(objective.id)
@@ -58,7 +55,8 @@ function helperAddObjective() {
     let position = filteredPosition
     filteredPosition++
 
-    const objectivePair = {objective: objective, deleteButton: closeButton, position: position}
+
+    const objectivePair = {objective: objective, deleteButton: closeButton, position: position, new: true}
  
 
     objectivesStore.push(objectivePair)
@@ -216,9 +214,45 @@ function helperShowForm(objectiveNumber) {
     let descriptionText = document.createElement('p')
     let labelSubmit = document.createElement('button')
     let closeForm = document.createElement("div")
+
+    let difficultyForm = document.createElement('form')
+    let selectDifficulty = document.createElement('select')
+    let easyDifficulty = document.createElement('option')
+    let mediumDifficulty = document.createElement('option')
+    let hardDifficulty = document.createElement('option')
+
+    easyDifficulty.setAttribute("value", "easy")
+    mediumDifficulty.setAttribute("value", "intermediate")
+    hardDifficulty.setAttribute("value", "hard")
+
+   
+
+
+    let labelDifficulty = document.createElement('label')
+    let difficultyText = document.createElement('p')
+
+    labelDifficulty.className = "labelTitle"
+    difficultyText.innerHTML = "Difficulty"
+
+    labelDifficulty.appendChild(difficultyText)
+
+    easyDifficulty.innerHTML = "Easy"
+    mediumDifficulty.innerHTML = "Intermediate"
+    hardDifficulty.innerHTML = "Hard"
+
+    selectDifficulty.appendChild(easyDifficulty)
+    selectDifficulty.appendChild(mediumDifficulty)
+    selectDifficulty.appendChild(hardDifficulty)
+    
+    difficultyForm.appendChild(selectDifficulty)
     
     let labelCategory = document.createElement('label')
     let categoryText = document.createElement('p')
+
+    selectDifficulty.id = "selectDifficulty"
+
+
+
     categoryText.innerHTML = "Category"
     labelCategory.appendChild(categoryText)
     labelCategory.className = "labelTitle"
@@ -269,6 +303,9 @@ function helperShowForm(objectiveNumber) {
     form.appendChild(closeForm)
     form.appendChild(labelTitle)
     form.appendChild(input)
+    
+    form.appendChild(labelDifficulty)
+    form.appendChild(difficultyForm)
 
     form.appendChild(labelCategory)
     form.appendChild(category)
@@ -289,17 +326,17 @@ function helperShowForm(objectiveNumber) {
 
     eve.addEventListener("click", clickedSubmit)
 
+    //add event listeners for difficulty levels.
+
+    let select = document.getElementById("selectDifficulty")
+
+
+
+    select.addEventListener("change", setDifficulty)
+ 
     //retrieve the data.
     let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent") 
-
-    let marginTopw = (objectiveNumber-1) * 100
-
- 
-
-
     let marginTop = (objectivesStore[objectiveNumber-1].position-1) * 100
-   
-    
     popup.className ="popupform"
     popup.style.marginTop = marginTop.toString() + "px"
 
@@ -441,21 +478,25 @@ function LearnJS() {
         
         searchBar.appendChild(input)
         searchBar.appendChild(button)
-
         searchBar.className = "searchBar"
 
         document.body.appendChild(searchBar)
 
-
         let search = document.getElementById('submitSearch')
+        let searchChange = document.getElementById('searchInput')
+
+        //add an event listener for on change in the search bar.
+
+        //basically based on the input in the search bar, add elements SHOWING that match.
 
         search.addEventListener('click', searchSubmit)
+    
+        //searchChange.addEventListener('input', searchResults)
         
+        searchBar.setAttribute('onSubmit', 'return false;')
 
-
-        //get value of input?
-
-
+        searchChange.addEventListener('keyup', searchSubmit)
+        
     }
 
     obj.addForm = function(objectiveNumber, on) {
@@ -513,7 +554,6 @@ function addEventAdd(e) {
 
     helperShowForm(newObjectiveId)
     popupOpen = true
-
     //set a variable here.
 }
 
@@ -558,11 +598,22 @@ function clickedCloseForm(e) {
 
     popupOpen = false;
 
+    /*
+    if (objectivesStore[currentPopupID-1].new == true) {
+        //delete.
+        let objectiveDelete = document.getElementById(currentPopupID)
+        //need to also get the delete button.
+        //pass into helper: the id and the id+closeButton
+        let deleteButton = document.getElementById((currentPopupID).toString() + "closeButton")
+        helperDeleteObjective(objectiveDelete, deleteButton)
 
-
+        //remove from the 
+      
+    }*/
 }
 
 function clickedSubmit(e) {
+
     
     let input = document.getElementById('input')
     let textbox = document.getElementById('textarea')
@@ -633,7 +684,9 @@ function clickedSubmit(e) {
 
     //change all positions to the right position after doing an EDIT.
     
-    //justAddedObjective = false
+    objectivesStore[objectiveNumber-1].new = false
+
+
 
 
 }
@@ -641,7 +694,13 @@ function clickedSubmit(e) {
 
 function searchSubmit (e) {
     //check value of search bar
-  
+
+  e.preventDefault()
+   log(e.keyCode)
+    if ((e.keyCode == 13)) {
+      
+        e.preventDefault()
+    }
 
     let searchInput = document.getElementById('searchInput')
     //take searchInput.value and run the filter with this. 
@@ -685,36 +744,59 @@ function searchSubmit (e) {
         }
     }
 
-
-
-    
-
-    //Go through all objectives, and if it doesn't match category, REMOVE from list temporarily.
-
-
-    /*
-    for (let i=0; i<objectivesStore.length; i++) {
-        if (categories[i] != searchInput.value) {
-            list.removeChild(objectivesStore[i].objective)
-            list.removeChild(objectivesStore[i].objective)
-        }
-
-
-    }
-    
  
 
-    list.removeChild(objectivesStore[0].objective)
-    list.removeChild(objectivesStore[0].deleteButton)
+}
 
-    log(objectivesStore[0])
 
-    list.appendChild(objectivesStore[0].objective)
-    list.appendChild(objectivesStore[0].deleteButton)
-*/
 
+
+function setDifficulty(e) {
+    log(this.value)
+    
+    //extract objective using currentpopupid!
+    
+
+
+    let changeObjectiveDifficulty = document.getElementById(currentPopupID)
+    log(changeObjectiveDifficulty)
+
+
+
+    if (this.value == "easy") {
+        changeObjectiveDifficulty.className = "objective"
+
+    }
+
+    else if (this.value == "intermediate") {
+        changeObjectiveDifficulty.className = "intermediateObjective"
+
+    }
+
+    //hard
+    else {
+        changeObjectiveDifficulty.className ="hardObjective"
+
+    }
 
 }
+
+function setMedium(e) {
+
+    log(e)
+
+}
+
+function setHard(e) {
+
+    log(e)
+}
+
+function searchResults(e) {
+    log("searhc results")
+}
+
+
 
 //SOLUTION: USE DUPLICATE, e.g. keep master list of objectives, objectives baed on categpories, so you can use original method of deletion.
 //ON DELETE MODIFIED LIST, MODIFY ORIGINAL LIST AS WELL.
