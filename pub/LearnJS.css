@@ -142,9 +142,53 @@
 
 }
 
+.searchContainer {
+
+    padding-left: 10px;
+    position: absolute;
+    float: right;
+    top: 5px;
+    right: 5px;
+
+}
+
+.searchBox {
+    width: 200px;
+    height: 30px;
+
+}
+
+.searchList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /*position: absolute;*/
+
+}
+
+/*
+.searchElement span {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+}*/
+
+.searchElement {
+    height: 20px;
+
+    /*line-height: 50px;*/
+    width: 205px;
+    /*z-index: 10;*/
+    background-color: white;
+    border: 1px solid grey;
+  
+}
+
+
 .searchBar {
     float:right;
     position: absolute;
     top: 5px;
     right: 5px;
 }
+

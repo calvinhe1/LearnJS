@@ -195,6 +195,9 @@ function helperHoverObjective(e) {
     popupText.style = "text-align: center;"
 
     currentPopupID = e
+
+    objectivesStore[e-1].new = false
+
     return currentPopupID
 
 }
@@ -461,42 +464,49 @@ function LearnJS() {
     }
 
     obj.addSearchBar = function () { 
-    
-        let searchBar = document.createElement('form')
-        let input = document.createElement('input')
-        let button = document.createElement('button')
-        
-        button.setAttribute("type", 'button')
 
-        searchBar.id = "searchBar"
-        button.id = "submitSearch"
+
+        let searchContainer = document.createElement('span')
+        //let span = document.createElement('span')
+        let ul = document.createElement('ul')
+    
+
+        //let spanField = document.createElement('span')
+        let input = document.createElement('input')
+
+
+        searchContainer.className = "searchContainer"
+        searchContainer.id = "searchContainer"
+        input.className = "searchBox"
+        ul.className = "searchList"
+
         input.id = "searchInput"
 
+        ul.id = "searchList"
 
-        input.setAttribute("placeholder", "Categories")
-        button.innerHTML = "Search"
+
+        input.setAttribute("placeholder", "category")
+        input.setAttribute("autocomplete", "off")
+
+        //span.appendChild(input)
+        searchContainer.appendChild(input)
+
+
         
-        searchBar.appendChild(input)
-        searchBar.appendChild(button)
-        searchBar.className = "searchBar"
+        //li.appendChild(spanField)
+        //litwo.appendChild(spanField)
 
-        document.body.appendChild(searchBar)
+        searchContainer.appendChild(ul)
+        
+        document.body.appendChild(searchContainer)
 
-        let search = document.getElementById('submitSearch')
+
+  
         let searchChange = document.getElementById('searchInput')
-
-        //add an event listener for on change in the search bar.
-
-        //basically based on the input in the search bar, add elements SHOWING that match.
-
-        search.addEventListener('click', searchSubmit)
-    
-        //searchChange.addEventListener('input', searchResults)
-        
-        searchBar.setAttribute('onSubmit', 'return false;')
-
+      
         searchChange.addEventListener('keyup', searchSubmit)
         
+
     }
 
     obj.addForm = function(objectiveNumber, on) {
@@ -656,8 +666,6 @@ function clickedSubmit(e) {
     elem.parentNode.removeChild(elem)
     
     popupOpen = false
-
-
     const list = document.getElementById("list")
 
     //IF the category matches the current category KEEP, else remove it from the DOM.
@@ -668,13 +676,11 @@ function clickedSubmit(e) {
         filteredPosition = 1
             
         for (let i=0; i<objectivesStore.length; i++) {
-            
             //if user entered a blank or matches category then add back.
             if (categories[i] == currentCategory || currentCategory == "all") {
                 filteredPosition++
                 list.appendChild(objectivesStore[i].objective)
                 list.appendChild(objectivesStore[i].deleteButton)
-            
                 objectivesStore[i].position = filteredPosition-1;
             }
         }
@@ -683,34 +689,92 @@ function clickedSubmit(e) {
 
 
     //change all positions to the right position after doing an EDIT.
-    
     objectivesStore[objectiveNumber-1].new = false
-
-
-
 
 }
 
 
 function searchSubmit (e) {
-    //check value of search bar
 
+  //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
   e.preventDefault()
-   log(e.keyCode)
-    if ((e.keyCode == 13)) {
-      
-        e.preventDefault()
-    }
-
-    let searchInput = document.getElementById('searchInput')
-    //take searchInput.value and run the filter with this. 
-    const list = document.getElementById("list")
 
 
-    log("Current category: ", currentCategory)
 
+  let searchList = document.getElementById("searchList")
+  let searchContainer = document.getElementById('searchContainer')
+
+  
+  if (searchList)
+    searchContainer.removeChild(searchList)
+
+ 
 
     
+   
+  //take searchInput.value and run the filter with this. 
+  const list = document.getElementById("list")
+
+  //Clear the list from previous and show the new list.
+
+   //show the categories if it matches this.
+
+   let matchingCategories = categories.filter(category => {
+        if (category.toLowerCase().indexOf(searchInput.value.toLowerCase()) >= 0 && searchInput.value != "") {
+            return true;
+        }
+        return false;
+   })
+
+
+
+
+   let categoriesFinal = [...new Set(matchingCategories)]
+
+   log(categoriesFinal)
+   categoriesFinal.sort()
+   log(categoriesFinal)
+
+ 
+
+   //SHOW THESE MATCHING CATEGORIES BELOW THE SEARCH BAR.
+
+   //unique. 
+
+
+
+   //Make a LI corresponding to these categories.
+
+   //remove 
+
+   searchList = document.createElement('ul')
+   searchList.id = "searchList"
+   searchList.className = "searchList"
+
+   for (let i =0; i < categoriesFinal.length; i++) {
+   
+        let li = document.createElement('li')
+        li.className = "searchElement"
+        li.innerHTML = categoriesFinal[i]
+
+        li.setAttribute("value", categoriesFinal[i])
+        searchList.appendChild(li)
+
+        li.addEventListener("click", enter)
+        
+
+
+   }
+   searchContainer.appendChild(searchList)
+
+   log (e.keyCode)
+   if (Number.isInteger(e.keyCode) && e.keyCode != 13) {
+        return    
+    }
+
+    console.log("Here")
+
+
     //Remove all the objectives that were in previous filter.
     for (let i=0; i<objectivesStore.length; i++) {
         if (categories[i] == currentCategory || currentCategory == "all") {
@@ -744,52 +808,88 @@ function searchSubmit (e) {
         }
     }
 
+    if (searchList)
+    searchContainer.removeChild(searchList)
+
+    
+    
+
  
 
 }
 
+function enter(e) {
+    //on enter key or when clicking a list item, REMOVE.
+    
+    e.preventDefault()
 
+    log(e.currentTarget.innerHTML)
+
+    //extract the value pressed AND MAKE THAT.
+
+    let searchList = document.getElementById("searchList")
+    let searchContainer = document.getElementById('searchContainer')
+  
+
+    for (let i=0; i<objectivesStore.length; i++) {
+        if (categories[i] == currentCategory || currentCategory == "all") {
+  
+            list.removeChild(objectivesStore[i].objective)
+            list.removeChild(objectivesStore[i].deleteButton)
+        }
+    }
+
+    filteredPosition = 1
+
+    //add everything in current filter.
+
+    currentCategory = e.currentTarget.innerHTML
+
+    if (currentCategory == "")
+        currentCategory = "all"
+
+ 
+    for (let i=0; i<objectivesStore.length; i++) {
+        
+        //if user entered a blank or matches category then add back.
+        if (categories[i] == currentCategory || currentCategory == "all") {
+            filteredPosition++
+            list.appendChild(objectivesStore[i].objective)
+            list.appendChild(objectivesStore[i].deleteButton)
+          
+            objectivesStore[i].position = filteredPosition-1;
+        
+
+        }
+    }
+
+    if (searchList)
+    searchContainer.removeChild(searchList)
+
+
+
+
+
+
+
+
+
+}
 
 
 function setDifficulty(e) {
-    log(this.value)
-    
-    //extract objective using currentpopupid!
-    
-
 
     let changeObjectiveDifficulty = document.getElementById(currentPopupID)
-    log(changeObjectiveDifficulty)
-
-
-
     if (this.value == "easy") {
         changeObjectiveDifficulty.className = "objective"
-
     }
-
     else if (this.value == "intermediate") {
         changeObjectiveDifficulty.className = "intermediateObjective"
-
     }
-
-    //hard
+ 
     else {
         changeObjectiveDifficulty.className ="hardObjective"
-
     }
-
-}
-
-function setMedium(e) {
-
-    log(e)
-
-}
-
-function setHard(e) {
-
-    log(e)
 }
 
 function searchResults(e) {
