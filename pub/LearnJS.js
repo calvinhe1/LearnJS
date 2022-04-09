@@ -10,8 +10,10 @@ let popupOpen = false
 let justAddedObjective = true
 let objectivesStore = []; //Used to re-add, hide objectives rather than completely removing it; simply remove it from DOM if it doesn't match the search.
 let currentCategory = "all";
-
 let objectivesFilter = [];
+
+let filteredPosition  = 1;
+
 
 //Helper functions
 function helperAddObjective() {
@@ -53,7 +55,8 @@ function helperAddObjective() {
     ev.addEventListener('mouseover', addEventPopup)
     ev.addEventListener('mouseout', addEventRemovePopup)
 
-    let position = objective.id
+    let position = filteredPosition
+    filteredPosition++
 
     const objectivePair = {objective: objective, deleteButton: closeButton, position: position}
  
@@ -110,10 +113,10 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
         let objective = document.getElementById(i)
       
 
-        //Why is this null?
+        //NULL because currently not in the DOM, but should still update position.
         if (objective == null) {
             objectivesStore[i-2].objective.setAttribute('id', i-1)
-            objectivesStore[i-2].position--;
+         
             continue;
         }
 
@@ -121,9 +124,11 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
 
         let closeObjective = document.getElementById(i.toString() + "closeButton")
         closeObjective.id = (i-1).toString() + "closeButton"
+        objectivesStore[i-2].position = objectivesStore[i-2].position-1;
     }
 
     numberOfObjectives--;
+    filteredPosition--;
 
     if (currentPopupID == id && popupOpen == true) {
         let elem = document.getElementById(id.toString() + "descriptorParent")
@@ -179,11 +184,14 @@ function helperHoverObjective(e) {
 
     //popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;  "
     
-    //let marginTop = (e-1) * 108
+   
+    let marginTopw = (e-1) * 108
+    
     //popup.style.marginTop = marginTop.toString() + "px"
     
    
-    let marginTop = (objectivesStore[e-1].position)-1 * 108
+    let marginTop = (objectivesStore[e-1].position-1)  * 108
+    
     popup.style.marginTop = marginTop.toString() + "px"
 
     popupText.style = "text-align: center;"
@@ -284,10 +292,16 @@ function helperShowForm(objectiveNumber) {
     //retrieve the data.
     let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent") 
 
-    //let marginTop = (objectiveNumber-1) * 100
+    let marginTopw = (objectiveNumber-1) * 100
+
+ 
+
+
+    let marginTop = (objectivesStore[objectiveNumber-1].position-1) * 100
+   
     
     popup.className ="popupform"
-    //popup.style.marginTop = marginTop.toString() + "px"
+    popup.style.marginTop = marginTop.toString() + "px"
 
     currentPopupID = objectiveNumber
     return currentPopupID
@@ -484,9 +498,6 @@ function addEventClick(e) {
 function addEventDelete(e) {
 
     let deleteButton= document.getElementById(e.currentTarget.id)
-
-
-
     let objectiveDeleteID = deleteButton.id[0]
     let objDelete = document.getElementById(objectiveDeleteID)
 
@@ -595,7 +606,34 @@ function clickedSubmit(e) {
     
     popupOpen = false
 
-    justAddedObjective = false
+
+    const list = document.getElementById("list")
+
+    //IF the category matches the current category KEEP, else remove it from the DOM.
+    if (categories[objectiveNumber-1] != currentCategory && currentCategory != "all") {
+            list.removeChild(objectivesStore[objectiveNumber-1].objective)
+            list.removeChild(objectivesStore[objectiveNumber-1].deleteButton)
+
+        filteredPosition = 1
+            
+        for (let i=0; i<objectivesStore.length; i++) {
+            
+            //if user entered a blank or matches category then add back.
+            if (categories[i] == currentCategory || currentCategory == "all") {
+                filteredPosition++
+                list.appendChild(objectivesStore[i].objective)
+                list.appendChild(objectivesStore[i].deleteButton)
+            
+                objectivesStore[i].position = filteredPosition-1;
+            }
+        }
+
+    }
+
+
+    //change all positions to the right position after doing an EDIT.
+    
+    //justAddedObjective = false
 
 
 }
@@ -611,6 +649,8 @@ function searchSubmit (e) {
 
 
     log("Current category: ", currentCategory)
+
+
     
     //Remove all the objectives that were in previous filter.
     for (let i=0; i<objectivesStore.length; i++) {
@@ -621,6 +661,7 @@ function searchSubmit (e) {
         }
     }
 
+    filteredPosition = 1
 
     //add everything in current filter.
 
@@ -634,9 +675,13 @@ function searchSubmit (e) {
         
         //if user entered a blank or matches category then add back.
         if (categories[i] == currentCategory || currentCategory == "all") {
-       
+            filteredPosition++
             list.appendChild(objectivesStore[i].objective)
             list.appendChild(objectivesStore[i].deleteButton)
+          
+            objectivesStore[i].position = filteredPosition-1;
+        
+
         }
     }
 
