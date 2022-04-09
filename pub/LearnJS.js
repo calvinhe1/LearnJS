@@ -7,12 +7,14 @@ let descriptions = [];
 let titles = [];
 let categories = [];
 let popupOpen = false
-let justAddedObjective = true
+let justAddedObjective = false
 let objectivesStore = []; //Used to re-add, hide objectives rather than completely removing it; simply remove it from DOM if it doesn't match the search.
 let currentCategory = "all";
 let objectivesFilter = [];
 
 let filteredPosition  = 1;
+
+
 
 
 //Helper functions
@@ -57,10 +59,11 @@ function helperAddObjective() {
 
 
     const objectivePair = {objective: objective, deleteButton: closeButton, position: position, new: true}
- 
+    
 
     objectivesStore.push(objectivePair)
-  
+    
+    justAddedObjective = true
 
 
 
@@ -198,6 +201,9 @@ function helperHoverObjective(e) {
 
     objectivesStore[e-1].new = false
 
+    //Submitted form.
+    justAddedObjective = false;
+
     return currentPopupID
 
 }
@@ -223,12 +229,11 @@ function helperShowForm(objectiveNumber) {
     let easyDifficulty = document.createElement('option')
     let mediumDifficulty = document.createElement('option')
     let hardDifficulty = document.createElement('option')
+    let pickDifficulty = document.createElement('option')
 
     easyDifficulty.setAttribute("value", "easy")
     mediumDifficulty.setAttribute("value", "intermediate")
     hardDifficulty.setAttribute("value", "hard")
-
-   
 
 
     let labelDifficulty = document.createElement('label')
@@ -239,37 +244,60 @@ function helperShowForm(objectiveNumber) {
 
     labelDifficulty.appendChild(difficultyText)
 
+    pickDifficulty.innerHTML = "---"
     easyDifficulty.innerHTML = "Easy"
-    mediumDifficulty.innerHTML = "Intermediate"
+    mediumDifficulty.innerHTML = "Intermediate" //Need the difficulty thing to be selecting the last picked value.
     hardDifficulty.innerHTML = "Hard"
 
+    selectDifficulty.appendChild(pickDifficulty)
     selectDifficulty.appendChild(easyDifficulty)
     selectDifficulty.appendChild(mediumDifficulty)
     selectDifficulty.appendChild(hardDifficulty)
     
     difficultyForm.appendChild(selectDifficulty)
+    selectDifficulty.id = "selectDifficulty"
+
+  
+
     
     let labelCategory = document.createElement('label')
     let categoryText = document.createElement('p')
-
-    selectDifficulty.id = "selectDifficulty"
-
-
 
     categoryText.innerHTML = "Category"
     labelCategory.appendChild(categoryText)
     labelCategory.className = "labelTitle"
 
-
     let category = document.createElement('input')
     category.className = "formInput"
+    input.className = "formInput";
+    input.id = 'input'
+
+    /*
+     let searchContainer = document.createElement('span')
+        let ul = document.createElement('ul')
+        let input = document.createElement('input')
+        searchContainer.className = "searchContainer"
+        searchContainer.id = "searchContainer"
+        input.className = "searchBox"
+        ul.className = "searchList"
+        input.id = "searchInput"
+        ul.id = "searchList"
+
+        input.setAttribute("placeholder", "category")
+        input.setAttribute("autocomplete", "off")
+
+        searchContainer.appendChild(input)
+        searchContainer.appendChild(ul)
+        document.body.appendChild(searchContainer)
+        let searchChange = document.getElementById('searchInput')
+        searchChange.addEventListener('keyup', searchSubmit)*/
+
 
     closeForm.innerHTML = "X"
     closeForm.className = "closePopup"
     closeForm.id = objectiveNumber.toString() + "closeForm"
 
     descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
-    
     labelSubmit.innerHTML = "Submit"
     labelSubmit.className ="labelSubmit"
     labelSubmit.id = objectiveNumber.toString() + "submit"
@@ -279,8 +307,7 @@ function helperShowForm(objectiveNumber) {
     titleText.innerHTML = "Title: "
     descriptionText.innerHTML = "Description: "
     labelTitle.className = "labelTitle"
-    input.className = "formInput";
-    input.id = 'input'
+
 
     if (titles[objectiveNumber-1] != undefined) {
         input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
@@ -465,48 +492,24 @@ function LearnJS() {
 
     obj.addSearchBar = function () { 
 
-
         let searchContainer = document.createElement('span')
-        //let span = document.createElement('span')
         let ul = document.createElement('ul')
-    
-
-        //let spanField = document.createElement('span')
         let input = document.createElement('input')
-
-
         searchContainer.className = "searchContainer"
         searchContainer.id = "searchContainer"
         input.className = "searchBox"
         ul.className = "searchList"
-
         input.id = "searchInput"
-
         ul.id = "searchList"
-
 
         input.setAttribute("placeholder", "category")
         input.setAttribute("autocomplete", "off")
 
-        //span.appendChild(input)
         searchContainer.appendChild(input)
-
-
-        
-        //li.appendChild(spanField)
-        //litwo.appendChild(spanField)
-
         searchContainer.appendChild(ul)
-        
         document.body.appendChild(searchContainer)
-
-
-  
         let searchChange = document.getElementById('searchInput')
-      
         searchChange.addEventListener('keyup', searchSubmit)
-        
-
     }
 
     obj.addForm = function(objectiveNumber, on) {
@@ -607,8 +610,16 @@ function clickedCloseForm(e) {
     elem.parentNode.removeChild(elem)
 
     popupOpen = false;
+    
+
+    if (justAddedObjective) {
+        let objectiveDelete = document.getElementById(currentPopupID)
+        let deleteButton = document.getElementById((currentPopupID).toString() + "closeButton")
+        helperDeleteObjective(objectiveDelete, deleteButton)
+    }
 
     /*
+    
     if (objectivesStore[currentPopupID-1].new == true) {
         //delete.
         let objectiveDelete = document.getElementById(currentPopupID)
@@ -698,26 +709,14 @@ function searchSubmit (e) {
 
   //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
   e.preventDefault()
-
-
-
   let searchList = document.getElementById("searchList")
   let searchContainer = document.getElementById('searchContainer')
 
-  
   if (searchList)
     searchContainer.removeChild(searchList)
 
- 
-
-    
-   
   //take searchInput.value and run the filter with this. 
   const list = document.getElementById("list")
-
-  //Clear the list from previous and show the new list.
-
-   //show the categories if it matches this.
 
    let matchingCategories = categories.filter(category => {
         if (category.toLowerCase().indexOf(searchInput.value.toLowerCase()) >= 0 && searchInput.value != "") {
@@ -726,95 +725,56 @@ function searchSubmit (e) {
         return false;
    })
 
-
-
-
    let categoriesFinal = [...new Set(matchingCategories)]
-
-   log(categoriesFinal)
    categoriesFinal.sort()
-   log(categoriesFinal)
 
- 
-
-   //SHOW THESE MATCHING CATEGORIES BELOW THE SEARCH BAR.
-
-   //unique. 
-
-
-
-   //Make a LI corresponding to these categories.
-
-   //remove 
 
    searchList = document.createElement('ul')
    searchList.id = "searchList"
    searchList.className = "searchList"
 
    for (let i =0; i < categoriesFinal.length; i++) {
-   
         let li = document.createElement('li')
         li.className = "searchElement"
         li.innerHTML = categoriesFinal[i]
-
         li.setAttribute("value", categoriesFinal[i])
         searchList.appendChild(li)
-
         li.addEventListener("click", enter)
-        
-
-
    }
    searchContainer.appendChild(searchList)
 
-   log (e.keyCode)
    if (Number.isInteger(e.keyCode) && e.keyCode != 13) {
         return    
     }
 
-    console.log("Here")
-
-
     //Remove all the objectives that were in previous filter.
     for (let i=0; i<objectivesStore.length; i++) {
-        if (categories[i] == currentCategory || currentCategory == "all") {
-  
+        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
             list.removeChild(objectivesStore[i].objective)
             list.removeChild(objectivesStore[i].deleteButton)
         }
     }
 
     filteredPosition = 1
-
-    //add everything in current filter.
-
     currentCategory = searchInput.value
 
     if (currentCategory == "")
         currentCategory = "all"
 
- 
     for (let i=0; i<objectivesStore.length; i++) {
         
         //if user entered a blank or matches category then add back.
-        if (categories[i] == currentCategory || currentCategory == "all") {
+        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
             filteredPosition++
             list.appendChild(objectivesStore[i].objective)
             list.appendChild(objectivesStore[i].deleteButton)
           
             objectivesStore[i].position = filteredPosition-1;
-        
-
         }
     }
 
     if (searchList)
     searchContainer.removeChild(searchList)
-
-    
-    
-
- 
 
 }
 
@@ -822,17 +782,13 @@ function enter(e) {
     //on enter key or when clicking a list item, REMOVE.
     
     e.preventDefault()
-
-    log(e.currentTarget.innerHTML)
-
-    //extract the value pressed AND MAKE THAT.
-
     let searchList = document.getElementById("searchList")
     let searchContainer = document.getElementById('searchContainer')
-  
+    let searchInput = document.getElementById('searchInput')
+    searchInput.value = e.currentTarget.innerHTML
 
     for (let i=0; i<objectivesStore.length; i++) {
-        if (categories[i] == currentCategory || currentCategory == "all") {
+        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
   
             list.removeChild(objectivesStore[i].objective)
             list.removeChild(objectivesStore[i].deleteButton)
@@ -842,38 +798,24 @@ function enter(e) {
     filteredPosition = 1
 
     //add everything in current filter.
-
     currentCategory = e.currentTarget.innerHTML
 
     if (currentCategory == "")
         currentCategory = "all"
 
- 
     for (let i=0; i<objectivesStore.length; i++) {
-        
         //if user entered a blank or matches category then add back.
-        if (categories[i] == currentCategory || currentCategory == "all") {
+        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
             filteredPosition++
             list.appendChild(objectivesStore[i].objective)
             list.appendChild(objectivesStore[i].deleteButton)
           
             objectivesStore[i].position = filteredPosition-1;
         
-
         }
     }
-
     if (searchList)
     searchContainer.removeChild(searchList)
-
-
-
-
-
-
-
-
-
 }
 
 
@@ -886,14 +828,11 @@ function setDifficulty(e) {
     else if (this.value == "intermediate") {
         changeObjectiveDifficulty.className = "intermediateObjective"
     }
- 
     else {
         changeObjectiveDifficulty.className ="hardObjective"
     }
-}
 
-function searchResults(e) {
-    log("searhc results")
+    let selectDifficulty = document.getElementById()
 }
 
 
