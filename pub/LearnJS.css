@@ -4,13 +4,49 @@
     width: 50px; 
     height: 50px; 
     border: 1px; 
-    border-radius: 50%; 
-    background-color: aqua; 
+    border-radius: 50%;
+    border: 4px solid white;
+
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    margin-left: 14px;
+    text-align: center;
+}
+
+.squircleObjective {
+    word-wrap: break-word; 
+    font-weight: bold; 
+    width: 50px; 
+    height: 50px; 
+    border: 1px; 
+    border-radius: 25%;
+    border-style: solid;
+    border: 4px solid grey;
+
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    margin-left: 14px;
+    text-align: center;
+
+
+}
+
+.squareObjective {
+
+    word-wrap: break-word; 
+    font-weight: bold; 
+    width: 50px; 
+    height: 50px; 
+    border: 1px; 
+    border: 4px solid black;
+
     border-style: solid; 
     margin-top: 20px; 
     margin-bottom: 20px;
     margin-left: 14px;
     text-align: center;
+
+
 }
 
 .closeButton {
@@ -35,8 +71,7 @@
 }
 
 .labelTitle {
-    font-size: 12px; position: relative; bottom: 10px;
-
+    font-size: 12px; position: relative; bottom: 10px; 
 }
 
 .formInput {
@@ -45,7 +80,7 @@
 }
 
 .listContainer {
-    width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;
+    width: 80px; height:100%; background-color: Bisque; float: right; margin-right: 25px; border-style: solid; right:25px;
 }
 .addButton {
     text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; 
@@ -99,10 +134,17 @@
     border: 2px solid black;
     word-wrap:break-word; 
     padding: 2px;
-    height: 220px;
+    height: 300px;
     max-width: 150px; 
     float: right; 
     margin-right: 20px; 
     background-color: Bisque; 
 
+}
+
+.searchBar {
+    float:right;
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }

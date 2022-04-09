@@ -5,22 +5,32 @@ let numberOfObjectives=0
 let currentPopupID = -1
 let descriptions = [];
 let titles = [];
+let categories = [];
 let popupOpen = false
 let justAddedObjective = true
+let objectivesStore = []; //Used to re-add, hide objectives rather than completely removing it; simply remove it from DOM if it doesn't match the search.
+let currentCategory = "all";
 
+let objectivesFilter = [];
 
 //Helper functions
 function helperAddObjective() {
     if (popupOpen)
         return
-    
+
     const list = document.getElementById("list")
     const objective = document.createElement('div')
-    log("objective object ", objective)
+    //objective.style = 'word-wrap: break-word; font-weight: bold; width: 50px; height: 50px; border: 1px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
+    
+    objective.style.backgroundColor = 'rgb(255, 105, 97)'   
 
-    objective.style = 'word-wrap: break-word; font-weight: bold; width: 50px; height: 50px; border: 1px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
     numberOfObjectives++
     objective.id = numberOfObjectives
+
+ 
+    objective.className = "objective"
+   
+ 
     list.appendChild(objective)
     let ev = document.getElementById(objective.id)
     ev.addEventListener('click', addEventClick)
@@ -32,17 +42,26 @@ function helperAddObjective() {
     const textNode  = document.createElement('p')
     textNode.innerText = "Delete"
     textNode.style = "text-align: center; font-size: 10px; text-decoration: underline; color: blue;"
-    closeButton.appendChild(textNode)
 
+    closeButton.appendChild(textNode)
     list.append(closeButton)
 
     let e = document.getElementById(closeButton.id)
-
     //add event listeners
     e.addEventListener('click', addEventDelete)
     ev.addEventListener('contextmenu', addEventForm)
     ev.addEventListener('mouseover', addEventPopup)
     ev.addEventListener('mouseout', addEventRemovePopup)
+
+    let position = objective.id
+
+    const objectivePair = {objective: objective, deleteButton: closeButton, position: position}
+ 
+
+    objectivesStore.push(objectivePair)
+  
+
+
 
     return objective.id
 
@@ -51,7 +70,6 @@ function helperAddObjective() {
 
 function helperDeleteJustAddedObjective(deleteObjective) {
 
-    console.log("ARE WE DELETING?", deleteObjective)
     let list = document.getElementById("list")
     list.removeChild(document.getElementById(deleteObjective))
     list.removeChild(document.getElementById(deleteObjective.toString() + "closeButton"))
@@ -69,30 +87,43 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     let list = document.getElementById("list")
     let id = deleteObjective.id
 
+
+    //remove from master list of objectives.
+
+    objectivesStore.splice(id-1,1) 
+
     list.removeChild(deleteObjective)
     list.removeChild(deleteButton)
 
     //also delete from arrays.
-
     descriptions.splice(parseInt(id)-1, 1)
     titles.splice(parseInt(id)-1, 1)
-    
     //Change all previous IDs -1.
+    categories.splice(parseInt(id)-1)
 
+  
+
+    //Change the ids of the objectives that come AFTER it to ensure correct ID.
+
+    //Issue is the DOM elements might not be present. In that case, rather manipulate the objectives array.
     for (let i=parseInt(id)+1; i<numberOfObjectives+1; i++) {
-     
         let objective = document.getElementById(i)
+      
+
+        //Why is this null?
+        if (objective == null) {
+            objectivesStore[i-2].objective.setAttribute('id', i-1)
+            objectivesStore[i-2].position--;
+            continue;
+        }
+
         objective.id = i-1
 
         let closeObjective = document.getElementById(i.toString() + "closeButton")
         closeObjective.id = (i-1).toString() + "closeButton"
-
     }
 
-  
     numberOfObjectives--;
-
-    
 
     if (currentPopupID == id && popupOpen == true) {
         let elem = document.getElementById(id.toString() + "descriptorParent")
@@ -102,8 +133,9 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
 
 
     }
-    return numberOfObjectives;
 
+
+    return numberOfObjectives;
 }
 
 function helperClickObjective(e) {
@@ -111,11 +143,17 @@ function helperClickObjective(e) {
         return
     
     let element = document.getElementById(e)
-    if (element.style.backgroundColor == "aqua")
+
+    if (element.style.backgroundColor == 'rgb(255, 105, 97)')
+        element.style.background = "yellow"
+    else if (element.style.backgroundColor == "yellow") {
         element.style.background = "lime"
+    }
     else
-        element.style.background="aqua"
+        element.style.background="rgb(255, 105, 97)"
 }
+
+
 
 function helperHoverObjective(e) {
 
@@ -135,12 +173,20 @@ function helperHoverObjective(e) {
     let popup = document.getElementById(e.toString() + "descriptorParent")
     let popupText  = document.getElementById(e.toString() + "descriptor")
 
-    let marginTop = (e-1) * 108
-    
-    popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;  "
-    popup.style.marginTop = marginTop.toString() + "px"
-    popupText.style = "text-align: center;"
 
+    
+    popup.className = "popuphover"
+
+    //popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;  "
+    
+    //let marginTop = (e-1) * 108
+    //popup.style.marginTop = marginTop.toString() + "px"
+    
+   
+    let marginTop = (objectivesStore[e-1].position)-1 * 108
+    popup.style.marginTop = marginTop.toString() + "px"
+
+    popupText.style = "text-align: center;"
 
     currentPopupID = e
     return currentPopupID
@@ -162,14 +208,21 @@ function helperShowForm(objectiveNumber) {
     let descriptionText = document.createElement('p')
     let labelSubmit = document.createElement('button')
     let closeForm = document.createElement("div")
+    
+    let labelCategory = document.createElement('label')
+    let categoryText = document.createElement('p')
+    categoryText.innerHTML = "Category"
+    labelCategory.appendChild(categoryText)
+    labelCategory.className = "labelTitle"
+
+
+    let category = document.createElement('input')
+    category.className = "formInput"
 
     closeForm.innerHTML = "X"
     closeForm.className = "closePopup"
     closeForm.id = objectiveNumber.toString() + "closeForm"
 
-
-
-    
     descriptorParent.id = objectiveNumber.toString() +"descriptorParent"
     
     labelSubmit.innerHTML = "Submit"
@@ -197,10 +250,21 @@ function helperShowForm(objectiveNumber) {
     if (descriptions[objectiveNumber-1] != undefined)
         textarea.innerText = descriptions[objectiveNumber-1] 
 
+
+    if (categories[objectiveNumber-1] != undefined) 
+        category.setAttribute("value", categories[objectiveNumber-1])
+
+
+    category.id = "category"
+
     form.className = "form"
     form.appendChild(closeForm)
     form.appendChild(labelTitle)
     form.appendChild(input)
+
+    form.appendChild(labelCategory)
+    form.appendChild(category)
+
     form.appendChild(labelDescription)
     form.appendChild(textarea)
     form.appendChild(labelSubmit)
@@ -212,21 +276,18 @@ function helperShowForm(objectiveNumber) {
     let close = document.getElementById(objectiveNumber.toString() + 'closeForm')
     close.addEventListener("click", clickedCloseForm)
     
-    
- 
     let eve = document.getElementById(objectiveNumber.toString() + 'submit')
+
+
     eve.addEventListener("click", clickedSubmit)
 
-    
-
     //retrieve the data.
-    let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent")
- 
+    let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent") 
 
-    let marginTop = (objectiveNumber-1) * 100
+    //let marginTop = (objectiveNumber-1) * 100
     
     popup.className ="popupform"
-    popup.style.marginTop = marginTop.toString() + "px"
+    //popup.style.marginTop = marginTop.toString() + "px"
 
     currentPopupID = objectiveNumber
     return currentPopupID
@@ -243,7 +304,9 @@ function LearnJS() {
         const parentContainer = document.createElement('div')
         const container = document.createElement('div');
         container.id = "list";
-        parentContainer.style = 'width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
+
+        //parentContainer.style = 'width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
+        parentContainer.className="listContainer"
         const addButton = document.createElement('div');
         addButton.id = "addButton";
 
@@ -310,6 +373,7 @@ function LearnJS() {
         let deleteButton = document.getElementById(objectiveNumber.toString() + "closeButton")
         return helperDeleteObjective(objectiveDelete, deleteButton)
 
+
     }
 
     obj.addTitle= function(objectiveNumber, title) {
@@ -337,6 +401,49 @@ function LearnJS() {
         descriptions.push(description)
     }
 
+    obj.addCategory = function(objectiveNumber, category="") {
+        if (categories[objectiveNumber-1] != 'undefined') {
+            categories[objectiveNumber-1] = category
+            return
+        }
+        categories.push(category)
+    }
+
+    obj.addSearchBar = function () { 
+    
+        let searchBar = document.createElement('form')
+        let input = document.createElement('input')
+        let button = document.createElement('button')
+        
+        button.setAttribute("type", 'button')
+
+        searchBar.id = "searchBar"
+        button.id = "submitSearch"
+        input.id = "searchInput"
+
+
+        input.setAttribute("placeholder", "Categories")
+        button.innerHTML = "Search"
+        
+        searchBar.appendChild(input)
+        searchBar.appendChild(button)
+
+        searchBar.className = "searchBar"
+
+        document.body.appendChild(searchBar)
+
+
+        let search = document.getElementById('submitSearch')
+
+        search.addEventListener('click', searchSubmit)
+        
+
+
+        //get value of input?
+
+
+    }
+
     obj.addForm = function(objectiveNumber, on) {
 
         //only display if no other hovers or popups.
@@ -354,7 +461,7 @@ function LearnJS() {
         }
         
         else {
-            log("off")
+      
             popupOpen = false
             currentPopupID = -1
 
@@ -364,6 +471,8 @@ function LearnJS() {
         }
         
     }
+
+    
     return obj
 }
 
@@ -376,7 +485,7 @@ function addEventDelete(e) {
 
     let deleteButton= document.getElementById(e.currentTarget.id)
 
-    log(e.currentTarget.id)
+
 
     let objectiveDeleteID = deleteButton.id[0]
     let objDelete = document.getElementById(objectiveDeleteID)
@@ -390,9 +499,11 @@ function addEventAdd(e) {
     //addEventForm(newObjectiveId)
     //addEventForm() //with the new.
     //show new form.
-    justAddedObjective = true
+
     helperShowForm(newObjectiveId)
     popupOpen = true
+
+    //set a variable here.
 }
 
 
@@ -429,17 +540,13 @@ function addEventForm(e) {
 
 function clickedCloseForm(e) {
 
+    //if users want to make an empty objective, that's their choice.
 
     let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
     elem.parentNode.removeChild(elem)
 
     popupOpen = false;
 
-    if (justAddedObjective) {
-        helperDeleteJustAddedObjective(currentPopupID)
-    }
-
-    //if the popup is...
 
 
 }
@@ -448,6 +555,9 @@ function clickedSubmit(e) {
     
     let input = document.getElementById('input')
     let textbox = document.getElementById('textarea')
+
+    let category = document.getElementById('category')
+
     let objectiveNumber = e.currentTarget.id[0]
     let objectiveEdit = document.getElementById(objectiveNumber)
 
@@ -458,6 +568,7 @@ function clickedSubmit(e) {
       
     }
     else {
+
         titles.push(input.value)
         let text = document.createElement("p")
         text.innerText = input.value
@@ -465,6 +576,10 @@ function clickedSubmit(e) {
         text.id = objectiveNumber.toString() + "title"
         objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
     }
+
+    //Update category value.
+    categories[objectiveNumber-1] = category.value
+
 
     //edit description
     if (descriptions[objectiveNumber-1] != 'undefined') {
@@ -484,3 +599,89 @@ function clickedSubmit(e) {
 
 
 }
+
+
+function searchSubmit (e) {
+    //check value of search bar
+  
+
+    let searchInput = document.getElementById('searchInput')
+    //take searchInput.value and run the filter with this. 
+    const list = document.getElementById("list")
+
+
+    log("Current category: ", currentCategory)
+    
+    //Remove all the objectives that were in previous filter.
+    for (let i=0; i<objectivesStore.length; i++) {
+        if (categories[i] == currentCategory || currentCategory == "all") {
+  
+            list.removeChild(objectivesStore[i].objective)
+            list.removeChild(objectivesStore[i].deleteButton)
+        }
+    }
+
+
+    //add everything in current filter.
+
+    currentCategory = searchInput.value
+
+    if (currentCategory == "")
+        currentCategory = "all"
+
+ 
+    for (let i=0; i<objectivesStore.length; i++) {
+        
+        //if user entered a blank or matches category then add back.
+        if (categories[i] == currentCategory || currentCategory == "all") {
+       
+            list.appendChild(objectivesStore[i].objective)
+            list.appendChild(objectivesStore[i].deleteButton)
+        }
+    }
+
+
+
+    
+
+    //Go through all objectives, and if it doesn't match category, REMOVE from list temporarily.
+
+
+    /*
+    for (let i=0; i<objectivesStore.length; i++) {
+        if (categories[i] != searchInput.value) {
+            list.removeChild(objectivesStore[i].objective)
+            list.removeChild(objectivesStore[i].objective)
+        }
+
+
+    }
+    
+ 
+
+    list.removeChild(objectivesStore[0].objective)
+    list.removeChild(objectivesStore[0].deleteButton)
+
+    log(objectivesStore[0])
+
+    list.appendChild(objectivesStore[0].objective)
+    list.appendChild(objectivesStore[0].deleteButton)
+*/
+
+
+}
+
+//SOLUTION: USE DUPLICATE, e.g. keep master list of objectives, objectives baed on categpories, so you can use original method of deletion.
+//ON DELETE MODIFIED LIST, MODIFY ORIGINAL LIST AS WELL.
+//MAKE A NEW LIST FOR EACH SEARCH.
+
+
+
+//Remove all objectives from original
+//Make a brand new list of objectives with that specific category
+//if users add/edit, the category should not be edited. If deleted, delete from original list as well.
+
+//If they edit the category ->remove from list
+//If they add objective that differs -> remove from list.
+
+//autofil capabilities.
