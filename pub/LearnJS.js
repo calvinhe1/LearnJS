@@ -278,6 +278,8 @@ function helperShowForm(objectiveNumber) {
     titleText.innerHTML = "Title: "
     descriptionText.innerHTML = "Description: "
     labelTitle.className = "labelTitle"
+    input.className = "formInput"
+    input.id = "input"
 
 
     if (titles[objectiveNumber-1] != undefined) {
@@ -299,8 +301,7 @@ function helperShowForm(objectiveNumber) {
     form.appendChild(input)
     form.appendChild(labelDifficulty)
     form.appendChild(difficultyForm)
-    form.appendChild(labelCategory)
-
+    
    
     //dropdown
     let category = document.createElement('span')
@@ -317,7 +318,8 @@ function helperShowForm(objectiveNumber) {
     inputcategory.setAttribute("placeholder", "category")
     inputcategory.setAttribute("autocomplete", "off")
 
-    
+
+
 
     category.appendChild(inputcategory)
     category.appendChild(ul)
@@ -328,14 +330,22 @@ function helperShowForm(objectiveNumber) {
     }
 
     //add category.
-    form.appendChild(category)
 
+    form.appendChild(labelCategory)
+    form.appendChild(category)
 
     //search category.
     inputcategory.addEventListener('keyup', searchCategory)
 
+
+    let breakLine = document.createElement("br");
+
+    form.appendChild(breakLine)
+
     form.appendChild(labelDescription)
     form.appendChild(textarea)
+
+
     form.appendChild(labelSubmit)
     descriptorParent.appendChild(form)
     document.body.appendChild(descriptorParent)
@@ -621,11 +631,10 @@ function clickedCloseForm(e) {
 
 function clickedSubmit(e) {
 
-    
     let input = document.getElementById('input')
     let textbox = document.getElementById('textarea')
 
-    let category = document.getElementById('category')
+    let searchCategory = document.getElementById("searchCategory")
 
     let objectiveNumber = e.currentTarget.id[0]
     let objectiveEdit = document.getElementById(objectiveNumber)
@@ -647,7 +656,8 @@ function clickedSubmit(e) {
     }
 
     //Update category value.
-    categories[objectiveNumber-1] = category.value
+  
+    categories[objectiveNumber-1] = searchCategory.value
 
 
     //edit description
@@ -702,14 +712,10 @@ function searchCategory (e) {
     let searchContainer = document.getElementById('categoryContainer')
     let searchCategory = document.getElementById('searchCategory')
 
-
-
     if (searchList)
       searchContainer.removeChild(searchList)
   
-    //take searchInput.value and run the filter with this. 
     
-  
      let matchingCategories = categories.filter(categoryy => {
           if (categoryy.toLowerCase().indexOf(searchCategory.value.toLowerCase()) >= 0 && searchCategory.value != "") {
               return true;
@@ -737,14 +743,14 @@ function searchCategory (e) {
 
      searchContainer.appendChild(searchList)
 
-     /*
+     
   
      if (Number.isInteger(e.keyCode) && e.keyCode != 13) {
           return    
       }
       
       if (searchList)
-        searchContainer.removeChild(searchList)*/
+        searchContainer.removeChild(searchList)
   
   }
 
@@ -830,8 +836,11 @@ function clickCategory(e) {
     e.preventDefault()
     let searchList = document.getElementById("categoryList")
     let searchContainer = document.getElementById('categoryContainer')
-    let searchInput = document.getElementById('categoryInput')
+    let searchInput = document.getElementById('searchCategory')
     searchInput.value = e.currentTarget.innerHTML
+
+
+    /*
 
     for (let i=0; i<objectivesStore.length; i++) {
         if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
@@ -858,9 +867,13 @@ function clickCategory(e) {
             objectivesStore[i].position = filteredPosition-1;
         
         }
-    }
+    }*/
+
+    
     if (searchList)
         searchContainer.removeChild(searchList)
+
+    log(searchInput.value)
 
 
 

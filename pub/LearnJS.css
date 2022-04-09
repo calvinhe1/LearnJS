@@ -67,16 +67,15 @@
 
 .labelSubmit {
 
-    position: relative; bottom: 30px; height: 15px; font-size: 10px; text-align: center; 
+    height: 15px; font-size: 10px; text-align: center; 
 }
 
 .labelTitle {
-    font-size: 12px; position: relative; bottom: 10px; 
+    font-size: 12px; 
 }
 
 .formInput {
-
-    height: 12px; position: relative; bottom: 20px; font-size: 10px; width: 140px;
+    height: 12px;  font-size: 10px; width: 140px;
 }
 
 .listContainer {
@@ -114,18 +113,19 @@
 }
 
 .form {
-    position: relative;
+   
 }
 
 .labelDescription {
-    font-size: 12px; position: relative; bottom: 25px;
+    font-size: 12px; 
+    
     
 
 }
 
 .textarea {
 
-    height: 20px; position: relative; bottom: 30px; width: 141px; height: 100px; font-size: 10px; 
+    height: 20px;  width: 141px; height: 100px; font-size: 10px; 
 }
 
 .popupform {
@@ -135,7 +135,7 @@
     border: 2px solid black;
     word-wrap:break-word; 
     padding: 2px;
-    height: 350px;
+    height: 375px;
     max-width: 150px; 
     float: right; 
     margin-right: 20px; 
@@ -198,17 +198,13 @@
 
 
 .categoryContainer {
-
-    padding-bottom: 15px;
+    position: absolute;
  
- 
-    
-
 }
 
 .categoryBox {
     width: 140px;
-    height: 15px;
+    height: 12px;
 
 
 
