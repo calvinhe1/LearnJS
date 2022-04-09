@@ -7,14 +7,15 @@ objecter.addList()
 
 
 //Add learning goals/objectives to the list to keep track of what learning objectives are in this webpage.
-objecter.addObjective()
+objecter.addObjective("easy")
 
 //Add a title and description/summary of that objective.
 objecter.addTitle(1, "Learn HTML")
 objecter.addDescription(1, "Discussed some important HTML facts, and some relevant HTML elements including <!doctype html>, <html>, <head>, <title>, <body>, and <p>")
 objecter.addCategory(1, "Cb")
 
-objecter.addObjective()
+objecter.addObjective("hard")
+
 objecter.addTitle(2, "Learn CSS")
 objecter.addDescription(2, "Discussed some important CSS facts, and reviewed some CSS examples as well as learned the general CSS snytax: \"element {css declarations; }\" ")
 objecter.addCategory(2, "Cac")
@@ -33,6 +34,12 @@ objecter.addCategory(3, "Cabbb")
 
 
 objecter.addSearchBar()
+
+objecter.addDifficulty(1, "intermediate")
+
+//empty category case. fails.
+objecter.filter("Cabbb")
+
 
 
 
