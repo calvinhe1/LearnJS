@@ -11,7 +11,6 @@ let justAddedObjective = false
 let objectivesStore = []; //Used to re-add, hide objectives rather than completely removing it; simply remove it from DOM if it doesn't match the search.
 let currentCategory = "all";
 let objectivesFilter = [];
-
 let filteredPosition  = 1;
 
 
@@ -212,7 +211,6 @@ function helperHoverObjective(e) {
 //pass in the objective number.
 function helperShowForm(objectiveNumber) {
 
-    //declarations
     let descriptorParent = document.createElement("div")
     let form = document.createElement('form')
     let labelTitle = document.createElement('label')
@@ -235,13 +233,12 @@ function helperShowForm(objectiveNumber) {
     mediumDifficulty.setAttribute("value", "intermediate")
     hardDifficulty.setAttribute("value", "hard")
 
-
     let labelDifficulty = document.createElement('label')
     let difficultyText = document.createElement('p')
 
     labelDifficulty.className = "labelTitle"
     difficultyText.innerHTML = "Difficulty"
-
+    
     labelDifficulty.appendChild(difficultyText)
 
     pickDifficulty.innerHTML = "---"
@@ -256,9 +253,6 @@ function helperShowForm(objectiveNumber) {
     
     difficultyForm.appendChild(selectDifficulty)
     selectDifficulty.id = "selectDifficulty"
-
-  
-
     
     let labelCategory = document.createElement('label')
     let categoryText = document.createElement('p')
@@ -267,31 +261,8 @@ function helperShowForm(objectiveNumber) {
     labelCategory.appendChild(categoryText)
     labelCategory.className = "labelTitle"
 
-    let category = document.createElement('input')
-    category.className = "formInput"
-    input.className = "formInput";
-    input.id = 'input'
-
-    /*
-     let searchContainer = document.createElement('span')
-        let ul = document.createElement('ul')
-        let input = document.createElement('input')
-        searchContainer.className = "searchContainer"
-        searchContainer.id = "searchContainer"
-        input.className = "searchBox"
-        ul.className = "searchList"
-        input.id = "searchInput"
-        ul.id = "searchList"
-
-        input.setAttribute("placeholder", "category")
-        input.setAttribute("autocomplete", "off")
-
-        searchContainer.appendChild(input)
-        searchContainer.appendChild(ul)
-        document.body.appendChild(searchContainer)
-        let searchChange = document.getElementById('searchInput')
-        searchChange.addEventListener('keyup', searchSubmit)*/
-
+    //let category = document.createElement('input')
+    //category.className = "formInput"
 
     closeForm.innerHTML = "X"
     closeForm.className = "closePopup"
@@ -321,30 +292,51 @@ function helperShowForm(objectiveNumber) {
 
     if (descriptions[objectiveNumber-1] != undefined)
         textarea.innerText = descriptions[objectiveNumber-1] 
-
-
-    if (categories[objectiveNumber-1] != undefined) 
-        category.setAttribute("value", categories[objectiveNumber-1])
-
-
-    category.id = "category"
-
+    
     form.className = "form"
     form.appendChild(closeForm)
     form.appendChild(labelTitle)
     form.appendChild(input)
-    
     form.appendChild(labelDifficulty)
     form.appendChild(difficultyForm)
-
     form.appendChild(labelCategory)
+
+   
+    //dropdown
+    let category = document.createElement('span')
+    let inputcategory = document.createElement('input')
+    let ul = document.createElement('ul')
+
+    ul.className = "categoryList"
+    ul.id = "categoryList"
+    inputcategory.className = "categoryBox"
+    inputcategory.id = "searchCategory"
+    category.className = "categoryContainer"
+    category.id = "categoryContainer"
+
+    inputcategory.setAttribute("placeholder", "category")
+    inputcategory.setAttribute("autocomplete", "off")
+
+    
+
+    category.appendChild(inputcategory)
+    category.appendChild(ul)
+
+
+    if (categories[objectiveNumber-1] != undefined)  {
+        inputcategory.setAttribute("value", categories[objectiveNumber-1])
+    }
+
+    //add category.
     form.appendChild(category)
+
+
+    //search category.
+    inputcategory.addEventListener('keyup', searchCategory)
 
     form.appendChild(labelDescription)
     form.appendChild(textarea)
     form.appendChild(labelSubmit)
-
-
     descriptorParent.appendChild(form)
     document.body.appendChild(descriptorParent)
 
@@ -352,16 +344,10 @@ function helperShowForm(objectiveNumber) {
     close.addEventListener("click", clickedCloseForm)
     
     let eve = document.getElementById(objectiveNumber.toString() + 'submit')
-
-
     eve.addEventListener("click", clickedSubmit)
 
     //add event listeners for difficulty levels.
-
     let select = document.getElementById("selectDifficulty")
-
-
-
     select.addEventListener("change", setDifficulty)
  
     //retrieve the data.
@@ -610,7 +596,7 @@ function clickedCloseForm(e) {
     elem.parentNode.removeChild(elem)
 
     popupOpen = false;
-    
+
 
     if (justAddedObjective) {
         let objectiveDelete = document.getElementById(currentPopupID)
@@ -705,6 +691,63 @@ function clickedSubmit(e) {
 }
 
 
+//OnClick.
+function searchCategory (e) {
+    console.log("HERE")
+    //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
+    e.preventDefault()
+
+    //Extract 
+    let searchList = document.getElementById("categoryList")
+    let searchContainer = document.getElementById('categoryContainer')
+    let searchCategory = document.getElementById('searchCategory')
+
+
+
+    if (searchList)
+      searchContainer.removeChild(searchList)
+  
+    //take searchInput.value and run the filter with this. 
+    
+  
+     let matchingCategories = categories.filter(categoryy => {
+          if (categoryy.toLowerCase().indexOf(searchCategory.value.toLowerCase()) >= 0 && searchCategory.value != "") {
+              return true;
+          }
+          return false;
+     })
+  
+     let categoriesFinal = [...new Set(matchingCategories)]
+     categoriesFinal.sort()
+
+     log(categoriesFinal)
+  
+     searchList = document.createElement('ul')
+     searchList.id = "categoryList"
+     searchList.className = "categoryList"
+  
+     for (let i =0; i < categoriesFinal.length; i++) {
+          let li = document.createElement('li')
+          li.className = "categoryElement"
+          li.innerHTML = categoriesFinal[i]
+          li.setAttribute("value", categoriesFinal[i])
+          searchList.appendChild(li)
+          li.addEventListener("click", clickCategory)
+     }
+
+     searchContainer.appendChild(searchList)
+
+     /*
+  
+     if (Number.isInteger(e.keyCode) && e.keyCode != 13) {
+          return    
+      }
+      
+      if (searchList)
+        searchContainer.removeChild(searchList)*/
+  
+  }
+
 function searchSubmit (e) {
 
   //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
@@ -775,6 +818,52 @@ function searchSubmit (e) {
 
     if (searchList)
     searchContainer.removeChild(searchList)
+
+}
+
+function clickCategory(e) {
+
+    
+
+    //on enter key or when clicking a list item, REMOVE.
+    
+    e.preventDefault()
+    let searchList = document.getElementById("categoryList")
+    let searchContainer = document.getElementById('categoryContainer')
+    let searchInput = document.getElementById('categoryInput')
+    searchInput.value = e.currentTarget.innerHTML
+
+    for (let i=0; i<objectivesStore.length; i++) {
+        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
+  
+            list.removeChild(objectivesStore[i].objective)
+            list.removeChild(objectivesStore[i].deleteButton)
+        }
+    }
+
+    filteredPosition = 1
+
+    //add everything in current filter.
+    currentCategory = e.currentTarget.innerHTML
+
+    if (currentCategory == "")
+        currentCategory = "all"
+
+    for (let i=0; i<objectivesStore.length; i++) {
+        //if user entered a blank or matches category then add back.
+        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
+            filteredPosition++
+            list.appendChild(objectivesStore[i].objective)
+            list.appendChild(objectivesStore[i].deleteButton)
+            objectivesStore[i].position = filteredPosition-1;
+        
+        }
+    }
+    if (searchList)
+        searchContainer.removeChild(searchList)
+
+
+
 
 }
 
