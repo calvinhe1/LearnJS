@@ -375,7 +375,7 @@ function helperShowForm(objectiveNumber) {
     category.className = "categoryContainer"
     category.id = "categoryContainer"
 
-    inputcategory.setAttribute("placeholder", "Search category")
+  
     inputcategory.setAttribute("autocomplete", "off")
 
 

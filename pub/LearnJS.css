@@ -11,6 +11,9 @@
     text-align: center;
     margin: auto;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 
 }
@@ -33,7 +36,9 @@
     margin: auto;
     text-align: center;
     overflow: hidden;    
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 
 }
@@ -48,6 +53,9 @@
     margin: auto;
     text-align: center;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .closeButton {
@@ -91,6 +99,7 @@
     font-size: 12px;
     padding: 2px;
     text-align: center;   
+
 
 }
 
