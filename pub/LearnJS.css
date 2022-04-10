@@ -1,32 +1,39 @@
 .objective {
     word-wrap: break-word; 
     font-weight: bold; 
-    width: 50px; 
-    height: 50px; 
-    border: 1px; 
+    padding: 3px;
+    width: 75px; 
+    height: 75px; 
     border-radius: 50%;
-    border: 4px solid white;
+    
 
-    margin-top: 20px; 
-    margin-bottom: 20px;
-    margin-left: 14px;
+    border: 4px solid white;
     text-align: center;
+    margin: auto;
+    overflow: hidden;
+
+
 }
 
 .intermediateObjective {
     word-wrap: break-word; 
     font-weight: bold; 
-    width: 50px; 
-    height: 50px; 
-    border: 1px; 
+    width: 75px; 
+    height: 75px; 
     border-radius: 25%;
-    border-style: solid;
+  
     border: 4px solid grey;
+    
 
+    /*
     margin-top: 20px; 
     margin-bottom: 20px;
-    margin-left: 14px;
+    margin-left: 14px;*/
+    
+    margin: auto;
     text-align: center;
+    overflow: hidden;    
+
 
 
 }
@@ -35,18 +42,12 @@
 
     word-wrap: break-word; 
     font-weight: bold; 
-    width: 50px; 
-    height: 50px; 
-    border: 1px; 
+    width: 75px; 
+    height: 75px; 
     border: 4px solid black;
-
-    border-style: solid; 
-    margin-top: 20px; 
-    margin-bottom: 20px;
-    margin-left: 14px;
+    margin: auto;
     text-align: center;
-
-
+    overflow: hidden;
 }
 
 .closeButton {
@@ -55,13 +56,13 @@
 }
 
 .closeButtonText {
-    text-align: center; font-size: 10px; text-decoration: underline; color: blue;
+    text-align: center; font-size: 12px; text-decoration: underline; color: blue; 
 }
 
 
 .popuphover {
 
-    position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;
+    position: absolute; top: 50px; right: 125px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;
 
 }
 
@@ -71,7 +72,7 @@
 }
 
 .labelTitle {
-    font-size: 12px; 
+    font-size: 10px; 
 }
 
 .formInput {
@@ -79,18 +80,18 @@
 }
 
 .listContainer {
-    width: 80px; height:100%; background-color: Bisque; float: right; margin-right: 0px; border-style: solid; right:25px;
+    width: 100px; height:100%; background-color: Bisque; float: right; margin-right: 0px; border-style: solid; right: 0px; padding-top: 10px;
 }
 .addButton {
-    text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; 
+    text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative;  color: white; text-align: center; font-weight: bold; font-size: 17px; margin: auto; 
 }
 
-.test {
-    position: absolute; top: 50px; right: 50px;
-}
 
 .objectiveTitle {
-    font-size: 12px; padding: 2px; text-align: center;
+    font-size: 12px;
+    padding: 2px;
+    text-align: center;   
+
 }
 
 .textTitleSubmit {
@@ -127,17 +128,17 @@
 
 .textarea {
 
-    height: 20px;  width: 141px; height: 100px; font-size: 10px; 
+    height: 20px; width: 141px; height: 100px; font-size: 10px; 
 }
 
 .popupform {
     position: absolute; 
     top: 50px;
-    right: 150px; 
+    right: 125px; 
     border: 2px solid black;
     word-wrap:break-word; 
     padding: 2px;
-    height: 350px;
+    height: 325px;
     max-width: 150px; 
     float: right; 
     margin-right: 20px; 
@@ -146,7 +147,6 @@
 }
 
 .searchContainer {
-
     padding-left: 10px;
     position: absolute;
     float: right;
@@ -156,7 +156,7 @@
 }
 
 .searchBox {
-    width: 200px;
+    width: 150px;
     height: 30px;
 
 }
@@ -165,26 +165,15 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    /*position: absolute;*/
 
 }
 
-/*
-.searchElement span {
-    display: flex;
-    color: inherit;
-    text-decoration: none;
-}*/
 
 .searchElement {
     height: 20px;
-
-    /*line-height: 50px;*/
-    width: 205px;
-    /*z-index: 10;*/
+    width: 155px;
     background-color: white;
     border: 1px solid black;
-  
 }
 
 
@@ -196,9 +185,6 @@
 }
 
 
-
-
-
 .categoryContainer {
     position: absolute;
  
@@ -208,34 +194,24 @@
     width: 140px;
     height: 12px;
 
-
-
 }
 
 .categoryList {
     list-style: none;
     padding: 0;
     margin: 0;
-    /*position: absolute;*/
+ 
 }
-
-/*
-.categoryElement span {
-    display: flex;
-    color: inherit;
-    text-decoration: none;
-}*/
 
 .categoryElement {
     height: 20px;
-
-    /*line-height: 50px;*/
-    width: 145px;
-    /*z-index: 10;*/
+    width: 135px;
     background-color: white;
     border: 1px solid black;
- 
-  
 }
 
-
+.positionContainer {
+    position: absolute; 
+    top: 50px; 
+    right: 25px;
+}

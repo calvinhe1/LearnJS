@@ -10,7 +10,7 @@ objecter.addList()
 objecter.addObjective("easy")
 
 //Add a title and description/summary of that objective.
-objecter.addTitle(1, "Learn HTML")
+objecter.addTitle(1, "Learn the truth of society!!!ddddd")
 objecter.addDescription(1, "Discussed some important HTML facts, and some relevant HTML elements including <!doctype html>, <html>, <head>, <title>, <body>, and <p>")
 objecter.addCategory(1, "Cb")
 
@@ -27,7 +27,7 @@ objecter.addCategory(2, "Cac")
 objecter.clickObjective(1)
 
 objecter.addObjective()
-objecter.addTitle(3, "Learn JS")
+objecter.addTitle(3, "Learn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thddddd")
 objecter.addDescription(2, "Discussed some important CSS facts, and reviewed some CSS examples as well as learned the general CSS snytax: \"element {css declarations; }\" ")
 objecter.addCategory(3, "Cabbb")
 

@@ -110,10 +110,10 @@ function helperAddObjective() {
 
     const list = document.getElementById("list")
     const objective = document.createElement('div')
-    //objective.style = 'word-wrap: break-word; font-weight: bold; width: 50px; height: 50px; border: 1px; border-radius: 50%; background-color: aqua; border-style: solid; margin-top: 20px; margin-bottom: 20px; margin-left: 14px; text-align: center;';
-    
-    objective.style.backgroundColor = 'rgb(255, 105, 97)'   
+    const closeButton = document.createElement('div')
+    const textNode  = document.createElement('p')
 
+    objective.style.backgroundColor = 'rgb(255, 105, 97)'   
     numberOfObjectives++
     objective.id = numberOfObjectives
     objective.className = "objective"
@@ -122,13 +122,11 @@ function helperAddObjective() {
     let ev = document.getElementById(objective.id)
     ev.addEventListener('click', addEventClick)
 
-    const  closeButton = document.createElement('div')
     closeButton.id = numberOfObjectives.toString() + "closeButton"
-    closeButton.style = "position: relative; bottom: 8px;"
+    closeButton.className = "closeButton"
 
-    const textNode  = document.createElement('p')
     textNode.innerText = "Delete"
-    textNode.style = "text-align: center; font-size: 10px; text-decoration: underline; color: blue;"
+    textNode.className = "closeButtonText"
 
     closeButton.appendChild(textNode)
     list.append(closeButton)
@@ -143,14 +141,10 @@ function helperAddObjective() {
     let position = filteredPosition
     filteredPosition++
 
-
-    const objectivePair = {objective: objective, deleteButton: closeButton, position: position, new: true}
-    
+    const objectivePair = {objective: objective, deleteButton: closeButton, position: position}
 
     objectivesStore.push(objectivePair)
-    
     justAddedObjective = true
-
 
 
     return objective.id
@@ -158,16 +152,6 @@ function helperAddObjective() {
    
 }
 
-function helperDeleteJustAddedObjective(deleteObjective) {
-
-    let list = document.getElementById("list")
-    list.removeChild(document.getElementById(deleteObjective))
-    list.removeChild(document.getElementById(deleteObjective.toString() + "closeButton"))
-      
-    numberOfObjectives--;
-
-    return numberOfObjectives;
-}
 
 function helperDeleteObjective(deleteObjective, deleteButton) {
 
@@ -272,12 +256,12 @@ function helperHoverObjective(e) {
     //popup.style="position: absolute; top: 50px; right: 150px; border: 2px solid black; word-wrap:break-word; padding: 2px; min-height: 75px; min-width: 150px; float: right; margin-right: 20px; background-color: Bisque; max-width: 250px;  "
     
    
-    let marginTopw = (e-1) * 108
+    
     
     //popup.style.marginTop = marginTop.toString() + "px"
     
    
-    let marginTop = (objectivesStore[e-1].position-1)  * 108
+    let marginTop = (objectivesStore[e-1].position-1)  * 130
     
     popup.style.marginTop = marginTop.toString() + "px"
 
@@ -285,7 +269,7 @@ function helperHoverObjective(e) {
 
     currentPopupID = e
 
-    objectivesStore[e-1].new = false
+   
 
     //Submitted form.
     justAddedObjective = false;
@@ -449,7 +433,7 @@ function helperShowForm(objectiveNumber) {
  
     //retrieve the data.
     let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent") 
-    let marginTop = (objectivesStore[objectiveNumber-1].position-1) * 100
+    let marginTop = (objectivesStore[objectiveNumber-1].position-1) * 130
     popup.className ="popupform"
     popup.style.marginTop = marginTop.toString() + "px"
 
@@ -460,40 +444,32 @@ function helperShowForm(objectiveNumber) {
 
 function LearnJS() {
     const obj = {}
-   
- 
+
     //Create list
     obj.addList = function() {
-
         const parentContainer = document.createElement('div')
         const container = document.createElement('div');
-        container.id = "list";
-
-        //parentContainer.style = 'width: 80px; height:100%; background-color: #F0F8FF; float: right; margin-right: 25px; border-style: solid; right:25px;';
-        parentContainer.className="listContainer"
         const addButton = document.createElement('div');
+        let textElem = document.createTextNode("+")
+        const positionContainer = document.createElement('div')
+
+        container.id = "list";
         addButton.id = "addButton";
 
+        parentContainer.className="listContainer"
         addButton.className = "addButton";
 
-        //addButton.style = 'text-align: center; background-color: red; border: 2px solid white; border-radius: 50%; width: 20px; height: 20px;position: relative; left: 36%; color: white; text-align: center; font-weight: bold; font-size: 17px; '
-        let textElem = document.createTextNode("+")
         addButton.appendChild(textElem)
-
         parentContainer.appendChild(container)
         parentContainer.appendChild(addButton)
 
         //Make the sidebar FIXED.
-        const test = document.createElement('div')
-        test.style = "position: absolute; top: 50px; right: 50px; "
-        test.appendChild(parentContainer)
-  
+        positionContainer.className = "positionContainer"
+        positionContainer.appendChild(parentContainer)
+        document.body.appendChild(positionContainer)
 
-        document.body.appendChild(test)
-
-
-        let e = document.getElementById("addButton") 
-        e.addEventListener('click', addEventAdd)
+        let add = document.getElementById("addButton") 
+        add.addEventListener('click', addEventAdd)
     }
 
     /*Return an ID which signifies which objective*/
@@ -563,7 +539,7 @@ function LearnJS() {
         titles.push(title)
         let text = document.createElement("p")
         text.innerText = title
-        text.style = "font-size: 12px; padding: 2px; text-align: center;"
+        text.className = "objectiveTitle"
         text.id = objectiveNumber.toString() + "title"
         objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
 
@@ -764,19 +740,6 @@ function clickedCloseForm(e) {
         helperDeleteObjective(objectiveDelete, deleteButton)
     }
 
-    /*
-    
-    if (objectivesStore[currentPopupID-1].new == true) {
-        //delete.
-        let objectiveDelete = document.getElementById(currentPopupID)
-        //need to also get the delete button.
-        //pass into helper: the id and the id+closeButton
-        let deleteButton = document.getElementById((currentPopupID).toString() + "closeButton")
-        helperDeleteObjective(objectiveDelete, deleteButton)
-
-        //remove from the 
-      
-    }*/
 }
 
 function clickedSubmit(e) {
@@ -800,7 +763,7 @@ function clickedSubmit(e) {
         titles.push(input.value)
         let text = document.createElement("p")
         text.innerText = input.value
-        text.style = "font-size: 10px; padding: 2px; text-align: center;"
+        text.className = "objectiveTitle"
         text.id = objectiveNumber.toString() + "title"
         objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
     }
@@ -846,7 +809,7 @@ function clickedSubmit(e) {
 
 
     //change all positions to the right position after doing an EDIT.
-    objectivesStore[objectiveNumber-1].new = false
+   
 
 }
 
