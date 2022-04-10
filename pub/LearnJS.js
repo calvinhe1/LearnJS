@@ -240,6 +240,10 @@ function helperHoverObjective(e) {
 
     if (descriptions[e-1] != undefined)
         descriptor.innerText = descriptions[e-1]
+    else {
+        justAddedObjective = false
+        return
+    }
 
     descriptor.id = e.toString() + "descriptor"
 
@@ -687,8 +691,20 @@ function addEventPopup(e) {
 
 function addEventRemovePopup(e) { 
     //should be turned off if popup is open.
+
+    
+
+
     if (!popupOpen)  {
         let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+
+        if (!elem)  
+            return;
+
+
+
+
+
         elem.parentNode.removeChild(elem)
     }
 }
@@ -700,7 +716,9 @@ function addEventForm(e) {
         return
     //disable hover.
     let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
-    elem.parentNode.removeChild(elem)
+
+    if (elem != null)
+        elem.parentNode.removeChild(elem)
 
     if (popupOpen == false) {
         helperShowForm(e.currentTarget.id)
@@ -713,13 +731,17 @@ function clickedCloseForm(e) {
 
     //if users want to make an empty objective, that's their choice.
 
+    log(e)
+
     let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
     elem.parentNode.removeChild(elem)
 
     popupOpen = false;
 
-
+    //?????
+  
     if (justAddedObjective) {
+        
         let objectiveDelete = document.getElementById(currentPopupID)
         let deleteButton = document.getElementById((currentPopupID).toString() + "closeButton")
         helperDeleteObjective(objectiveDelete, deleteButton)
@@ -792,6 +814,8 @@ function clickedSubmit(e) {
 
     }
 
+    log("SUBMITTED")
+    justAddedObjective=false
 
     //change all positions to the right position after doing an EDIT.
    
