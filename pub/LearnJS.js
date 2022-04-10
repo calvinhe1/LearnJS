@@ -18,11 +18,15 @@ function searchDropdown(search) {
 
     let searchList = document.getElementById("searchList")
     let searchContainer = document.getElementById('searchContainer')
-  
+
+
     if (searchList)
       searchContainer.removeChild(searchList)
   
     //take searchInput.value and run the filter with this. 
+
+    if (search == "")
+        return
 
   
      let matchingCategories = categories.filter(category => {
@@ -398,7 +402,7 @@ function helperShowForm(objectiveNumber) {
     category.className = "categoryContainer"
     category.id = "categoryContainer"
 
-    inputcategory.setAttribute("placeholder", "category")
+    inputcategory.setAttribute("placeholder", "Search category")
     inputcategory.setAttribute("autocomplete", "off")
 
 
@@ -618,7 +622,7 @@ function LearnJS() {
         input.id = "searchInput"
         ul.id = "searchList"
 
-        input.setAttribute("placeholder", "category")
+        input.setAttribute("placeholder", "Search category")
         input.setAttribute("autocomplete", "off")
 
         searchContainer.appendChild(input)
@@ -904,81 +908,13 @@ function searchSubmit (e) {
 
   //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
   e.preventDefault()
-  /*
-  let searchList = document.getElementById("searchList")
-  let searchContainer = document.getElementById('searchContainer')
   
+    searchDropdown(searchInput.value)
 
-  if (searchList)
-    searchContainer.removeChild(searchList)
-
-  //take searchInput.value and run the filter with this. 
-  const list = document.getElementById("list")
-
-   let matchingCategories = categories.filter(category => {
-        if (category.toLowerCase().indexOf(searchInput.value.toLowerCase()) >= 0 && searchInput.value != "") {
-            return true;
-        }
-        return false;
-   })
-
-   let categoriesFinal = [...new Set(matchingCategories)]
-   categoriesFinal.sort()
-
-
-   searchList = document.createElement('ul')
-   searchList.id = "searchList"
-   searchList.className = "searchList"
-
-   for (let i =0; i < categoriesFinal.length; i++) {
-        let li = document.createElement('li')
-        li.className = "searchElement"
-        li.innerHTML = categoriesFinal[i]
-        li.setAttribute("value", categoriesFinal[i])
-        searchList.appendChild(li)
-        li.addEventListener("click", enter)
-   }
-   searchContainer.appendChild(searchList)*/
-
-   searchDropdown(searchInput.value)
-
-   if (Number.isInteger(e.keyCode) && e.keyCode != 13) {
+    if (Number.isInteger(e.keyCode) && e.keyCode != 13) {
         return    
     }
-
     filterObjectives(searchInput.value)
-
-    //Remove all the objectives that were in previous filter.
-
-    /*
-    for (let i=0; i<objectivesStore.length; i++) {
-        
-        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
-            list.removeChild(objectivesStore[i].objective)
-            list.removeChild(objectivesStore[i].deleteButton)
-        }
-    }
-
-    filteredPosition = 1
-    currentCategory = searchInput.value
-
-    if (currentCategory == "")
-        currentCategory = "all"
-
-    for (let i=0; i<objectivesStore.length; i++) {
-        
-        //if user entered a blank or matches category then add back.
-        if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
-            filteredPosition++
-            list.appendChild(objectivesStore[i].objective)
-            list.appendChild(objectivesStore[i].deleteButton)
-          
-            objectivesStore[i].position = filteredPosition-1;
-        }
-    }
-
-    if (searchList)
-    searchContainer.removeChild(searchList)*/
 
 }
 

@@ -38,7 +38,6 @@ objecter.addSearchBar()
 objecter.addDifficulty(1, "intermediate")
 
 //empty category case. fails.
-objecter.filter("Cabbb")
 
 
 
