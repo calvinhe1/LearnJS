@@ -1,17 +1,21 @@
-"use strict"
+"use strict";
 
-const log = console.log
-let numberOfObjectives=0
-let currentPopupID = -1
-let descriptions = [];
-let titles = [];
-let categories = [];
-let popupOpen = false
-let justAddedObjective = false
-let objectivesStore = []; //Used to re-add, hide objectives rather than completely removing it; simply remove it from DOM if it doesn't match the search.
-let currentCategory = "all";
-let objectivesFilter = [];
-let filteredPosition  = 1;
+
+
+(function(global, document) {
+    
+    const log = console.log
+    let numberOfObjectives=0
+    let currentPopupID = -1
+    let descriptions = [];
+    let titles = [];
+    let categories = [];
+    let popupOpen = false
+    let justAddedObjective = false
+    let objectivesStore = []; //Used to re-add, hide objectives rather than completely removing it; simply remove it from DOM if it doesn't match the search.
+    let currentCategory = "all";
+    let objectivesFilter = [];
+    let filteredPosition  = 1;
 
 
 function searchDropdown(search) {
@@ -933,3 +937,11 @@ function setDifficulty(e) {
 
     //let selectDifficulty = document.getElementById()
 }
+
+
+    global.LearnJS = global.LearnJS || LearnJS
+
+})(window, window.document);
+
+
+

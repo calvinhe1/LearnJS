@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 //Open visual list of learning goals.
 const objecter = LearnJS()
@@ -28,7 +28,7 @@ objecter.clickObjective(1)
 
 objecter.addObjective()
 objecter.addTitle(3, "Learn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thddddd")
-objecter.addDescription(2, "Discussed some important CSS facts, and reviewed some CSS examples as well as learned the general CSS snytax: \"element {css declarations; }\" ")
+objecter.addDescription(2, "Discussed some important CSS facts, and revieLearn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thdddddLearn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thdddddLearn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thdddddLearn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thdddddLearn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thdddddLearn the truth of society!!!dddewqewqewqewqewqewqewqewqewqewqewqewqeqwewqewqewqeqweqwewqewqewqeqwewqeddLearn thdddddwed some CSS examples as well as learned the general CSS snytax: \"element {css declarations; }\" ")
 objecter.addCategory(3, "Cabbb")
 
 
@@ -36,6 +36,9 @@ objecter.addCategory(3, "Cabbb")
 objecter.addSearchBar()
 
 objecter.addDifficulty(1, "intermediate")
+
+
+console.log(LearnJS())
 
 //empty category case. fails.
 
