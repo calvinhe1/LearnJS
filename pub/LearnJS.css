@@ -213,3 +213,13 @@
     top: 50px; 
     right: 25px;
 }
+
+.specialButtons {
+    cursor: pointer;
+    background-color: white;
+    font-weight: bold;
+    border: 2px solid black;
+    color: #16a085;
+    width: 100px;
+    margin: 5px;
+}

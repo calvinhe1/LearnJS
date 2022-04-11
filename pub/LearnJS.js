@@ -14,6 +14,114 @@ let objectivesFilter = [];
 let filteredPosition  = 1;
 
 
+let hide = 0
+let positionScroll = 0
+let storedList;
+let storedSearchBar;
+
+
+let randomButton = document.createElement('button')
+randomButton.innerHTML = "Move list"
+randomButton.className = "specialButtons"
+document.body.appendChild(randomButton)
+
+let hideButton = document.createElement('button')
+hideButton.innerHTML = "Hide list"
+document.body.appendChild(hideButton)
+
+
+hideButton.style.position="fixed"
+hideButton.style.top="20px"
+hideButton.className = "specialButtons"
+
+
+randomButton.style.position = "fixed"
+randomButton.style.top = "0px"
+
+
+function tester(e) {
+
+    positionScroll = window.scrollY
+    //adjust EVERYTHING.
+    let listContainer = document.getElementById("positionContainer")
+
+    if (!listContainer)
+        return
+
+    listContainer.style.top = (window.scrollY+50).toString() + "px"
+
+    let searchContainer = document.getElementById('searchContainer')
+    if (searchContainer)
+        searchContainer.style.top = (window.scrollY+5).toString() + "px"
+
+
+    //close previously open form.
+    let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+
+    if (elem)
+        elem.parentNode.removeChild(elem)
+
+    popupOpen = false;
+
+    //adjust the popups and the hover boxes as well.
+
+}
+
+//hide.
+function testertwo(e) {
+    let listContainer = document.getElementById("positionContainer")
+    let searchContainer = document.getElementById('searchContainer')
+
+
+    if (hide) {
+        hide = 0
+    } 
+    else
+        hide =1
+
+
+    if (hide) {
+        
+
+        document.body.removeChild(listContainer)
+
+        if (searchContainer) {
+            document.body.removeChild(searchContainer)
+        }
+
+        //also search bar.
+
+        
+        storedList = listContainer
+        storedSearchBar = searchContainer
+
+        let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
+        if (elem)
+            elem.parentNode.removeChild(elem)
+        popupOpen = false;
+    }
+    else {
+       
+        document.body.appendChild(storedList)
+        if(storedSearchBar)
+            document.body.appendChild(storedSearchBar)
+        
+
+    }
+    
+
+
+
+}
+
+hideButton.addEventListener("click", testertwo)
+randomButton.addEventListener("click", tester)
+
+
+
+
+
+
 function searchDropdown(search) {
 
     let searchList = document.getElementById("searchList")
@@ -254,7 +362,7 @@ function helperHoverObjective(e) {
     let popupText  = document.getElementById(e.toString() + "descriptor")
     popup.className = "popuphover"
 
-    let marginTop = (objectivesStore[e-1].position-1)  * 130
+    let marginTop = (objectivesStore[e-1].position-1)  * 130 + positionScroll
 
     popup.style.marginTop = marginTop.toString() + "px"
     popupText.style = "text-align: center;"
@@ -422,7 +530,7 @@ function helperShowForm(objectiveNumber) {
  
     //retrieve the data.
     let popup = document.getElementById(objectiveNumber.toString() + "descriptorParent") 
-    let marginTop = (objectivesStore[objectiveNumber-1].position-1) * 130
+    let marginTop = (objectivesStore[objectiveNumber-1].position-1) * 130 + positionScroll
     popup.className ="popupform"
     popup.style.marginTop = marginTop.toString() + "px"
 
@@ -446,7 +554,12 @@ function LearnJS() {
         addButton.id = "addButton";
 
         parentContainer.className="listContainer"
+    
         addButton.className = "addButton";
+        
+
+        
+
 
         addButton.appendChild(textElem)
         parentContainer.appendChild(container)
@@ -455,6 +568,9 @@ function LearnJS() {
         //Make the sidebar FIXED.
         positionContainer.className = "positionContainer"
         positionContainer.appendChild(parentContainer)
+
+        parentContainer.id = "parentContainer"
+        positionContainer.id = "positionContainer"
         document.body.appendChild(positionContainer)
 
         let add = document.getElementById("addButton") 
