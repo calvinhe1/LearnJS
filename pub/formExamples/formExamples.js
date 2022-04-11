@@ -1,14 +1,29 @@
 "use strict";
 
-//Open visual list of learning goals.
-const objecter = LearnJS()
-objecter.addList()
+const learn = LearnJS()
+
+//add list container to hold learning objectives
+learn.addList()
+
+//Add learning goals/objectives to the list
+learn.addObjective("easy")
+learn.addObjective("intermediate")
+learn.addObjective("hard")
 
 
 
-//Add learning goals/objectives to the list to keep track of what learning objectives are in this webpage.
-objecter.addObjective("easy")
+learn.editTitle(1, "Learn how to add objectives")
+learn.editTitle(2, "Learn how to search objectives")
 
+learn.editDifficulty(1, "hard")
+
+learn.deleteObjective(3)
+
+learn.form(1,1)
+
+
+
+/*
 //Add a title and description/summary of that objective.
 objecter.addTitle(1, "Learn the truth of society!!!ddddd")
 objecter.addDescription(1, "Discussed some important HTML facts, and some relevant HTML elements including <!doctype html>, <html>, <head>, <title>, <body>, and <p>")
@@ -65,7 +80,7 @@ console.log(LearnJS())
 
 
 
-
+*/
 
 
 

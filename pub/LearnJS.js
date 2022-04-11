@@ -436,12 +436,12 @@ function LearnJS() {
 
     //Create list
     obj.addList = function() {
+        const positionContainer = document.createElement('div')
         const parentContainer = document.createElement('div')
         const container = document.createElement('div');
         const addButton = document.createElement('div');
-        let textElem = document.createTextNode("+")
-        const positionContainer = document.createElement('div')
-
+        const textElem = document.createTextNode("+")
+        
         container.id = "list";
         addButton.id = "addButton";
 
@@ -483,7 +483,7 @@ function LearnJS() {
         return numberOfObjectives
     }
 
-    obj.showPopup = function(objectiveNumber, on) {
+    obj.showDescription = function(objectiveNumber, on) {
 
         //only control if no other hovers or popups
         if (currentPopupID != objectiveNumber && currentPopupID != -1)
@@ -517,7 +517,7 @@ function LearnJS() {
 
     }
 
-    obj.addTitle= function(objectiveNumber, title) {
+    obj.editTitle= function(objectiveNumber, title) {
         let objectiveEdit = document.getElementById(objectiveNumber)
         //see if title child exists.    
         if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
@@ -534,7 +534,7 @@ function LearnJS() {
 
     }
 
-    obj.addDescription = function(objectiveNumber, description) {
+    obj.editDescription = function(objectiveNumber, description) {
         if (descriptions[objectiveNumber-1] != 'undefined') {
             descriptions[objectiveNumber-1] = description
             return
@@ -542,7 +542,7 @@ function LearnJS() {
         descriptions.push(description)
     }
 
-    obj.addCategory = function(objectiveNumber, category="") {
+    obj.editCategory = function(objectiveNumber, category="") {
         if (categories[objectiveNumber-1] != 'undefined') {
             categories[objectiveNumber-1] = category
             return
@@ -552,7 +552,7 @@ function LearnJS() {
 
 
     //change difficulty level of objective
-    obj.addDifficulty = function(objectiveNumber, difficultyLevel) {
+    obj.editDifficulty = function(objectiveNumber, difficultyLevel) {
 
 
         if (difficultyLevel =="easy") {
@@ -623,7 +623,7 @@ function LearnJS() {
     }
 
 
-    obj.addForm = function(objectiveNumber, on) {
+    obj.form = function(objectiveNumber, on) {
 
         //only display if no other hovers or popups.
         //check if this popup matches your id.
@@ -631,8 +631,8 @@ function LearnJS() {
         if (currentPopupID != objectiveNumber && currentPopupID != -1)
             return
 
+        justAddedObjective = false;
         if (on) {
-         
             popupOpen = true
             currentPopupID = objectiveNumber
             helperShowForm(objectiveNumber)

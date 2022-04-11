@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>LearnJS</title>  
+        
+        <link rel="stylesheet" href="../LearnJS.css">
+        <link rel="stylesheet" href="formExamples.css"> 
+        <script defer type="text/javascript" src="../LearnJS.js"></script>
+        <script defer type="text/javascript" src="formExamples.js"></script>
+        
+    </head>
+    <body>
+
+        <div class="doc">
+
+        
+        <h1>
+            LearnJS
+        </h1>
+   
+        
+        <h3>Display the form of a learning objective</h3>
+        <p>
+            Display all the details about a learning objective. <p>
+        </p> 
+        This form can also be triggered if a user right clicks on the learning objective. The title, difficulty level, category, and description can be edited from here by the user. 
+          
+        </p>
+        <p>  Submitting the form saves any changes, and closing the form removes any changes.
+
+        </p>
+
+
+        <pre>
+            <code>
+                //First argument refers to objective form to display, second argument refers to on or off with 1 or 0 respectively.
+                learn.form(1,1)
+                
+                //learn.form(1,0) to close the form. Must turn off a form before opening another form. 
+            </code>
+        </pre>
+
+        <h3>Changing difficulty level of a learning objective</h3>
+        <p><i>Change the difficulty level of a given learning objective (changes the shape and the color of the border of the objective to the matching difficulty level - see main page for details) </i></p>
+        <pre>
+            <code>
+                //Changing difficulty level of first objective from easy to hard
+                <span class="object">learn<span>.<span class="method">editDifficulty(1, "hard")</span>
+            </code>
+        </pre>
+       
+
+
+        <a href="deleteExamples.html">
+            <button class="examplesButton">Delete examples</button>
+        </a>
+        <br>
+        <a href="../addExamples/addExamples.html">
+            <button class="examplesButton">Add examples</button>
+        </a>
+        <br>
+        <a href="../formExamples/formExamples.html">
+            <button class="examplesButton">Form examples</button>
+        </a>
+
+        <br>
+        <a href="../hoverExamples/hoverExamples.html">
+            <button class="examplesButton">Hover examples</button>
+        </a>
+        
+        
+        
+
+        
+
+
+
+
+
+
+
+
+
+        </div>
+
+        
+
+    </body>
+
+</html>

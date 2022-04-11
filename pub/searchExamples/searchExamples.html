@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>LearnJS</title>  
+        
+        <link rel="stylesheet" href="../LearnJS.css">
+        <link rel="stylesheet" href="searchExamples.css"> 
+        <script defer type="text/javascript" src="../LearnJS.js"></script>
+        <script defer type="text/javascript" src="searchExamples.js"></script>
+        
+    </head>
+    <body>
+
+        <div class="doc">
+
+        
+        <h1>
+            LearnJS
+        </h1>
+        
+        <h3>Edit the category of a learning objective</h3> 
+        <p>
+            Edit the category of a learning objective, this is to group objectives together, so it can be searched easily on the search bar.<p>
+        </p> 
+
+        <pre>
+            <code>
+                //add search bar above the list container to do searches based on category.
+                learn.addSearchBar()
+
+                //First argument refers to objective number to edit, second argument refers to category itself
+                learn.editCategory(1,"Add")
+                learn.editCategory(2,"Delete")
+            </code>
+        </pre>
+       
+       
+
+        <h3>Search objectives based on category</h3>
+        <p>
+           Search the objectives of interest based on the category that was typed in. <p>
+        </p> 
+        <p>
+            Users can type into the search bar as well to trigger the search, and press enter/or click on an existing category to apply the search. Searching empty shows objectives with all categories.
+         </p> 
+        This box can also be triggered if a user mouses over a learning objective. (Only if there exists a description)
+        </p>
+     
+        <pre>
+            <code>
+                //This mimics a user typing into the search bar, as shown, the search results that match what was entered are shown.
+                learn.search("Add")
+
+                //learn.search("") to display all the objectives and remove categories in search bar.
+            </code>
+        </pre>
+
+       
+        <a href="deleteExamples.html">
+            <button class="examplesButton">Delete examples</button>
+        </a>
+        <br>
+        <a href="../addExamples/addExamples.html">
+            <button class="examplesButton">Add examples</button>
+        </a>
+        <br>
+        <a href="../formExamples/formExamples.html">
+            <button class="examplesButton">Form examples</button>
+        </a>
+
+        <br>
+        <a href="../hoverExamples/hoverExamples.html">
+            <button class="examplesButton">Hover examples</button>
+        </a>
+
+        <br>
+        <a href="../searchExamples/searchExamples.html">
+            <button class="examplesButton">Hover examples</button>
+        </a>
+        <br>
+
+        <a href="../filterExamples/filterExamples.html">
+            <button class="examplesButton">Filter examples</button>
+        </a>
+        
+        
+
+        
+
+
+
+
+
+
+
+
+
+        </div>
+
+        
+
+    </body>
+
+</html>

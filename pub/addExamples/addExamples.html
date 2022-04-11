@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>LearnJS</title>  
+        
+        <link rel="stylesheet" href="../LearnJS.css">
+        <link rel="stylesheet" href="addExamples.css"> 
+        <script defer type="text/javascript" src="../LearnJS.js"></script>
+        <script defer type="text/javascript" src="addExamples.js"></script>
+        
+    </head>
+    <body>
+        <div class="doc">
+        <h1>
+            LearnJS
+        </h1>
+
+        <h3>Adding a learning objective</h3>
+        <p>Add learning objectives to a webpage in an aesthetic way and inform users about what they will learn.</p>
+   
+        <br>
+        <p><i>Create a list container and add learning objectives to it.</i></p>
+        
+
+        <pre>
+            <code>
+                const <span class="object">learn</span> = <span class="special">LearnJS()</span>
+
+                //add list container to hold learning objectives.
+                <span class="object">learn</span>.<span class="method">addList</span>()
+                
+                //Add learning objectives to the list, passing in the difficulty level.
+                <span class="object">learn</span>.<span class="method">addObjective("easy")</span>
+                <span class="object">learn</span>.<span class="method">addObjective("intermediate")</span>
+                <span class="object">learn</span>.<span class="method">addObjective("hard")</span>
+            </code>
+        </pre>
+        <p>Users can also add their own learning objectives by clicking the plus button in the bottom of the list container (<b>Note</b>: must submit the form to successfully add)</p>
+        
+        <br>
+        <h3>Adding/Editing the title of a learning objective</h3>
+        <p><i>Write a title on top of the corresponding objective.</i></p>
+        <pre>
+            <code>
+                //adding or editing titles for given objective number
+                <span class="object">learn</span>.<span class="method">editTitle(1,"Learn how to add objectives")</span>
+                <span class="object">learn</span>.<span class="method">editTitle(2,"Learn how to view objectives")</span>
+            </code>
+        </pre>
+
+        
+        <br class="buttonDistance">
+        <br class="buttonDistance">
+        <br class="buttonDistance">
+         
+        <div class="links">
+           
+            <a href="../addExamples/addExamples.html">
+                <button class="examplesButton">Adding, editing</button>
+            </a>
+            <br>
+            <a href="../deleteExamples/deleteExamples.html">
+                <button class="examplesButton">Deleting</button>
+            </a>
+            <br>
+            <a href="../formExamples/formExamples.html">
+                <button class="examplesButton">Form input</button>
+            </a>
+
+            <br>
+            <a href="../hoverExamples/hoverExamples.html">
+                <button class="examplesButton">Hover, description</button>
+            </a>
+
+            <br>
+            <a href="../searchExamples/searchExamples.html">
+                <button class="examplesButton">Search, category</button>
+            </a>
+            <br>
+
+            <a href="../filterExamples/filterExamples.html">
+                <button class="examplesButton">Filter, click</button>
+            </a>
+        </div>
+        </div>
+
+    </body>
+
+</html>

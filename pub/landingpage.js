@@ -7,6 +7,10 @@ intermediateObj.addEventListener("click", helperClickObjective)
 hardObj.addEventListener("click", helperClickObjective)
 
 
+let examplesPage = document.getElementById("examplesPage")
+examplesPage.addEventListener("click", )
+
+
 function helperClickObjective(e) {
 
 
