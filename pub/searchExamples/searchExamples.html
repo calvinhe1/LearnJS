@@ -15,60 +15,47 @@
         <div class="doc">
 
         
-        <h1>
-            LearnJS
-        </h1>
+         
+        <a href="../landingpage.html" style="text-decoration: none">
+            <h1>
+                LearnJS
+            </h1>
+        </a>
         
         <div class="links">
+           
             <a href="../addExamples/addExamples.html">
-                <button class="examplesButton">Adding</button>
+                <button class="examplesButton">Add</button>
             </a>
             <br>
             <a href="../deleteExamples/deleteExamples.html">
-                <button class="examplesButton">Deleting</button>
+                <button class="examplesButton">Delete</button>
             </a>
             <br>
             <a href="../formExamples/formExamples.html">
-                <button class="examplesButton">Form/Difficulty</button>
+                <button class="examplesButton">Form</button>
             </a>
-            
-            
 
             <br>
             <a href="../hoverExamples/hoverExamples.html">
-                <button class="examplesButton">Hover/Description</button>
+                <button class="examplesButton">Hover</button>
             </a>
 
             <br>
             <a href="../searchExamples/searchExamples.html">
-                <button class="examplesButton">Search/Category</button>
+                <button class="examplesButton">Search</button>
             </a>
             <br>
 
             <a href="../filterExamples/filterExamples.html">
-                <button class="examplesButton">Filter/Click</button>
+                <button class="examplesButton">Filter</button>
+            </a>
+            <a href="../clickExamples/clickExamples.html">
+                <button class="examplesButton">Click</button>
             </a>
         </div>
         <br>
         
-        <h3>Add/Edit the category of a learning objective</h3> 
-        <p>
-            <i>Add a search bar for future searches based on categories (will only show learning objectives matching the searched category) and add categories to learning objectives.</i><p>
-        </p> 
-
-        <pre>
-            <code>
-                //add search bar above the list container to do searches based on category.
-                <span class="object">learn</span>.<span class="method">addSearchBar()</span>
-
-                //First argument refers to objective number to edit, second argument refers to category itself
-                <span class="object">learn</span>.<span class="method">editCategory(1,"Add")</span>
-                <span class="object">learn</span>.<span class="method">editCategory(2,"Delete")</span>
-            </code>
-        </pre>
-        <p>The category can be edited through the form as well - view form/difficulty example for details</p>
-        <br>
-       
 
         <h3>Search objectives based on category</h3>
         <p>If users are particularly interested in a specific category of objectives to learn, then they can use this feature to view only those objectives.</p>
@@ -79,6 +66,9 @@
        
         <pre>
             <code>
+                //add search bar above the list container to do searches based on category.
+                <span class="object">learn</span>.<span class="method">addSearchBar()</span>
+
                 //This mimics a user typing into the search bar, as shown, the search results match the parameter to the search method
                 <span class="object">learn</span>.<span class="method">search("Add")</span>
 

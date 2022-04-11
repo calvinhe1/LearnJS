@@ -42,11 +42,6 @@ learn.search("")
 
 learn.filter("Add")
 
-//Makes the learning objective yellow
-learn.clickObjective(1)
-
-//Makes the learning objective green if clicked again. If clicked again, will go back to red.
-learn.clickObjective(1)
 
 
 /*

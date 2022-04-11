@@ -13,62 +13,94 @@
     <body>
 
         <div class="doc">
-        <h1>
-            LearnJS
-        </h1>
+         
+        <a href="../landingpage.html" style="text-decoration: none">
+            <h1>
+                LearnJS
+            </h1>
+        </a>
         <div class="links">
+           
             <a href="../addExamples/addExamples.html">
-                <button class="examplesButton">Adding/Editing</button>
+                <button class="examplesButton">Add</button>
             </a>
             <br>
             <a href="../deleteExamples/deleteExamples.html">
-                <button class="examplesButton">Deleting</button>
+                <button class="examplesButton">Delete</button>
             </a>
             <br>
             <a href="../formExamples/formExamples.html">
-                <button class="examplesButton">Form/Difficulty</button>
+                <button class="examplesButton">Form</button>
             </a>
 
             <br>
             <a href="../hoverExamples/hoverExamples.html">
-                <button class="examplesButton">Hover/Description</button>
+                <button class="examplesButton">Hover</button>
             </a>
 
             <br>
             <a href="../searchExamples/searchExamples.html">
-                <button class="examplesButton">Search/Category</button>
+                <button class="examplesButton">Search</button>
             </a>
             <br>
 
             <a href="../filterExamples/filterExamples.html">
-                <button class="examplesButton">Filter/Click</button>
+                <button class="examplesButton">Filter</button>
+            </a>
+            <a href="../clickExamples/clickExamples.html">
+                <button class="examplesButton">Click</button>
             </a>
         </div>
         <br>
-        
-   
-        <h3>Display details of a learning objective</h3>
-        <p>
-            Display all the details about a learning objective (the title, category, and description). <p>
-        <p>  
-        The form can be optionally edited: submitting the form saves any changes and closing discards any changes.
-        </p>
-        <br>
-        <p><i>Displaying the form of an objective.</i></p>
+        <h3>Add/Edit the title of a learning objective</h3>
+        <p><i>Write a title on top of the corresponding objective.</i></p>
         <pre>
             <code>
-                //First argument refers to objective form to display, second argument refers to on or off with 1 or 0 respectively.
-                learn.form(1,1)
-                
-                //learn.form(1,0) to close the form. Must turn off a form before opening another form. 
+                //adding or editing titles for given objective number
+                <span class="object">learn</span>.<span class="method">editTitle(1,"Learn how to add objectives")</span>
+                <span class="object">learn</span>.<span class="method">editTitle(2,"Learn how to view objectives")</span>
             </code>
         </pre>
-        </p> 
-        This form can also be triggered if a user right clicks on a learning objective. 
-        </p>
 
         <br>
 
+        <h3>Add/Edit the description of a learning objective</h3> 
+        <p>The description is the information that is displayed in a convenient manner in relation to a learning objective.
+        <p>
+        <p> It acts as a summary a user can quickly review.</p>
+
+        <br>
+
+        <p>
+        <i>Add/edit the description of a learning objective, this is the information that will remind users of the details of the learning objective. </i>
+        </p> 
+   
+        <pre>
+            <code>
+                //First argument refers to the objective number to edit, second argument refers to the description itself.
+                <span class="object">learn</span>.<span class="method">editDescription(1,"Users can click the press button to add an objective.")</span>
+    
+            </code>
+        </pre>
+      
+       <p>The description can be edited through the form as well - view form/difficulty example for details</p>
+        <br>
+
+        <h3>Add/Edit the category of a learning objective</h3> 
+        <p>
+            <i>Add a search bar for future searches based on categories (will only show learning objectives matching the searched category) and add categories to learning objectives.</i><p>
+        </p> 
+
+        <pre>
+            <code>
+                //First argument refers to objective number to edit, second argument refers to category itself
+                <span class="object">learn</span>.<span class="method">editCategory(1,"Add")</span>
+                <span class="object">learn</span>.<span class="method">editCategory(2,"Delete")</span>
+            </code>
+        </pre>
+        <p>The category can be edited through the form as well - view form/difficulty example for details</p>
+        <br>
+        
         <h3>Changing difficulty level of a learning objective</h3>
         <p>The purpose of these difficulty levels is to let the user know the amount of time/effort that needs to be invested to successfully understand the corresponding learning objective.</p>
         
@@ -83,6 +115,29 @@
         <p>
             The difficulty level can also be changed if user selects a different difficulty level than the current difficulty in the dropdown of the form and submitting.
         </p>
+
+        <br>
+        <h3>Display details of a learning objective</h3>
+        <p>
+            Display all the details about a learning objective in a form (the title, category, and description). <p>
+        <p>  
+        The form can be optionally edited: submitting the form saves any changes and closing discards any changes.
+        </p>
+        <br>
+        <p><i>Displaying the form of an objective.</i></p>
+        <pre>
+            <code>
+                //First argument refers to objective form to display, second argument refers to on or off with 1 or 0 respectively.
+                <span class="object">learn</span>.<span class="method">form(1,1)</span>
+                
+                //learn.form(1,0) to close the form. Must turn off a form before opening another form. 
+            </code>
+        </pre>
+        </p> 
+        This form can also be triggered if a user right clicks on a learning objective. 
+        </p>
+
+        <br>
 
         </div>
 

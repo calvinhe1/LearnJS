@@ -10,11 +10,6 @@ learn.addObjective("easy")
 learn.addObjective("intermediate")
 learn.addObjective("hard")
 
-
-learn.editTitle(1, "Learn how to add objectives")
-learn.editTitle(2, "Learn how to search objectives")
-
-
 learn.deleteObjective(3)
 
 

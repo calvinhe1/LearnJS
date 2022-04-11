@@ -2,13 +2,14 @@ body { /*Ensure it doesn't cross the sidebar*/
     right: 125px;
     background-color:Linen;
     font-family: Helvetica,Arial,sans-serif;
+    margin-bottom: 150px;
 
 }
 
 h1 {
     color: #16a085;
     display: inline;
-    background-color: Bisque;
+    background-color: white;
     padding-left: 10px;
     padding-right: 10px;
     font-style: italic;
@@ -103,7 +104,17 @@ h4 {
 .examplesButton {
     height: 50px;
     cursor: pointer;
-    background-color: rgb(255, 105, 97);
+    background-color: white;
     font-weight: bold;
     border: 2px solid black;
+    color: #16a085;
+    font-size: 16px;
+    width: 150px;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }

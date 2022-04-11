@@ -462,7 +462,7 @@ function LearnJS() {
     }
 
     /*Return an ID which signifies which objective*/
-    obj.clickObjective = function(objectiveNumber){
+    obj.changeColor = function(objectiveNumber){
         helperClickObjective(objectiveNumber)
     }
 

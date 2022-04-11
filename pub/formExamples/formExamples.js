@@ -10,14 +10,19 @@ learn.addObjective("easy")
 learn.addObjective("intermediate")
 learn.addObjective("hard")
 
-
-
 learn.editTitle(1, "Learn how to add objectives")
 learn.editTitle(2, "Learn how to search objectives")
+
+
 
 learn.editDifficulty(1, "hard")
 
 learn.deleteObjective(3)
+
+learn.editDescription(1,"Users can click the plus button to add an objective.")
+
+learn.editCategory(1,"Add")
+learn.editCategory(2,"Delete")
 
 learn.showDescription(1,1)
 learn.showDescription(1,0)

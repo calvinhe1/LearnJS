@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../LearnJS.css">
         <link rel="stylesheet" href="../ExamplesCSS.css"> 
         <script defer type="text/javascript" src="../LearnJS.js"></script>
-        <script defer type="text/javascript" src="searchExamples.js"></script>
+        <script defer type="text/javascript" src="clickExamples.js"></script>
         
     </head>
     <body>
@@ -15,79 +15,67 @@
         <div class="doc">
 
         
+       <a href="../landingpage.html" style="text-decoration: none">
         <h1>
             LearnJS
         </h1>
-        
+        </a>
         <div class="links">
+           
             <a href="../addExamples/addExamples.html">
-                <button class="examplesButton">Adding</button>
+                <button class="examplesButton">Add</button>
             </a>
             <br>
             <a href="../deleteExamples/deleteExamples.html">
-                <button class="examplesButton">Deleting</button>
+                <button class="examplesButton">Delete</button>
             </a>
             <br>
             <a href="../formExamples/formExamples.html">
-                <button class="examplesButton">Form/Difficulty</button>
+                <button class="examplesButton">Form</button>
             </a>
-            
-            
 
             <br>
             <a href="../hoverExamples/hoverExamples.html">
-                <button class="examplesButton">Hover/Description</button>
+                <button class="examplesButton">Hover</button>
             </a>
 
             <br>
             <a href="../searchExamples/searchExamples.html">
-                <button class="examplesButton">Search/Category</button>
+                <button class="examplesButton">Search</button>
             </a>
             <br>
 
             <a href="../filterExamples/filterExamples.html">
-                <button class="examplesButton">Filter/Click</button>
+                <button class="examplesButton">Filter</button>
+            </a>
+            <a href="../clickExamples/clickExamples.html">
+                <button class="examplesButton">Click</button>
             </a>
         </div>
         <br>
         
-        <h3>Add/Edit the category of a learning objective</h3> 
+    
+        <h3>Changing color of objectives</h3>
         <p>
-            <i>Add a search bar for future searches based on categories (will only show learning objectives matching the searched category) and add categories to learning objectives.</i><p>
+           Red indicates no understanding, yellow indicating some, and green indicating full.
         </p> 
-
-        <pre>
-            <code>
-                //add search bar above the list container to do searches based on category.
-                <span class="object">learn</span>.<span class="method">addSearchBar()</span>
-
-                //First argument refers to objective number to edit, second argument refers to category itself
-                <span class="object">learn</span>.<span class="method">editCategory(1,"Add")</span>
-                <span class="object">learn</span>.<span class="method">editCategory(2,"Delete")</span>
-            </code>
-        </pre>
-        <p>The category can be edited through the form as well - view form/difficulty example for details</p>
-        <br>
-       
-
-        <h3>Search objectives based on category</h3>
-        <p>If users are particularly interested in a specific category of objectives to learn, then they can use this feature to view only those objectives.</p>
-        <br>
         <p>
-           <i>Search the objectives of interest based on category.</i>
-        </p> 
-       
-        <pre>
-            <code>
-                //This mimics a user typing into the search bar, as shown, the search results match the parameter to the search method
-                <span class="object">learn</span>.<span class="method">search("Add")</span>
-
-                //learn.search("") to display all the objectives and remove categories in search bar.
-            </code>
-        </pre>
-        <p>
-            Users can type into the search bar as well to trigger the search
+            These colors are meant to help users keep track of their learning process.
         </p>
+      
+        <br>
+        <p><i>Changing the color of a learning objective to the corresponding user's level of understanding.</i></p>
+        <pre>
+            <code>
+                //Makes the learning objective yellow
+                <span class="object">learn</span>.<span class="method">changeColor(1)</span>
+
+                //Makes the learning objective green. If called again, will go back to red.
+                <span class="object">learn</span>.<span class="method">changeColor(1)</span>
+            </code>
+        </pre>
+
+        <p>Users can directly interact with the objectives through their own clicks.</p>
 
         </div>
 
