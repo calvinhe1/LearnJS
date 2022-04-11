@@ -5,7 +5,7 @@
         <title>LearnJS</title>  
         
         <link rel="stylesheet" href="../LearnJS.css">
-        <link rel="stylesheet" href="deleteExamples.css"> 
+        <link rel="stylesheet" href="../ExamplesCSS.css"> 
         <script defer type="text/javascript" src="../LearnJS.js"></script>
         <script defer type="text/javascript" src="deleteExamples.js"></script>
         
@@ -18,56 +18,59 @@
         <h1>
             LearnJS
         </h1>
+        
+        <div class="links">
+           
+            <a href="../addExamples/addExamples.html">
+                <button class="examplesButton">Adding/Editing</button>
+            </a>
+            <br>
+            <a href="../deleteExamples/deleteExamples.html">
+                <button class="examplesButton">Deleting</button>
+            </a>
+            <br>
+            <a href="../formExamples/formExamples.html">
+                <button class="examplesButton">Form/Difficulty</button>
+            </a>
+
+            <br>
+            <a href="../hoverExamples/hoverExamples.html">
+                <button class="examplesButton">Hover/Description</button>
+            </a>
+
+            <br>
+            <a href="../searchExamples/searchExamples.html">
+                <button class="examplesButton">Search/Category</button>
+            </a>
+            <br>
+
+            <a href="../filterExamples/filterExamples.html">
+                <button class="examplesButton">Filter/Click</button>
+            </a>
+        </div>
+        <br>
    
         
         <h3>Deleting a learning objective</h3>
-        <p>Remove a learning objective from the list. </p>
-
+        <p>If learning objectives are not relevant or are incorrectly added, then they can be removed from the list.<p>
+        <br>    
+        <p><i>Remove a learning objective from the list.</i> </p>
 
         <pre>
             <code>
-                //Delete nth objective shown in the list.
-                learn.deleteObjective(3)
+                //Delete 3rd objective shown in the list. 
+                <span class="object">learn</span>.<span class="method">deleteObjective(3)</span>
             </code>
         </pre>
+
+        <p>Users can also delete learning objectives themselves by clicking on the delete button below a specified learning objective.</p>
        
-
-
+           
+        <br class="buttonDistance">
+        <br class="buttonDistance">
+        <br class="buttonDistance">
+    
         
-        <a href="deleteExamples.html">
-            <button class="examplesButton">Delete examples</button>
-        </a>
-        <br>
-        <a href="../addExamples/addExamples.html">
-            <button class="examplesButton">Add examples</button>
-        </a>
-        <br>
-        <a href="../formExamples/formExamples.html">
-            <button class="examplesButton">Form examples</button>
-        </a>
-
-        <br>
-        <a href="../hoverExamples/hoverExamples.html">
-            <button class="examplesButton">Hover examples</button>
-        </a>
-
-        <br>
-        <a href="../searchExamples/searchExamples.html">
-            <button class="examplesButton">Hover examples</button>
-        </a>
-        <br>
-
-        <a href="../filterExamples/filterExamples.html">
-            <button class="examplesButton">Filter examples</button>
-        </a>
-        
-
-
-
-
-
-
-
         </div>
 
         

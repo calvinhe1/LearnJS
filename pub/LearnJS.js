@@ -492,7 +492,8 @@ function LearnJS() {
 
         if (on == 0) {
             let elem = document.getElementById(objectiveNumber.toString() + "descriptorParent")
-            elem.parentNode.removeChild(elem)
+            if (elem!= null)
+                elem.parentNode.removeChild(elem)
             popupOpen = false
             currentPopupID = -1
             
@@ -601,8 +602,9 @@ function LearnJS() {
     
     obj.search = function(search, on=1) {
 
-        //
-
+    
+        let searchInput = document.getElementById('searchInput')
+        searchInput.setAttribute("value", search)
         if (on)
             searchDropdown(search)
         else {
@@ -631,6 +633,7 @@ function LearnJS() {
         if (currentPopupID != objectiveNumber && currentPopupID != -1)
             return
 
+
         justAddedObjective = false;
         if (on) {
             popupOpen = true
@@ -640,13 +643,11 @@ function LearnJS() {
         }
         
         else {
-      
             popupOpen = false
             currentPopupID = -1
 
             let elem = document.getElementById(objectiveNumber.toString() + "descriptorParent")
             elem.parentNode.removeChild(elem)
-            
         }
         
     }
@@ -880,7 +881,7 @@ function searchSubmit (e) {
 
   //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
   e.preventDefault()
-  
+
     searchDropdown(searchInput.value)
 
     if (Number.isInteger(e.keyCode) && e.keyCode != 13) {

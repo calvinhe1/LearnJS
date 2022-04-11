@@ -11,18 +11,42 @@ learn.addObjective("intermediate")
 learn.addObjective("hard")
 
 
-
 learn.editTitle(1, "Learn how to add objectives")
 learn.editTitle(2, "Learn how to search objectives")
 
 learn.editDifficulty(1, "hard")
 
+//Delete examples
 learn.deleteObjective(3)
 
+//Form examples
+//learn.form(1,1)
+
+//Hover examples
+learn.editDescription(1,"Users can click the press button to add an objective.")
+
+//Show the description of an objective
 learn.showDescription(1,1)
 learn.showDescription(1,0)
-learn.form(1,1)
 
+learn.addSearchBar()
+
+learn.editCategory(1,"Add")
+learn.editCategory(2,"Delete")
+
+learn.search("Add")
+
+learn.search("")
+
+
+
+learn.filter("Add")
+
+//Makes the learning objective yellow
+learn.clickObjective(1)
+
+//Makes the learning objective green if clicked again. If clicked again, will go back to red.
+learn.clickObjective(1)
 
 
 /*

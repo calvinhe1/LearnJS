@@ -5,7 +5,7 @@
         <title>LearnJS</title>  
         
         <link rel="stylesheet" href="../LearnJS.css">
-        <link rel="stylesheet" href="formExamples.css"> 
+        <link rel="stylesheet" href="../ExamplesCSS.css"> 
         <script defer type="text/javascript" src="../LearnJS.js"></script>
         <script defer type="text/javascript" src="formExamples.js"></script>
         
@@ -13,25 +13,48 @@
     <body>
 
         <div class="doc">
-
-        
         <h1>
             LearnJS
         </h1>
-   
+        <div class="links">
+            <a href="../addExamples/addExamples.html">
+                <button class="examplesButton">Adding/Editing</button>
+            </a>
+            <br>
+            <a href="../deleteExamples/deleteExamples.html">
+                <button class="examplesButton">Deleting</button>
+            </a>
+            <br>
+            <a href="../formExamples/formExamples.html">
+                <button class="examplesButton">Form/Difficulty</button>
+            </a>
+
+            <br>
+            <a href="../hoverExamples/hoverExamples.html">
+                <button class="examplesButton">Hover/Description</button>
+            </a>
+
+            <br>
+            <a href="../searchExamples/searchExamples.html">
+                <button class="examplesButton">Search/Category</button>
+            </a>
+            <br>
+
+            <a href="../filterExamples/filterExamples.html">
+                <button class="examplesButton">Filter/Click</button>
+            </a>
+        </div>
+        <br>
         
-        <h3>Display the form of a learning objective</h3>
+   
+        <h3>Display details of a learning objective</h3>
         <p>
-            Display all the details about a learning objective. <p>
-        </p> 
-        This form can also be triggered if a user right clicks on the learning objective. The title, difficulty level, category, and description can be edited from here by the user. 
-          
+            Display all the details about a learning objective (the title, category, and description). <p>
+        <p>  
+        The form can be optionally edited: submitting the form saves any changes and closing discards any changes.
         </p>
-        <p>  Submitting the form saves any changes, and closing the form removes any changes.
-
-        </p>
-
-
+        <br>
+        <p><i>Displaying the form of an objective.</i></p>
         <pre>
             <code>
                 //First argument refers to objective form to display, second argument refers to on or off with 1 or 0 respectively.
@@ -40,8 +63,16 @@
                 //learn.form(1,0) to close the form. Must turn off a form before opening another form. 
             </code>
         </pre>
+        </p> 
+        This form can also be triggered if a user right clicks on a learning objective. 
+        </p>
+
+        <br>
 
         <h3>Changing difficulty level of a learning objective</h3>
+        <p>The purpose of these difficulty levels is to let the user know the amount of time/effort that needs to be invested to successfully understand the corresponding learning objective.</p>
+        
+        <br>
         <p><i>Change the difficulty level of a given learning objective (changes the shape and the color of the border of the objective to the matching difficulty level - see main page for details) </i></p>
         <pre>
             <code>
@@ -49,38 +80,9 @@
                 <span class="object">learn<span>.<span class="method">editDifficulty(1, "hard")</span>
             </code>
         </pre>
-       
-
-
-        <a href="deleteExamples.html">
-            <button class="examplesButton">Delete examples</button>
-        </a>
-        <br>
-        <a href="../addExamples/addExamples.html">
-            <button class="examplesButton">Add examples</button>
-        </a>
-        <br>
-        <a href="../formExamples/formExamples.html">
-            <button class="examplesButton">Form examples</button>
-        </a>
-
-        <br>
-        <a href="../hoverExamples/hoverExamples.html">
-            <button class="examplesButton">Hover examples</button>
-        </a>
-        
-        
-        
-
-        
-
-
-
-
-
-
-
-
+        <p>
+            The difficulty level can also be changed if user selects a different difficulty level than the current difficulty in the dropdown of the form and submitting.
+        </p>
 
         </div>
 

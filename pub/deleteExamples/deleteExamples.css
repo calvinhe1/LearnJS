@@ -5,6 +5,28 @@
   
 }
 
+pre, code {
+    white-space: pre-line;
+}
+
+pre {
+    background-color: white;
+}
+
+.object {
+    color: #16a085;
+
+}
+
+.method {
+    color: rgb(255, 105, 97);
+}
+
+.special {
+    color: purple;
+}
+
+
 
 body { /*Ensure it doesn't cross the sidebar*/
     right: 125px;
@@ -18,7 +40,7 @@ h1 {
     display: inline;
 
 
-    background-color: Bisque;
+    background-color: white;
     padding-left: 10px;
     padding-right: 10px;
     font-style: italic;
@@ -32,4 +54,21 @@ h3 {
     color: rgb(255, 105, 97);
     font-size: 1.5em;
     font-weight: bold;
+}
+
+.examplesButton {
+    height: 50px;
+    cursor: pointer;
+    background-color: white;
+    font-weight: bold;
+    border: 2px solid black;
+    color: #16a085;
+    font-size: 16px;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }

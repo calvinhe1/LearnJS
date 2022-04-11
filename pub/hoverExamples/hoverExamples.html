@@ -5,10 +5,9 @@
         <title>LearnJS</title>  
         
         <link rel="stylesheet" href="../LearnJS.css">
-        <link rel="stylesheet" href="hoverExamples.css"> 
+        <link rel="stylesheet" href="../ExamplesCSS.css"> 
         <script defer type="text/javascript" src="../LearnJS.js"></script>
         <script defer type="text/javascript" src="hoverExamples.js"></script>
-        
     </head>
     <body>
 
@@ -18,70 +17,82 @@
         <h1>
             LearnJS
         </h1>
-        
-        <h3>Edit the description of a learning objective</h3> 
-        <p>
-            Edit the summary/description of a learning objective, this is the set of information a user wants to be reminded of with regards to a learning objective. <p>
-        </p> 
 
+        <div class="links">
+            <a href="../addExamples/addExamples.html">
+                <button class="examplesButton">Adding/Editing</button>
+            </a>
+            <br>
+            <a href="../deleteExamples/deleteExamples.html">
+                <button class="examplesButton">Deleting</button>
+            </a>
+            <br>
+            <a href="../formExamples/formExamples.html">
+                <button class="examplesButton">Form/Difficulty</button>
+            </a>
+
+            <br>
+            <a href="../hoverExamples/hoverExamples.html">
+                <button class="examplesButton">Hover/Description</button>
+            </a>
+
+            <br>
+            <a href="../searchExamples/searchExamples.html">
+                <button class="examplesButton">Search/Category</button>
+            </a>
+            <br>
+
+            <a href="../filterExamples/filterExamples.html">
+                <button class="examplesButton">Filter/Click</button>
+            </a>
+        </div>
+        <br>
+
+        
+        <h3>Add/Edit the description of a learning objective</h3> 
+        <p>The description is the information that is displayed in a convenient manner in relation to a learning objective.
+        <p>
+        <p> It acts as a summary a user can quickly review.</p>
+
+        <br>
+
+        <p>
+        <i>Add/edit the description of a learning objective, this is the information that will remind users of the details of the learning objective. </i>
+        </p> 
+   
         <pre>
             <code>
-                //First argument refers to objective number to edit, second argument refers to the description itself.
-                learn.editDescription(1,"Users can click the press button to add an objective.")
+                //First argument refers to the objective number to edit, second argument refers to the description itself.
+                <span class="object">learn</span>.<span class="method">editDescription(1,"Users can click the press button to add an objective.")</span>
     
             </code>
         </pre>
-       
-
+      
+       <p>The description can be edited through the form as well - view form/difficulty example for details</p>
+        <br>
         <h3>Display the description of a learning objective</h3>
         <p>
-            Display the description/summary about a learning objective in a boxed format. <p>
-        </p> 
-        This box can also be triggered if a user mouses over a learning objective. (Only if there exists a description)
-        </p>
-        </p> 
-        NOTE: The above user functionality will not work in this example page to showcase the popup without a user mousing over the learning objective.
-        </p>
-
+           <i> Display the description about a learning objective and view the important details associated with it.</i> <p>
         <pre>
             <code>
                 //First argument refers to the objective description to display, second argument refers to on or off with 1 or 0 respectively.
-                learn.showDescription(1,1)
+                <span class="object">learn</span>.<span class="method">showDescription(1,1)</span>
                 
                 //learn.showDescription(1,0) to close the description. Must turn off this before opening another form/popup.
             </code>
         </pre>
-       
+        </p> 
+        This box can also be triggered if a user mouses over a learning objective (only if there exists a description).
+        </p>
+        </p> 
+        <b>Note</b>: The above user functionality will not work in this particular example page (Hover/Description) to showcase the popup.
+        </p>
 
-
-       
-        <a href="deleteExamples.html">
-            <button class="examplesButton">Delete examples</button>
-        </a>
-        <br>
-        <a href="../addExamples/addExamples.html">
-            <button class="examplesButton">Add examples</button>
-        </a>
-        <br>
-        <a href="../formExamples/formExamples.html">
-            <button class="examplesButton">Form examples</button>
-        </a>
-
-        <br>
-        <a href="../hoverExamples/hoverExamples.html">
-            <button class="examplesButton">Hover examples</button>
-        </a>
-
-        <br>
-        <a href="../searchExamples/searchExamples.html">
-            <button class="examplesButton">Hover examples</button>
-        </a>
-        <br>
-
-        <a href="../filterExamples/filterExamples.html">
-            <button class="examplesButton">Filter examples</button>
-        </a>
         
+
+
+       
+       
         
         
 
