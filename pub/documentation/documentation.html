@@ -6,6 +6,8 @@
         
         <link rel="stylesheet" href="../LearnJS.css">
         <link rel="stylesheet" href="../ExamplesCSS.css"> 
+        <link rel="stylesheet" href="documentation.css"> 
+
         <script defer type="text/javascript" src="../LearnJS.js"></script>
         <script defer type="text/javascript" src="documentation.js"></script>
         
@@ -112,10 +114,12 @@
         <ul class="behaviors">
             <li>Adds an event listener for users to delete the learning objective when they click the delete button below the learning objective. </li>
             <li>Adds an event listener for users to display to edit the details (difficulty level, category, title, description) of a learning objective by displaying a form when they right click the learning objective. </li>
+            <li>Adds an event listener for when the user types any key, showing categories that partially or fully matches with what was typed as a dropdown. When the enter key is pressed, the recommended choices are hidden.</li>
+            <li>Adds an event listener for when the user clicks on a recommended category in the dropdown menu in category.</li>
             <li>Adds an event listener for users to submit the form of any changes of a learning objective by clicking the submit button. </li>
             <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
-
             <li>Adds an event listener for users to view the description (key ideas of learning objective) of a learning objective when they mouse over the learning objective (for non empty description). </li>
+            <li>Adds an event listener to hide the description when users mouse out of the learning objective. </li>
             <li>Adds an event listener for users to change the color of a learning objective to signify current level of understanding to help keep track of their learning progress by clicking on the learning objective. </li>
         </ul>
 
@@ -222,6 +226,10 @@
         <ul class="behaviors">
             <li>Adds an event listener for users to submit the form of any changes of a learning objective by clicking the submit button. </li>
             <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
+            <li>Add event listener for when the user types any key in the category field, showing categories that partially or fully matches with what was typed as a dropdown. When the enter key is pressed, the recommended choices are hidden.</li>
+            <li>Add event listener for when the user clicks on a recommended category in the dropdown menu in category.</li>
+            <li>Add event listener for when the user selects a different difficulty level, to keep track of the new difficulty level.</li>
+            
         </ul>
 
 
@@ -246,6 +254,7 @@
         <ul class="behaviors">
             <li>Add event listener for when the user types any key, showing categories that partially or fully matches with what was typed as a dropdown. When the enter key is pressed, the search is registered and the learning objectives matching the search shows up. Note: entering an empty space will show all the learning objectives.</li>
             <li>Add event listener for when the user clicks a recommended category in the dropdown menu, acting as an enter key with the clicked category.</li>
+    
         </ul>
 
 

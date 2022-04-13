@@ -18,6 +18,7 @@ learn.editDifficulty(1, "hard")
 learn.deleteObjective(3)
 
 learn.editDescription(1,"Users can click the plus button to add an objective.")
+learn.editDescription(2,"Users can click the delete button to remove an objective.")
 
 learn.editCategory(1,"Add")
 learn.editCategory(2,"Delete")

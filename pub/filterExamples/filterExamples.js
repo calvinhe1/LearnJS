@@ -24,6 +24,7 @@ learn.deleteObjective(3)
 
 //Hover examples
 learn.editDescription(1,"Users can click the press button to add an objective.")
+learn.editDescription(2,"Users can click the delete button to remove an objective.")
 
 //Show the description of an objective
 learn.showDescription(1,1)

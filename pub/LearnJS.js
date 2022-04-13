@@ -18,6 +18,7 @@ let positionScroll = 0
 let storedList;
 let storedSearchBar;
 let currentSearching = true
+let currentDifficulty="easy"
 
 
 function moveList(e) {
@@ -203,6 +204,14 @@ function helperAddObjective() {
     objectivesStore.push(objectivePair)
     justAddedObjective = true
 
+    
+    //Make empty arrays.
+    categories.push("")
+    descriptions.push("")
+    titles.push("")
+
+
+
     return objective.id
 }
 
@@ -226,6 +235,8 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     difficulties.splice(parseInt(id-1))
 
 
+
+
     //Change the ids of the objectives that come AFTER it to ensure correct ID.
 
     //Issue is the DOM elements might not be present. In that case, manipulate the objectives array.
@@ -234,7 +245,8 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
       
         //NULL because currently not in the DOM, but should still update position.
         if (objective == null) {
-            objectivesStore[i-2].objective.setAttribute('id', i-1)
+            objectivesStore[i-2].objective.setAttribute('id', i-1) //change objective id.
+            objectivesStore[i-2].deleteButton.setAttribute('id', (i-1).toString() + "closeButton")
             continue;
         }
 
@@ -276,18 +288,29 @@ function helperClickObjective(e) {
 
 
 function helperHoverObjective(e) {
-
+    
+    
     let descriptorParent = document.createElement("div")
     descriptorParent.id = e.toString() +"descriptorParent"
     
     let descriptor = document.createElement('span')
 
-    if (descriptions[e-1] != undefined)
-        descriptor.innerText = descriptions[e-1]
+    if (descriptions[e-1] == "")
+        return
+    else if (descriptions[e-1] != undefined) {
+
+         descriptor.innerText = descriptions[e-1]
+
+    }
     else {
         justAddedObjective = false
         return
     }
+
+
+
+
+    
 
     descriptor.id = e.toString() + "descriptor"
 
@@ -314,6 +337,8 @@ function helperHoverObjective(e) {
 
 //pass in the objective number.
 function helperShowForm(objectiveNumber) {
+
+    currentDifficulty = difficulties[objectiveNumber-1]
 
     let descriptorParent = document.createElement("div")
     let form = document.createElement('form')
@@ -387,8 +412,10 @@ function helperShowForm(objectiveNumber) {
     input.id = "input"
 
 
+    log(titles[objectiveNumber-1])
     if (titles[objectiveNumber-1] != undefined) {
         input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
+        log("HERE")
     }
   
     labelTitle.appendChild(titleText)
@@ -570,7 +597,7 @@ function LearnJS() {
         let objectiveEdit = document.getElementById(objectiveNumber)
         //see if title child exists.    
         if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
-            objectiveEdit.firstElementChild.innerText = title
+            objectiveEdit.firstElementChild.innerText = title //Why not just append a paragraph with the respective title instead of doing this?
             titles[objectiveNumber-1] = title
             return title
         }
@@ -646,7 +673,7 @@ function LearnJS() {
         searchContainer.appendChild(ul)
         document.body.appendChild(searchContainer)
         let searchChange = document.getElementById('searchInput')
-        searchChange.addEventListener('keyup', searchSubmit)
+        searchChange.addEventListener('keyup', searchObjectives)
     }
 
     //Need a function for filtered state, and one for list.
@@ -746,6 +773,7 @@ function LearnJS() {
         return titles 
     }
 
+
     
     return obj
 }
@@ -761,6 +789,9 @@ function addEventDelete(e) {
     let deleteButton= document.getElementById(e.currentTarget.id)
     let objectiveDeleteID = deleteButton.id[0]
     let objDelete = document.getElementById(objectiveDeleteID)
+
+    log("addEventDelete")
+    log(deleteButton, objectiveDeleteID, objDelete)
    
     helperDeleteObjective(objDelete, deleteButton)
 
@@ -770,7 +801,10 @@ function addEventAdd(e) {
 
 
     let newObjectiveId = helperAddObjective()
+    //update arrays
     difficulties[newObjectiveId-1] = "easy"
+   
+
     helperShowForm(newObjectiveId)
     popupOpen = true
 
@@ -822,6 +856,8 @@ function clickedCloseForm(e) {
     elem.parentNode.removeChild(elem)
 
     popupOpen = false;
+
+    difficulties[currentPopupID-1] = currentDifficulty
   
     if (justAddedObjective) {
         
@@ -841,20 +877,26 @@ function clickedSubmit(e) {
     let objectiveNumber = e.currentTarget.id[0]
     let objectiveEdit = document.getElementById(objectiveNumber)
 
+
+    log("title's not saving.")
+    log(objectiveEdit)
+    log(objectiveEdit.firstElementChild)
+
     //edit title
     if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
+        log("HERERQTQWT")
         objectiveEdit.firstElementChild.innerText = input.value
         titles[objectiveNumber-1] = input.value
       
     }
     else {
 
-        titles.push(input.value)
+        titles[objectiveNumber-1] = input.value
         let text = document.createElement("p")
         text.innerText = input.value
         text.className = "objectiveTitle"
         text.id = objectiveNumber.toString() + "title"
-        objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
+        objectiveEdit.appendChild(text) 
     }
 
     categories[objectiveNumber-1] = searchCategory.value
@@ -962,7 +1004,7 @@ function searchCategory (e) {
   
   }
 
-function searchSubmit (e) {
+function searchObjectives (e) {
 
   //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
   e.preventDefault()
@@ -977,7 +1019,7 @@ function searchSubmit (e) {
     }
 
     if (popupOpen == true)
-    return
+        return
 
     filterObjectives(searchInput.value)
     currentSearching = false
@@ -1032,7 +1074,7 @@ function enter(e) {
             filteredPosition++
             list.appendChild(objectivesStore[i].objective)
             list.appendChild(objectivesStore[i].deleteButton)
-          
+          .LearnJS
             objectivesStore[i].position = filteredPosition-1;
         
         }
@@ -1048,6 +1090,5 @@ function setDifficulty(e) {
         difficulties[currentPopupID-1] = this.value
     else
         difficulties[currentPopupID-1] = this.value.slice(9)
-
     
 }
