@@ -11,18 +11,5 @@ learn.addObjective("easy")
 learn.addObjective("intermediate")
 learn.addObjective("hard")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(learn)
 
