@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>LearnJS</title>  
+        
+        <link rel="stylesheet" href="../LearnJS.css">
+        <link rel="stylesheet" href="../ExamplesCSS.css"> 
+        <script defer type="text/javascript" src="../LearnJS.js"></script>
+        <script defer type="text/javascript" src="clickExamples.js"></script>
+        
+    </head>
+    <body>
+
+        <div class="doc">
+
+        
+       <a href="../landingpage.html" style="text-decoration: none">
+        <h1>
+            LearnJS
+        </h1>
+        </a>
+        <div class="links">
+           
+            <a href="../addExamples/addExamples.html">
+                <button class="examplesButton">Adding</button>
+            </a>
+            <br>
+            <a href="../deleteExamples/deleteExamples.html">
+                <button class="examplesButton">Deleting</button>
+            </a>
+            <br>
+            <a href="../formExamples/formExamples.html">
+                <button class="examplesButton">Editing</button>
+            </a>
+
+            <br>
+            <a href="../hoverExamples/hoverExamples.html">
+                <button class="examplesButton">Description</button>
+            </a>
+
+            <br>
+            <a href="../searchExamples/searchExamples.html">
+                <button class="examplesButton">Searching</button>
+            </a>
+            <br>
+
+            <a href="../filterExamples/filterExamples.html">
+                <button class="examplesButton">Filtering</button>
+            </a>
+            <a href="../clickExamples/clickExamples.html">
+                <button class="examplesButton">Color</button>
+            </a>
+        </div>
+        <br>
+    
+        <h3>Changing color of objectives</h3>
+        <p>
+           Recall: Red indicates no understanding of learning objective, yellow indicating some, and green indicating full.
+        </p> 
+        <p>
+            These colors are meant to help users keep track of their learning process. They can interact with these learning objectives as they progress through the material, keeping in mind their level of understanding.
+        </p>
+      
+        <br>
+        <p><i>Changing the color of a learning objective to the corresponding user's level of understanding.</i></p>
+        <pre>
+            <code>
+                //Makes the learning objective yellow indicating some understanding of learning objective.
+                <span class="object">learn</span>.<span class="method">changeColor("yellow")</span>
+
+                //Makes the learning objective green indicating full understanding of learning objective.
+                <span class="object">learn</span>.<span class="method">changeColor("green")</span>
+            </code>
+        </pre>
+
+        <p>Users can directly change the color of the objectives through their own clicks.</p>
+
+        </div>
+
+        
+
+    </body>
+
+</html>

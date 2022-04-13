@@ -20,42 +20,42 @@
         <div class="links">
            
             <a href="../addExamples/addExamples.html">
-                <button class="examplesButton">Add</button>
+                <button class="examplesButton">Adding</button>
             </a>
             <br>
             <a href="../deleteExamples/deleteExamples.html">
-                <button class="examplesButton">Delete</button>
+                <button class="examplesButton">Deleting</button>
             </a>
             <br>
             <a href="../formExamples/formExamples.html">
-                <button class="examplesButton">Form</button>
+                <button class="examplesButton">Editing</button>
             </a>
 
             <br>
             <a href="../hoverExamples/hoverExamples.html">
-                <button class="examplesButton">Hover</button>
+                <button class="examplesButton">Description</button>
             </a>
 
             <br>
             <a href="../searchExamples/searchExamples.html">
-                <button class="examplesButton">Search</button>
+                <button class="examplesButton">Searching</button>
             </a>
             <br>
 
             <a href="../filterExamples/filterExamples.html">
-                <button class="examplesButton">Filter</button>
+                <button class="examplesButton">Filtering</button>
             </a>
             <a href="../clickExamples/clickExamples.html">
-                <button class="examplesButton">Click</button>
+                <button class="examplesButton">Color</button>
             </a>
         </div>
         <br>
-
         
-        <h4>Note: The above examples are built on top of each other from left to right.</h4>
+        <h4>Note: The above examples build on top of each other from left to right, however each example page has its own JS file so they are separate (changes in a particular example page won't affect another example page).</h4>
 
         <h3>Adding a learning objective</h3>
-        <p>Add learning objectives to a webpage in an aesthetic way and inform users about what they will learn.</p>
+        <p>Add learning objectives to a webpage in an aesthetic way and inform users about what they will learn (refer to main page to understand meaning of shapes and their respective difficulty level)
+
    
         <br>
         <p><i>Create a list container and add learning objectives to it.</i></p>
@@ -63,6 +63,7 @@
 
         <pre>
             <code>
+                //Get LearnJS library object
                 const <span class="object">learn</span> = <span class="special">LearnJS()</span>
 
                 //add list container to hold learning objectives.
@@ -74,8 +75,8 @@
                 <span class="object">learn</span>.<span class="method">addObjective("hard")</span>
             </code>
         </pre>
-        <p>Users can also add their own learning objectives by clicking the plus button in the bottom of the list container (<b>Note</b>: must submit the form to successfully add)</p>
-        
+        <p>Users can add their own learning objectives by clicking the plus button in the bottom of the list container (<b>Note</b>: must submit the form to successfully add)</p>
+    
     
      
         </div>

@@ -6,6 +6,7 @@ let currentPopupID = -1
 let descriptions = [];
 let titles = [];
 let categories = [];
+let difficulties = [];
 let popupOpen = false
 let justAddedObjective = false
 let objectivesStore = []; //Used to re-add, hide objectives rather than completely removing it; simply remove it from DOM if it doesn't match the search.
@@ -13,33 +14,15 @@ let currentCategory = "all";
 let objectivesFilter = [];
 let filteredPosition  = 1;
 
-
 let hide = 0
 let positionScroll = 0
 let storedList;
 let storedSearchBar;
 
-
-let randomButton = document.createElement('button')
-randomButton.innerHTML = "Move list"
-randomButton.className = "specialButtons"
-document.body.appendChild(randomButton)
-
-let hideButton = document.createElement('button')
-hideButton.innerHTML = "Hide list"
-document.body.appendChild(hideButton)
+let currentSearching = true
 
 
-hideButton.style.position="fixed"
-hideButton.style.top="20px"
-hideButton.className = "specialButtons"
-
-
-randomButton.style.position = "fixed"
-randomButton.style.top = "0px"
-
-
-function tester(e) {
+function moveList(e) {
 
     positionScroll = window.scrollY
     //adjust EVERYTHING.
@@ -68,10 +51,10 @@ function tester(e) {
 }
 
 //hide.
-function testertwo(e) {
+function hideList(e) {
     let listContainer = document.getElementById("positionContainer")
     let searchContainer = document.getElementById('searchContainer')
-
+    let hideButton = document.getElementById('hideButton')
 
     if (hide) {
         hide = 0
@@ -79,43 +62,45 @@ function testertwo(e) {
     else
         hide =1
 
-
     if (hide) {
-        
-
+    
         document.body.removeChild(listContainer)
 
         if (searchContainer) {
             document.body.removeChild(searchContainer)
         }
 
-        //also search bar.
-
-        
+        //searchbar.
         storedList = listContainer
         storedSearchBar = searchContainer
 
         let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
-        if (elem)
+        if (elem) {
             elem.parentNode.removeChild(elem)
+
+        
+    
+
+            //change innerhtml.
+
+        }
+        
+        hideButton.innerHTML = "Unhide list"
+
+
         popupOpen = false;
     }
     else {
        
         document.body.appendChild(storedList)
-        if(storedSearchBar)
+
+     
+        hideButton.innerHTML = "Hide list"
+       
+        if(storedSearchBar) 
             document.body.appendChild(storedSearchBar)
-        
-
     }
-    
-
-
-
 }
-
-hideButton.addEventListener("click", testertwo)
-randomButton.addEventListener("click", tester)
 
 
 
@@ -126,6 +111,8 @@ function searchDropdown(search) {
 
     let searchList = document.getElementById("searchList")
     let searchContainer = document.getElementById('searchContainer')
+
+    log(searchContainer)
 
 
     if (searchList)
@@ -138,7 +125,7 @@ function searchDropdown(search) {
 
   
      let matchingCategories = categories.filter(category => {
-          if (category.toLowerCase().indexOf(search.toLowerCase()) >= 0 && search.value != "") {
+          if (category.toLowerCase().indexOf(search.toLowerCase()) >= 0 ) {
               return true;
           }
           return false;
@@ -170,14 +157,19 @@ function searchDropdown(search) {
 function filterObjectives(search) {
 
 
-
+    //currentSearching = false;
 
     let searchList = document.getElementById("searchList")
     let searchContainer = document.getElementById('searchContainer')
 
     //Remove all the objectives that were in previous filter.
+
+
+    log("HERE", currentCategory)
+
     for (let i=0; i<objectivesStore.length; i++) {
-        
+    
+   
         if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
             list.removeChild(objectivesStore[i].objective)
             list.removeChild(objectivesStore[i].deleteButton)
@@ -187,11 +179,15 @@ function filterObjectives(search) {
     filteredPosition = 1
     currentCategory = search //replace with search
 
+    log(currentCategory)
+
     if (currentCategory == "")
         currentCategory = "all"
 
     for (let i=0; i<objectivesStore.length; i++) {
         
+        if (categories[i] == undefined)
+        continue
         //if user entered a blank or matches category then add back.
         if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
             filteredPosition++
@@ -249,6 +245,7 @@ function helperAddObjective() {
     let position = filteredPosition
     filteredPosition++
 
+  
     const objectivePair = {objective: objective, deleteButton: closeButton, position: position}
 
     objectivesStore.push(objectivePair)
@@ -281,7 +278,8 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     descriptions.splice(parseInt(id)-1, 1)
     titles.splice(parseInt(id)-1, 1)
     //Change all previous IDs -1.
-    categories.splice(parseInt(id)-1)
+    categories.splice(parseInt(id)-1, 1)
+    difficulties.splice(parseInt(id-1))
 
   
 
@@ -379,6 +377,8 @@ function helperHoverObjective(e) {
 //pass in the objective number.
 function helperShowForm(objectiveNumber) {
 
+ 
+
     let descriptorParent = document.createElement("div")
     let form = document.createElement('form')
     let labelTitle = document.createElement('label')
@@ -409,17 +409,30 @@ function helperShowForm(objectiveNumber) {
     
     labelDifficulty.appendChild(difficultyText)
 
-    pickDifficulty.innerHTML = "---"
+
+    //check if there is an existing pickDifficulty
+
+    
+  
+    
+    pickDifficulty.innerHTML = "Current: " + difficulties[objectiveNumber-1]
+    
     easyDifficulty.innerHTML = "Easy"
     mediumDifficulty.innerHTML = "Intermediate" //Need the difficulty thing to be selecting the last picked value.
     hardDifficulty.innerHTML = "Hard"
 
+    pickDifficulty.id ="pickDifficulty"
+
+    //Reset?
+    
+ 
     selectDifficulty.appendChild(pickDifficulty)
     selectDifficulty.appendChild(easyDifficulty)
     selectDifficulty.appendChild(mediumDifficulty)
     selectDifficulty.appendChild(hardDifficulty)
     
     difficultyForm.appendChild(selectDifficulty)
+   
     selectDifficulty.id = "selectDifficulty"
     
     let labelCategory = document.createElement('label')
@@ -469,6 +482,11 @@ function helperShowForm(objectiveNumber) {
     form.appendChild(input)
     form.appendChild(labelDifficulty)
     form.appendChild(difficultyForm)
+
+
+
+    selectDifficulty.className = "selectDifficulty"
+    console.log(hardDifficulty.style.width)
     
    
     //dropdown
@@ -578,8 +596,13 @@ function LearnJS() {
     }
 
     /*Return an ID which signifies which objective*/
-    obj.changeColor = function(objectiveNumber){
-        helperClickObjective(objectiveNumber)
+    obj.changeColor = function(objectiveNumber, color){
+
+        let element = document.getElementById(objectiveNumber)
+
+        if (color == "red" || color == "green" || color == "yellow")
+            element.style.background = color
+
     }
 
     //Difficulty level.
@@ -593,7 +616,7 @@ function LearnJS() {
             document.getElementById(numberOfObjectives).className = "hardObjective"
             
         }
-        
+        difficulties[numberOfObjectives-1] = difficultyLevel
 
 
         return numberOfObjectives
@@ -684,6 +707,12 @@ function LearnJS() {
             document.getElementById(objectiveNumber).className = "hardObjective"
             
         }
+
+        if (difficulties[objectiveNumber-1] != 'undefined') {
+            difficulties[objectiveNumber-1] = difficultyLevel
+            return
+        }
+        difficulties.push(difficultyLevel)
         
 
 
@@ -716,13 +745,20 @@ function LearnJS() {
 
     //Need a function for filtered state, and one for list.
     
-    obj.search = function(search, on=1) {
+    obj.search = function(search) {
 
-    
+        
+        log("Search method")
+
         let searchInput = document.getElementById('searchInput')
         searchInput.setAttribute("value", search)
-        if (on)
+
+
+
+        if (search != "")
             searchDropdown(search)
+
+    
         else {
             let searchList = document.getElementById("searchList")
             let searchContainer = document.getElementById('searchContainer')
@@ -736,7 +772,10 @@ function LearnJS() {
 
     obj.filter = function(search) {
         
+        let searchInput = document.getElementById('searchInput')
+        searchInput.setAttribute("value", search)
         filterObjectives(search)
+        //currentSearching = false
 
     }
 
@@ -768,12 +807,48 @@ function LearnJS() {
         
     }
 
+    obj.addHideButton = function() {
+
+        let hideButton = document.createElement('button')
+        hideButton.innerHTML = "Hide list"
+        document.body.appendChild(hideButton)
+        hideButton.style.position="fixed"
+        hideButton.style.top="20px"
+        hideButton.className = "specialButtons"
+
+        
+        hideButton.id = "hideButton"
+        hideButton.addEventListener("click", hideList)
+    }
+
+
+    obj.addMoveButton =function() {
+        let moveButton = document.createElement('button')
+        moveButton.innerHTML = "Move list"
+
+
+    
+        moveButton.className = "specialButtons"
+        document.body.appendChild(moveButton)
+        
+        moveButton.style.position = "fixed"
+        moveButton.style.top = "0px"
+
+        moveButton.addEventListener("click", moveList)
+
+    }
+
     
     return obj
 }
 
 
 function addEventClick(e) {
+
+    /*
+    if (currentSearching == true)
+        return*/
+
     helperClickObjective(e.currentTarget.id)
 }
 
@@ -783,15 +858,25 @@ function addEventDelete(e) {
     let objectiveDeleteID = deleteButton.id[0]
     let objDelete = document.getElementById(objectiveDeleteID)
 
+    /*
+    if (currentSearching == true)
+        return
+    */
+    log("deleting",  objDelete)
     helperDeleteObjective(objDelete, deleteButton)
 
 }
 
 function addEventAdd(e) {
+    /*
+    if (currentSearching == true)
+        return*/
+
     let newObjectiveId = helperAddObjective()
     //addEventForm(newObjectiveId)
     //addEventForm() //with the new.
     //show new form.
+    difficulties[newObjectiveId-1] = "easy"
 
     helperShowForm(newObjectiveId)
     popupOpen = true
@@ -829,6 +914,11 @@ function addEventRemovePopup(e) {
 function addEventForm(e) {
     e.preventDefault()
 
+
+    /*
+    if (currentSearching)
+        return*/
+
     if (popupOpen == true)
         return
     //disable hover.
@@ -838,6 +928,10 @@ function addEventForm(e) {
         elem.parentNode.removeChild(elem)
 
     if (popupOpen == false) {
+        /*
+        if (currentSearching == true)
+            return*/
+
         helperShowForm(e.currentTarget.id)
         popupOpen = true
     }
@@ -848,7 +942,7 @@ function clickedCloseForm(e) {
 
     //if users want to make an empty objective, that's their choice.
 
-    log(e)
+
 
     let elem = document.getElementById(currentPopupID.toString() + "descriptorParent")
     elem.parentNode.removeChild(elem)
@@ -873,6 +967,8 @@ function clickedSubmit(e) {
 
     let searchCategory = document.getElementById("searchCategory")
 
+   
+
     let objectiveNumber = e.currentTarget.id[0]
     let objectiveEdit = document.getElementById(objectiveNumber)
 
@@ -895,6 +991,28 @@ function clickedSubmit(e) {
     //Update category value.
   
     categories[objectiveNumber-1] = searchCategory.value
+
+    //Updae difficulties
+    
+    //render the change.
+
+    let changeObjectiveDifficulty = document.getElementById(currentPopupID)
+    
+
+    if (difficulties[objectiveNumber-1] == "easy") {
+        changeObjectiveDifficulty.className = "objective"
+    }
+    else if(difficulties[objectiveNumber-1] == "intermediate"){
+        changeObjectiveDifficulty.className = "intermediateObjective"
+    }
+    else {
+
+         changeObjectiveDifficulty.className = "hardObjective"
+
+    }
+    
+
+    
 
 
     //edit description
@@ -998,12 +1116,26 @@ function searchSubmit (e) {
   //show suggested. e.g. type something and it shows matches. (dropdown of categories.)
   e.preventDefault()
 
+    currentSearching = true
+    log("changes in the bar")
+
+    let searchInput = document.getElementById("searchInput")
+    
     searchDropdown(searchInput.value)
 
     if (Number.isInteger(e.keyCode) && e.keyCode != 13) {
+
         return    
     }
+    log("Filtering")
+
+    if (popupOpen == true)
+    return
+
+
     filterObjectives(searchInput.value)
+    currentSearching = false
+    //currentSearching = false
 
 }
 
@@ -1020,12 +1152,20 @@ function clickCategory(e) {
 
 function enter(e) {
     //on enter key or when clicking a list item, REMOVE.
-    
+
+    if (popupOpen == true)
+    return
+
+
+    currentSearching = false
     e.preventDefault()
+    log("enter")
     let searchList = document.getElementById("searchList")
     let searchContainer = document.getElementById('searchContainer')
     let searchInput = document.getElementById('searchInput')
     searchInput.value = e.currentTarget.innerHTML
+
+    log(searchInput.value)
 
     for (let i=0; i<objectivesStore.length; i++) {
         if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
@@ -1056,21 +1196,22 @@ function enter(e) {
     }
     if (searchList)
     searchContainer.removeChild(searchList)
+    //currentSearching = false
+
+
+
+    //currently searchuing = false.
+
+
 }
 
 
 function setDifficulty(e) {
 
-    let changeObjectiveDifficulty = document.getElementById(currentPopupID)
-    if (this.value == "easy") {
-        changeObjectiveDifficulty.className = "objective"
-    }
-    else if (this.value == "intermediate") {
-        changeObjectiveDifficulty.className = "intermediateObjective"
-    }
-    else {
-        changeObjectiveDifficulty.className ="hardObjective"
-    }
+    if (this.value[0] != 'C')
+        difficulties[currentPopupID-1] = this.value
+    else
+        difficulties[currentPopupID-1] = this.value.slice(9)
 
-    //let selectDifficulty = document.getElementById()
+    
 }

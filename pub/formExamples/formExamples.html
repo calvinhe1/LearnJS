@@ -22,41 +22,42 @@
         <div class="links">
            
             <a href="../addExamples/addExamples.html">
-                <button class="examplesButton">Add</button>
+                <button class="examplesButton">Adding</button>
             </a>
             <br>
             <a href="../deleteExamples/deleteExamples.html">
-                <button class="examplesButton">Delete</button>
+                <button class="examplesButton">Deleting</button>
             </a>
             <br>
             <a href="../formExamples/formExamples.html">
-                <button class="examplesButton">Form</button>
+                <button class="examplesButton">Editing</button>
             </a>
 
             <br>
             <a href="../hoverExamples/hoverExamples.html">
-                <button class="examplesButton">Hover</button>
+                <button class="examplesButton">Description</button>
             </a>
 
             <br>
             <a href="../searchExamples/searchExamples.html">
-                <button class="examplesButton">Search</button>
+                <button class="examplesButton">Searching</button>
             </a>
             <br>
 
             <a href="../filterExamples/filterExamples.html">
-                <button class="examplesButton">Filter</button>
+                <button class="examplesButton">Filtering</button>
             </a>
             <a href="../clickExamples/clickExamples.html">
-                <button class="examplesButton">Click</button>
+                <button class="examplesButton">Color</button>
             </a>
         </div>
         <br>
-        <h3>Add/Edit the title of a learning objective</h3>
+        
+        <h3>Add the title of a learning objective</h3>
         <p><i>Write a title on top of the corresponding objective.</i></p>
         <pre>
             <code>
-                //adding or editing titles for given objective number
+                //adding or editing titles for given objective numbers
                 <span class="object">learn</span>.<span class="method">editTitle(1,"Learn how to add objectives")</span>
                 <span class="object">learn</span>.<span class="method">editTitle(2,"Learn how to view objectives")</span>
             </code>
@@ -64,45 +65,47 @@
 
         <br>
 
-        <h3>Add/Edit the description of a learning objective</h3> 
-        <p>The description is the information that is displayed in a convenient manner in relation to a learning objective.
+        <h3>Add the description of a learning objective</h3> 
+        <p>The description is the information that is displayed in a convenient manner in relation to a learning objective (see next example page to see this in action).
         <p>
-        <p> It acts as a summary a user can quickly review.</p>
+        <p> It acts as a summary a user can review so they can quickly learn a particular learning objective or ensure they have learned what is entailed.</p>
 
         <br>
 
         <p>
-        <i>Add/edit the description of a learning objective, this is the information that will remind users of the details of the learning objective. </i>
+        <i>Write a description for a particular learning objective. </i>
         </p> 
    
         <pre>
             <code>
-                //First argument refers to the objective number to edit, second argument refers to the description itself.
+                //adding or editing descriptions for given objective number
                 <span class="object">learn</span>.<span class="method">editDescription(1,"Users can click the press button to add an objective.")</span>
     
             </code>
         </pre>
       
-       <p>The description can be edited through the form as well - view form/difficulty example for details</p>
+
         <br>
 
-        <h3>Add/Edit the category of a learning objective</h3> 
-        <p>
-            <i>Add a search bar for future searches based on categories (will only show learning objectives matching the searched category) and add categories to learning objectives.</i><p>
-        </p> 
+        <h3>Add the category of a learning objective</h3> 
+        <p>The category is the group that a learning objective belongs to. This allows for the filtering of learning objectives based on category, so users can view just the learning objectives they are interested in.</p> 
+        <br>
+
+            <i>Add categories to learning objectives.</i>
+       
 
         <pre>
             <code>
-                //First argument refers to objective number to edit, second argument refers to category itself
+                //Adding or editing categories for given objective numbers
                 <span class="object">learn</span>.<span class="method">editCategory(1,"Add")</span>
                 <span class="object">learn</span>.<span class="method">editCategory(2,"Delete")</span>
             </code>
         </pre>
-        <p>The category can be edited through the form as well - view form/difficulty example for details</p>
+
         <br>
         
         <h3>Changing difficulty level of a learning objective</h3>
-        <p>The purpose of these difficulty levels is to let the user know the amount of time/effort that needs to be invested to successfully understand the corresponding learning objective.</p>
+        <p>The purpose of these difficulty levels is to let the user know the relative amount of time/effort that needs to be invested to successfully understand the corresponding learning objective.</p>
         
         <br>
         <p><i>Change the difficulty level of a given learning objective (changes the shape and the color of the border of the objective to the matching difficulty level - see main page for details) </i></p>
@@ -112,17 +115,14 @@
                 <span class="object">learn<span>.<span class="method">editDifficulty(1, "hard")</span>
             </code>
         </pre>
-        <p>
-            The difficulty level can also be changed if user selects a different difficulty level than the current difficulty in the dropdown of the form and submitting.
-        </p>
+
 
         <br>
         <h3>Display details of a learning objective</h3>
         <p>
-            Display all the details about a learning objective in a form (the title, category, and description). <p>
-        <p>  
-        The form can be optionally edited: submitting the form saves any changes and closing discards any changes.
-        </p>
+            Display all the details about a learning objective in a form (the title, difficulty, category, and description). <p>
+        <p>It can be seen that all of the above example data are shown in the form example above.</p>
+      
         <br>
         <p><i>Displaying the form of an objective.</i></p>
         <pre>
@@ -133,22 +133,35 @@
                 //learn.form(1,0) to close the form. Must turn off a form before opening another form. 
             </code>
         </pre>
+
         </p> 
-        This form can also be triggered if a user right clicks on a learning objective. 
+        This form for a learning objective can be triggered by users if they right click on it. Any of the fields can be optionally edited and if submitted will register in the changes.
+        </p>
+        <p>  
+        <b>Note: </b>When entering a category, recommended existing categories will show up. Users can either select a category in the dropdown menu or press enter to hide the recommended choices.
         </p>
 
         <br>
 
-        <h3>Displaying the list of learning objectives</h3>
+        <h3>Manipulating the list container</h3>
         <p>
-            There may be times were users don't want to see the list of learning objectives, so clicking the "hide list" button on the upper top left will hide the list. In reality, the list is entirely removed and then re-added rather than hidden, so it will not occupy space in the document.
+            There may be times were users don't want to see the list of learning objectives as it may block existing content. LearnJS provides a mechanism to hide/unhide the list through a button. In reality, the list is entirely removed and then re-added rather than hidden, so it will not occupy space in the document.
         </p>  
             <p>
-                Another very convenient feature, is the "move list" button, as it allows the movement of the list of learning objectives to whereever the user's scrolled position is at, allowing the users to interact with the list anywhere in the webpage.
+                Also, in scenerios such as this webpage, there may be webpages that are long and the list of leraning objectives are not seen unless users scroll back up to the top. LearnJS provides a mechanism to move the list to wherever the user is through a move button.
             </p>  
-
+        <br>
+        <p><i>Add a move and hide button to the DOM. Fixed in the top left corner of the page.</i></p>
+        <pre>
+            <code>
+                <span class="object">learn</span>.<span class="method">addHideButton()</span>
+                <span class="object">learn</span>.<span class="method">addMoveButton()</span>
+            </code>
+        </pre>
         </div>
+        <br>
 
+       
         
 
     </body>
