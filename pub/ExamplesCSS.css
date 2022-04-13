@@ -56,6 +56,7 @@ h3 {
     font-weight: bold;
 }
 
+
 .examplesButton {
     height: 50px;
     cursor: pointer;
@@ -74,5 +75,29 @@ h3 {
     margin-top: 50px;
     display: flex;
   
+    
+}
+.example {
+    color: #16a085;
+}
+
+.behaviors {
+
+    list-style-position: inside;
+    padding-left: 0px;
+    padding-bottom: 15px;
+   
+}
+
+
+
+.behaviors li {
+    padding-bottom: 15px;
+    text-decoration: no underline;
+
+}
+
+.section {
+    text-decoration:underline;
     
 }
