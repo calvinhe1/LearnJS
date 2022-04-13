@@ -83,7 +83,13 @@ function hideList(e) {
     }
 }
 
+function checkValidObjective(objectiveNumber) {
 
+    if (objectiveNumber > numberOfObjectives) {
+        return false
+    }
+    return true;
+}
 
 function searchDropdown(search) {
 
@@ -161,7 +167,7 @@ function filterObjectives(search) {
 }
 
 //Helper functions
-function helperAddObjective() {
+function helperAddObjective(difficultyLevel="easy") {
     if (popupOpen)
         return
 
@@ -205,10 +211,12 @@ function helperAddObjective() {
     justAddedObjective = true
 
     
+    difficulties.push(difficultyLevel)
     //Make empty arrays.
     categories.push("")
     descriptions.push("")
     titles.push("")
+    
 
 
 
@@ -232,8 +240,7 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
     descriptions.splice(parseInt(id)-1, 1)
     titles.splice(parseInt(id)-1, 1)
     categories.splice(parseInt(id)-1, 1)
-    difficulties.splice(parseInt(id-1))
-
+    difficulties.splice(parseInt(id-1),1)
 
 
 
@@ -255,6 +262,7 @@ function helperDeleteObjective(deleteObjective, deleteButton) {
         let closeObjective = document.getElementById(i.toString() + "closeButton")
         closeObjective.id = (i-1).toString() + "closeButton"
         objectivesStore[i-2].position = objectivesStore[i-2].position-1;
+     
     }
 
     numberOfObjectives--;
@@ -308,10 +316,6 @@ function helperHoverObjective(e) {
     }
 
 
-
-
-    
-
     descriptor.id = e.toString() + "descriptor"
 
     descriptorParent.appendChild(descriptor)
@@ -339,6 +343,7 @@ function helperHoverObjective(e) {
 function helperShowForm(objectiveNumber) {
 
     currentDifficulty = difficulties[objectiveNumber-1]
+ 
 
     let descriptorParent = document.createElement("div")
     let form = document.createElement('form')
@@ -412,10 +417,9 @@ function helperShowForm(objectiveNumber) {
     input.id = "input"
 
 
-    log(titles[objectiveNumber-1])
+
     if (titles[objectiveNumber-1] != undefined) {
         input.setAttribute("value", titles[objectiveNumber-1]) //get value field.
-        log("HERE")
     }
   
     labelTitle.appendChild(titleText)
@@ -534,17 +538,33 @@ function LearnJS() {
     /*Return an ID which signifies which objective*/
     obj.changeColor = function(objectiveNumber, color){
 
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        }
+
         let element = document.getElementById(objectiveNumber)
 
-        if (color == "red" || color == "green" || color == "yellow")
-            element.style.background = color
+        if (!element)
+            return
+     
+
+        if (color == "yellow") {
+            element.style.backgroundColor = color
+        }
+        else if (color == "green") 
+            element.style.backgroundColor = "lime"
+        if (color == "red")
+             element.style.backgroundColor = 'rgb(255, 105, 97)'
 
     }
 
     //Difficulty level.
     obj.addObjective = function(difficultyLevel="easy") {
-        helperAddObjective()
 
+
+        helperAddObjective(difficultyLevel)
+
+        justAddedObjective = false
         if (difficultyLevel == "intermediate") {
             document.getElementById(numberOfObjectives).className = "intermediateObjective"
         }
@@ -552,13 +572,15 @@ function LearnJS() {
             document.getElementById(numberOfObjectives).className = "hardObjective"
             
         }
-        difficulties[numberOfObjectives-1] = difficultyLevel
-
+        
         return numberOfObjectives
     }
 
     obj.showDescription = function(objectiveNumber, on) {
 
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        }
         //only control if no other hovers or popups
         if (currentPopupID != objectiveNumber && currentPopupID != -1)
             return
@@ -582,10 +604,20 @@ function LearnJS() {
 
     obj.deleteObjective = function(objectiveNumber) {
 
-        if (objectiveNumber > numberOfObjectives)
-            return
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        
+        }
+
+        
 
         let objectiveDelete = document.getElementById(objectiveNumber)
+
+        
+        //If it's not currently shown in the DOM, don't change.
+        if (!objectiveDelete)
+            return
+     
         //need to also get the delete button.
         //pass into helper: the id and the id+closeButton
         let deleteButton = document.getElementById(objectiveNumber.toString() + "closeButton")
@@ -594,23 +626,51 @@ function LearnJS() {
     }
 
     obj.editTitle= function(objectiveNumber, title) {
+
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        }
+
         let objectiveEdit = document.getElementById(objectiveNumber)
+
+        if (!objectiveEdit)
+            return
+
+        //???
+        titles[objectiveNumber-1] = title
+        if (objectiveEdit.firstElementChild) {
+            objectiveEdit.removeChild(objectiveEdit.firstElementChild)
+        }
+        
+            let text = document.createElement("p")
+            text.innerText = title
+            text.className = "objectiveTitle"
+            objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
+
+        
+
+
+
+        /*
         //see if title child exists.    
         if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
             objectiveEdit.firstElementChild.innerText = title //Why not just append a paragraph with the respective title instead of doing this?
             titles[objectiveNumber-1] = title
             return title
         }
-        titles.push(title)
-        let text = document.createElement("p")
-        text.innerText = title
-        text.className = "objectiveTitle"
-        text.id = objectiveNumber.toString() + "title"
-        objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
+        //titles.push(title)
+        
+        text.id = objectiveNumber.toString() + "title"*/
+     
 
     }
 
     obj.editDescription = function(objectiveNumber, description) {
+
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        }
+
         if (descriptions[objectiveNumber-1] != 'undefined') {
             descriptions[objectiveNumber-1] = description
             return
@@ -619,6 +679,11 @@ function LearnJS() {
     }
 
     obj.editCategory = function(objectiveNumber, category="") {
+
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        }
+
         if (categories[objectiveNumber-1] != 'undefined') {
             categories[objectiveNumber-1] = category
             return
@@ -629,6 +694,17 @@ function LearnJS() {
 
     //change difficulty level of objective
     obj.editDifficulty = function(objectiveNumber, difficultyLevel) {
+
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        }
+
+        let elem = document.getElementById(objectiveNumber)
+
+          //If it's not currently shown in the DOM, don't change.
+        if (!elem)
+            return
+
 
         if (difficultyLevel =="easy") {
             document.getElementById(objectiveNumber).className = "objective"
@@ -643,14 +719,10 @@ function LearnJS() {
             
         }
 
-        if (difficulties[objectiveNumber-1] != 'undefined') {
+        if (difficulties[objectiveNumber-1] != undefined) {
             difficulties[objectiveNumber-1] = difficultyLevel
             return
         }
-        difficulties.push(difficultyLevel)
-        
-
-
     }
 
 
@@ -680,6 +752,12 @@ function LearnJS() {
     
     obj.search = function(category) {
 
+        //Check if there's an actual search container, if not can't do it.
+        let searchContainer = document.getElementById("searchContainer")
+
+        if (!searchContainer)
+            return
+
 
         let searchInput = document.getElementById('searchInput')
         searchInput.setAttribute("value", category)
@@ -700,6 +778,11 @@ function LearnJS() {
     }
 
     obj.filter = function(category) {
+
+        let searchContainer = document.getElementById("searchContainer")
+
+        if (!searchContainer)
+            return
         
         let searchInput = document.getElementById('searchInput')
         searchInput.setAttribute("value", category)
@@ -710,6 +793,11 @@ function LearnJS() {
 
 
     obj.form = function(objectiveNumber, on) {
+
+
+        if (!checkValidObjective(objectiveNumber)) {
+            return;
+        }
 
         //only display if no other hovers or popups.
 
@@ -773,7 +861,6 @@ function LearnJS() {
         return titles 
     }
 
-
     
     return obj
 }
@@ -786,12 +873,15 @@ function addEventClick(e) {
 
 function addEventDelete(e) {
 
+    if (popupOpen)
+        return
+
+
+
     let deleteButton= document.getElementById(e.currentTarget.id)
     let objectiveDeleteID = deleteButton.id[0]
     let objDelete = document.getElementById(objectiveDeleteID)
 
-    log("addEventDelete")
-    log(deleteButton, objectiveDeleteID, objDelete)
    
     helperDeleteObjective(objDelete, deleteButton)
 
@@ -800,10 +890,15 @@ function addEventDelete(e) {
 function addEventAdd(e) {
 
 
-    let newObjectiveId = helperAddObjective()
+    if (popupOpen)
+        return
+
+
+
+    let newObjectiveId = helperAddObjective("easy")
     //update arrays
-    difficulties[newObjectiveId-1] = "easy"
    
+
 
     helperShowForm(newObjectiveId)
     popupOpen = true
@@ -858,12 +953,15 @@ function clickedCloseForm(e) {
     popupOpen = false;
 
     difficulties[currentPopupID-1] = currentDifficulty
-  
+    
     if (justAddedObjective) {
         
         let objectiveDelete = document.getElementById(currentPopupID)
         let deleteButton = document.getElementById((currentPopupID).toString() + "closeButton")
         helperDeleteObjective(objectiveDelete, deleteButton)
+
+        
+
     }
 
 }
@@ -878,26 +976,17 @@ function clickedSubmit(e) {
     let objectiveEdit = document.getElementById(objectiveNumber)
 
 
-    log("title's not saving.")
-    log(objectiveEdit)
-    log(objectiveEdit.firstElementChild)
+    titles[objectiveNumber-1] = input.value
 
-    //edit title
-    if (document.getElementById(objectiveNumber.toString() + "title") !== null) {
-        log("HERERQTQWT")
-        objectiveEdit.firstElementChild.innerText = input.value
-        titles[objectiveNumber-1] = input.value
-      
+    if (objectiveEdit.firstElementChild) {
+        objectiveEdit.removeChild(objectiveEdit.firstElementChild)
     }
-    else {
 
-        titles[objectiveNumber-1] = input.value
-        let text = document.createElement("p")
-        text.innerText = input.value
-        text.className = "objectiveTitle"
-        text.id = objectiveNumber.toString() + "title"
-        objectiveEdit.appendChild(text) 
-    }
+    let text = document.createElement("p")
+    text.innerText = titles[objectiveNumber-1]
+    text.className = "objectiveTitle"
+    objectiveEdit.appendChild(text) //why does it not follow the same color scheme?
+
 
     categories[objectiveNumber-1] = searchCategory.value
 
@@ -913,7 +1002,6 @@ function clickedSubmit(e) {
     else {
 
          changeObjectiveDifficulty.className = "hardObjective"
-
     }
     
     //edit description
@@ -932,7 +1020,7 @@ function clickedSubmit(e) {
     const list = document.getElementById("list")
 
     //IF the category matches the current category KEEP, else remove it from the DOM.
-    if (categories[objectiveNumber-1] != currentCategory && currentCategory != "all") {
+    if (categories[objectiveNumber-1].toLowerCase()  != currentCategory.toLowerCase()  && currentCategory != "all") {
             list.removeChild(objectivesStore[objectiveNumber-1].objective)
             list.removeChild(objectivesStore[objectiveNumber-1].deleteButton)
 
@@ -940,7 +1028,7 @@ function clickedSubmit(e) {
             
         for (let i=0; i<objectivesStore.length; i++) {
             //if user entered a blank or matches category then add back.
-            if (categories[i] == currentCategory || currentCategory == "all") {
+            if (categories[i].toLowerCase()  == currentCategory.toLowerCase()  || currentCategory == "all") {
                 filteredPosition++
                 list.appendChild(objectivesStore[i].objective)
                 list.appendChild(objectivesStore[i].deleteButton)
@@ -1054,7 +1142,8 @@ function enter(e) {
 
     for (let i=0; i<objectivesStore.length; i++) {
         if (categories[i].toLowerCase() == currentCategory.toLowerCase() || currentCategory == "all") {
-  
+            
+
             list.removeChild(objectivesStore[i].objective)
             list.removeChild(objectivesStore[i].deleteButton)
         }

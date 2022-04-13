@@ -39,7 +39,7 @@ h3 {
 .easy {
     word-wrap: break-word; 
     font-weight: bold; 
-    padding: 3px;
+    padding: 5px;
     width: 75px; 
     height: 75px; 
     border-radius: 50%;
@@ -51,6 +51,7 @@ h3 {
     cursor: pointer;
     display: flex;
     align-items: center;
+
     justify-content: center;
 }
 

@@ -161,6 +161,7 @@
     width: 155px;
     background-color: white;
     border: 1px solid black;
+    overflow: hidden
 }
 
 
@@ -196,7 +197,7 @@
     width: 135px;
     background-color: white;
     border: 1px solid black;
-    
+    overflow: hidden;
 }
 
 .positionContainer {

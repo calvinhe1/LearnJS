@@ -28,9 +28,9 @@
             Getting Started
         </h3>   
 
-        <p>Download the LearnJS.js and LearnJS.css file into your working directory, then link the LearnJS.js and LearnJS.css files in your webpage. </p>
+        <p>Download the LearnJS.js and LearnJS.css file into your working directory, then link the LearnJS.js and LearnJS.css files to your webpage. </p>
 
-        <i>Example of basic integration of library into a basic webpage </i>
+        <i>Example of integration of library into a basic webpage </i>
         <pre>
             <code>
                 <span>&lt;!DOCTYPE html&gt;</span>
@@ -61,7 +61,7 @@
         <pre>
             <code>
                 //Get LearnJS Object
-                const <span class="object">learn</span> =  <span class="special">learnJS()</span>
+                const <span class="object">learn</span> =  <span class="special">LearnJS()</span>
 
                 //Add a list container
                 <span class="object">learn</span>.<span class="method">addList()</span>
@@ -78,7 +78,7 @@
         </pre>
 
         <br>
-        <h3>API Object </h3>
+        <h3>API Object</h3>
 
 
         <h4>LearnJS()</h4>
@@ -86,7 +86,7 @@
         <p>This object contains all of the necessary functions for the LearnJS library.</p>
         
         <br>
-        <h3>API Methods of LearnJS </h3>
+        <h3>API Methods of LearnJS() </h3>
         
         <h4>addList()</h4>
         <p>Create a list container to hold learning objectives.</p>
@@ -95,32 +95,40 @@
         
         <p class="section">Behaviors</p>
         <ul class="behaviors">
-        <li>Adds an event listener for users to add learning objectives themselves when they click the plus button on the list container. Must submit the popup form to successfully add.</li>
+        <li>Adds an event listener for users to add learning objectives when they click the plus button on the list container. Must submit the popup form to successfully add.</li>
         </ul>
 
 
         <h4>addObjective(difficultyLevel)</h4>
-        <p>Add a learning objective with a difficulty level of <i>difficultyLevel</i> to the list container.</p>
+        <p>Add a learning objective with a difficulty level of <i>difficultyLevel</i> to the list container. If not specified, the default difficulty level is easy.</p>
 
         <br>
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>difficultyLevel</i>: a string that is either "easy", "medium", or "hard".</li>
+            <li>difficultyLevel: a string that is either "easy", "medium", or "hard".</li>
         </ul>
 
 
         <p class="section">Behaviors</p>
         <ul class="behaviors">
             <li>Adds an event listener for users to delete the learning objective when they click the delete button below the learning objective. </li>
-            <li>Adds an event listener for users to display to edit the details (difficulty level, category, title, description) of a learning objective by displaying a form when they right click the learning objective. </li>
-            <li>Adds an event listener for when the user types any key, showing categories that partially or fully matches with what was typed as a dropdown. When the enter key is pressed, the recommended choices are hidden.</li>
-            <li>Adds an event listener for when the user clicks on a recommended category in the dropdown menu in category.</li>
-            <li>Adds an event listener for users to submit the form of any changes of a learning objective by clicking the submit button. </li>
-            <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
+            <li>Adds an event listener for users to display a popup form to edit the details (difficulty level, category, title, description) of a learning objective by right clicking the learning objective. </li>
             <li>Adds an event listener for users to view the description (key ideas of learning objective) of a learning objective when they mouse over the learning objective (for non empty description). </li>
             <li>Adds an event listener to hide the description when users mouse out of the learning objective. </li>
             <li>Adds an event listener for users to change the color of a learning objective to signify current level of understanding to help keep track of their learning progress by clicking on the learning objective. </li>
+            <li>Initially, category, description, and title of learning objective are empty.</li>
+            <li>A popup form is displayed immediately when a user adds a learning objective. If this form is closed without submission, the learning objective is deleted. </li>
+            
+        </ul>
+
+        <p class="section">Form Behavior
+        <ul class="behaviors">
+            <li>Adds an event listener for when the user types any key in the category field, showing a dropdown of categories that partially or fully matches with what was typed in. When the enter key is pressed, the recommended choices are hidden.</li>
+            <li>Adds an event listener for when the user clicks on a recommended category in the dropdown menu in the category field.</li>
+            <li>Adds an event listener for users to submit the form of a learning objective with any changes by clicking the submit button. </li>
+            <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
+            <li>Adds an event listener for when the user selects a different difficulty level, to keep track of the new difficulty level.</li>
         </ul>
 
 
@@ -138,39 +146,39 @@
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to be deleted from the list container.</li>
+            <li>objectiveNumber: an integer that is the ID of the objective to be deleted from the list container.</li>
         </ul>
 
 
         <p class="section">Behaviors</p>
         <ul class="behaviors">
-        <li>Return the ID of the learning objective (ID starts at 1 and is incremented by 1 for each successive learning objective). </li>
+        <li>When an objective is deleted, all of the objective IDs that come after it shifts down by 1 to keep a sequential list of objective IDs. </li>
         </ul>
 
 
 
         <h4>editTitle(objectiveNumber, title)</h4>
-        <p>Add/edit the title of a objective number <i>objectiveNumber</i> in the list container.</p>
+        <p>Edit the title of a objective number <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to be edited.</li>
-            <li><i>title</i>: the name of a learning objective that is displayed on top of the learning objective figure.</li>
+            <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
+            <li>title: the name of a learning objective that is displayed on top of the learning objective figure.</li>
 
         </ul>
 
 
-        <h4>editDescription(objectiveNumber, title)</h4>
-        <p>Add/edit the description of a objective number <i>objectiveNumber</i> in the list container.</p>
+        <h4>editDescription(objectiveNumber, description)</h4>
+        <p>Edit the description of a objective number <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to be edited.</li>
-            <li><i>description</i>: the description of the learning objective that is displayed when user mouses over the learning objective.</li>
+            <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
+            <li>description: the information of the learning objective that is displayed when a user mouses over the learning objective.</li>
 
         </ul>
 
@@ -181,32 +189,32 @@
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to be edited.</li>
-            <li><i>difficultyLevel</i>: the difficultyLevel to be applied to the objective.</li>
+            <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
+            <li>difficultyLevel: the difficulty level of a learning objective.</li>
 
         </ul>
 
 
         <h4>editCategory(objectiveNumber, category)</h4>
-        <p>Add/edit the category of a objective number <i>objectiveNumber</i> in the list container.</p>
+        <p>Edit the category of a objective number <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to be edited.</li>
-            <li><i>category</i>: the category of a learning objective to be used for filtering by category.</li>
+            <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
+            <li>category: the category of a learning objective, to be used for filtering by category.</li>
         </ul>
 
         <h4>changeColor(objectiveNumber, color)</h4>
-        <p>Change the color of an obejctive with objective number <i>objectiveNumber</i> in the list container.</p>
+        <p>Change the color of an objective with objective number <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to be changed in color.</li>
-            <li><i>color</i>: one of red, yellow, or green; the colors to represent understanding of <i>objectiveNumber</i></li>
+            <li>objectiveNumber: an integer that is the ID of the objective to be changed in color.</li>
+            <li>color: a string that is one of red, yellow, or green; the colors to represent the understanding of an objective.</i></li>
         </ul>
 
 
@@ -218,20 +226,18 @@
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to open the form of</li>
-            <li><i>on</i>: either 0 or 1, if 1 it opens the form, and if 0 it closes the form. Must close a form before performing other methods (to stay consistent with user interactions) </li>
+            <li>objectiveNumber: an integer that is the ID of the objective to open the form for. </li>
+            <li>on: either 0 or 1, if 1 the function opens the form, and if 0 it closes the form. Must close the form before performing other methods (to stay consistent with user interactions) </li>
         </ul>
 
-        <p class="section">Behaviors</p>
-        <ul class="behaviors">
-            <li>Adds an event listener for users to submit the form of any changes of a learning objective by clicking the submit button. </li>
-            <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
-            <li>Add event listener for when the user types any key in the category field, showing categories that partially or fully matches with what was typed as a dropdown. When the enter key is pressed, the recommended choices are hidden.</li>
-            <li>Add event listener for when the user clicks on a recommended category in the dropdown menu in category.</li>
-            <li>Add event listener for when the user selects a different difficulty level, to keep track of the new difficulty level.</li>
-            
+        <p class="section">Form Behavior
+            <ul class="behaviors">
+                <li>Adds an event listener for when the user types any key in the category field, showing a dropdown of categories that partially or fully matches with what was typed in. When the enter key is pressed, the recommended choices are hidden.</li>
+                <li>Adds an event listener for when the user clicks on a recommended category in the dropdown menu in the category field.</li>
+                <li>Adds an event listener for users to submit the form of a learning objective with any changes by clicking the submit button. </li>
+                <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
+                <li>Adds an event listener for when the user selects a different difficulty level, to keep track of the new difficulty level.</li>
         </ul>
-
 
         <h4>showDescription(objectiveNumber, on)</h4>
         <p>Open the description for an objective with <i>objectiveNumber</i> in the list container.</p>
@@ -240,13 +246,13 @@
 
         <p class="section">Arguments</p>
         <ul class="behaviors">
-            <li><i>objectiveNumber</i>: an integer that is the ID of the objective to open the form of</li>
-            <li><i>on</i>: either 0 or 1, if 1 it opens the form, and if 0 it closes the form. Must close the popup box before performing other methods (to stay consistent with user interactions). Note: this method is strictly to see what the popup box looks like in the user side. </li>
+            <li>objectiveNumber: an integer that is the ID of the objective to open the form of</li>
+            <li>on: either 0 or 1, if 1 the function opens the description box, and if 0 it closes the description box. Must close the box before performing other methods (to stay consistent with user interactions). <b>Note</b>: this method is strictly to see what the popup box looks like on the user side. </li>
         </ul>
 
         
         <h4>addSearchBar()</h4>
-        <p>Add a search bar to allow users to search learning objectives by category.</p>
+        <p>Add a search bar to allow users to search and filter learning objectives by category.</p>
 
         <br>
 
@@ -260,38 +266,42 @@
 
          
         <h4>search(category)</h4>
-        <p>Search for a category with the argument <i>category</i>, however don't register in the search, simply show the dropdown menu of recommended categories that match the category.</p>
+        <p>Search for a category with the argument <i>category</i>, however don't register the search, simply show the dropdown menu of recommended categories that match <i>category</i>.</p>
 
         <br>
 
         <p class="section">Arguments
             <ul class="behaviors">
-                <li><i>category</i>: the category of learning objectives to search for.</li>
+                <li>category: the category of learning objectives to search for.</li>
             </ul>
     
     
    
 
         <h4>filter(category)</h4>
-        <p>Register in the search of <i>category</i>, remove the dropdown menu of recommended categories and show only the learning objectives that matched <i>category</i> </p>
+        <p>Register in the search of <i>category</i>, remove the dropdown menu of recommended categories and show only the learning objectives that matched <i>category</i> in the list container.</p>
 
         <br>
 
         <p class="section">Arguments
             <ul class="behaviors">
-                <li><i>category</i>: the category of learning objectives to filter for.</li>
+                <li><i>category</i>: the category of learning objectives to filter on.</li>
+            </ul>
+
+        <p class="section">Behaviors
+            <ul class="behaviors">
+                During a filtered state, only the learning objectives that are shown in the DOM can be manipulated through API methods that affect the DOM (e.g. deleteObjective, changeColor, editTitle, form, showDescription)
             </ul>
     
         
-            
         <h4>addHideButton()</h4>
-        <p>Add a button that allows for the hiding/unhiding of the list container entirely. In reality, it is removed from the DOM and re-added when unhiding and won't conflict with other elements in the webpage. </p>
+        <p>Add a button that allows for the hiding/unhiding of the list container entirely. In reality, it is removed from the DOM and re-added when unhiding. </p>
 
         <br>
 
         <p class="section">Behaviors
             <ul class="behaviors">
-                <li>Add an event listener for when the user clicks on the hide list button.</li>
+                <li>Add an event listener for when the user clicks on the hide/unhide list button.</li>
             </ul>
 
 
@@ -306,7 +316,7 @@
 
 
             <h4>getCategories()</h4>
-            <p>Get all the categories of the current set of objectives.</p>
+            <p>Get all the categories for the current set of objectives.</p>
             <br>
     
             <p class="section">Return
@@ -316,7 +326,7 @@
 
                 
                 <h4>getTitles()</h4>
-                <p>Get all the titlesof the current set of objectives.</p>
+                <p>Get all the titles for the current set of objectives.</p>
                 <br>
         
             <p class="section">Return
@@ -325,29 +335,28 @@
             </ul>
 
             <h4>getDescriptions()</h4>
-            <p>Get all the descriptionsof the current set of objectives.</p>
+            <p>Get all the descriptions for the current set of objectives.</p>
             <br>
     
             <p class="section">Return
                 <ul class="behaviors">
-                    <li>An array of all the descriptionsof the learning objectives.</li>
+                    <li>An array of all the descriptions of the learning objectives.</li>
                 </ul>
 
                 <h4>getDifficulties()</h4>
-                <p>Get all the difficulties of the current set of objectives.</p>
+                <p>Get all the difficulties for the current set of objectives.</p>
                 <br>
         
                 <p class="section">Return
                     <ul class="behaviors">
-                        <li>An array of all the difficulties of the learning objectives.</li>
+                        <li>An array of all the difficulty levels of the learning objectives.</li>
                     </ul>
 
 
 
             
     
-            
-    
+        
 
 
 
