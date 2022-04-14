@@ -1,15 +1,13 @@
-"use strict";
-
-//Get library object
 const learn = LearnJS()
 
-//add list container to hold learning objectives
+//Add a list container
 learn.addList()
 
-//Add learning goals/objectives to the list
-learn.addObjective("easy")
-learn.addObjective("intermediate")
-learn.addObjective("hard")
+//Add search bar for future searching of learning objectives by category
+learn.addSearchBar()
 
+//Add a hide button to hide/unhide the list of learning objectives
+learn.addHideButton()
 
-
+//Add a move button to move the list of learning objectives, so users can view it anywhere
+learn.addMoveButton()

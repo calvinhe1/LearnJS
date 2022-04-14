@@ -36,7 +36,6 @@ learn.addHideButton()
 learn.addMoveButton()
 
 //Show the description of an objective
-//learn.showDescription(1,1)
 
 learn.addSearchBar()
 

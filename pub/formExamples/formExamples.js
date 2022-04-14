@@ -32,6 +32,5 @@ learn.form(1,1)
 
 //learn.form(1,0) to close the form. Must turn off a form before opening another form.
 
-
 learn.addHideButton()
 learn.addMoveButton()
