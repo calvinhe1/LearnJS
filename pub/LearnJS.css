@@ -1,7 +1,7 @@
 .objective {
     word-wrap: break-word; 
     font-weight: bold; 
-    padding: 3px;
+    padding: 5px;
     width: 75px; 
     height: 75px; 
     border-radius: 50%;
@@ -81,7 +81,7 @@
 
 
 .objectiveTitle {
-    font-size: 12px;
+    font-size: 11px;
     padding: 2px;
     text-align: center;   
 
