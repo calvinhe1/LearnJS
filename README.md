@@ -1,4 +1,4 @@
-# 1) Link to landing page
+# 1) Link to main landing page
 https://protected-woodland-24087.herokuapp.com/landingpage.html
 
 # 2) Getting started
