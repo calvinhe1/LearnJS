@@ -28,7 +28,7 @@
             Getting Started
         </h3>   
 
-        <p>Download the LearnJS.js and LearnJS.css file into your working directory, then link the LearnJS.js and LearnJS.css files to your webpage. </p>
+        <p>Download the LearnJS.js and LearnJS.css files into your working directory, then link the LearnJS.js and LearnJS.css files to your webpage. </p>
 
         <i>Example of integration of library into a basic webpage </i>
         <pre>
@@ -113,12 +113,11 @@
         <p class="section">Behaviours</p>
         <ul class="Behaviours">
             <li>Adds an event listener for users to delete the learning objective when they click the delete button below the learning objective. </li>
-            <li>Adds an event listener for users to display a popup form to edit the details (difficulty level, category, title, description) of a learning objective by right-clicking the learning objective. </li>
-            <li>Adds an event listener for users to view the description (key ideas of learning objective) of a learning objective when they mouse over the learning objective (for non-empty description). </li>
+            <li>Adds an event listener for users to display a popup form when they right-click the learning objective to edit the details (difficulty level, category, title, description) of the learning objective. </li>
+            <li>Adds an event listener for users to view the description of a learning objective when they mouse over it (for non-empty description). </li>
             <li>Adds an event listener to hide the description when users mouse out of the learning objective. </li>
             <li>Adds an event listener for users to change the color of a learning objective to signify their current level of understanding to help keep track of their learning progress by clicking on the learning objective. </li>
-            <li>Initially, the category, description, and title of the learning objective are set to empty.</li>
-            <li>A popup form is displayed immediately when a user adds a learning objective. If this form is closed without submission, the learning objective is deleted. </li>
+            <li>A popup form is displayed immediately when a user adds a learning objective through the event listener. If this form is closed without submission, the learning objective is deleted. </li>
             
         </ul>
 
@@ -138,19 +137,19 @@
 
         <p class="section">Arguments</p>
         <ul class="Behaviours">
-            <li>objectiveNumber: an integer that is the ID of the objective to be deleted from the list container.</li>
+            <li>objectiveNumber: an integer that is the ID of the objective to be deleted. </li>
         </ul>
 
 
         <p class="section">Behaviours</p>
         <ul class="Behaviours">
-        <li>When an objective is deleted, all of the objective IDs that come after it shifts down by 1 to keep a sequential list of objective IDs. </li>
+        <li>When an objective is deleted, all of the objective IDs that come after it shifts down by 1 to keep a consecutive list of objective IDs. </li>
         </ul>
 
 
 
         <h4>editTitle(objectiveNumber, title)</h4>
-        <p>Edit the title of an objective number <i>objectiveNumber</i> in the list container.</p>
+        <p>Edit the title of an objective with ID <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
@@ -199,7 +198,7 @@
         </ul>
 
         <h4>changeColor(objectiveNumber, color)</h4>
-        <p>Change the color of an objective with the id <i>objectiveNumber</i> in the list container.</p>
+        <p>Change the color of an objective with the ID <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
@@ -212,7 +211,7 @@
 
 
         <h4>form(objectiveNumber, on)</h4>
-        <p>Open/close the form for an objective with id <i>objectiveNumber</i> in the list container.</p>
+        <p>Open/close the form for an objective with ID <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
@@ -225,21 +224,22 @@
         <p class="section">Form Behavior
             <ul class="Behaviours">
                 <li>Adds an event listener for when the user types any key in the category field, showing a dropdown of categories that partially or fully matches with what was typed in. When the enter key is pressed, the recommended choices are hidden.</li>
-                <li>Adds an event listener for when the user clicks on a recommended category in the dropdown menu in the category field.</li>
+                <li>Adds an event listener for when the user clicks on a recommended category in the dropdown menu in the category field, selecting the category. </li>
+                <li>Adds an event listener for users to change the difficulty level, by selecting a different option in the difficulty field.</li>
                 <li>Adds an event listener for users to submit the form of a learning objective with any changes by clicking the submit button. </li>
                 <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
-                <li>Adds an event listener for when the user selects a different difficulty level, to keep track of the new difficulty level.</li>
+               
         </ul>
 
         <h4>showDescription(objectiveNumber, on)</h4>
-        <p>Open the description for an objective with id <i>objectiveNumber</i> in the list container.</p>
+        <p>Open the description for an objective with ID <i>objectiveNumber</i> in the list container.</p>
 
         <br>
 
         <p class="section">Arguments</p>
         <ul class="Behaviours">
-            <li>objectiveNumber: an integer that is the ID of the objective to open the form of</li>
-            <li>on: either 0 or 1, if 1 the function opens the description box, and if 0 it closes the description box. Must close the box before performing other methods (to stay consistent with user interactions). <b>Note</b>: this method is strictly to see what the description box looks like on the user side. </li>
+            <li>objectiveNumber: an integer that is the ID of the objective to open the description box of.</li>
+            <li>on: either 0 or 1, if 1 the function opens the description box, and if 0 it closes the description box. Must close the box before performing other methods (to stay consistent with user interactions). <b>Note</b>: this method is strictly to see what the description box looks like on the user side for when they mouse over learning objectives. </li>
         </ul>
 
         
@@ -276,12 +276,13 @@
 
         <p class="section">Arguments
             <ul class="Behaviours">
-                <li><i>category</i>: the category of learning objectives to filter on.</li>
+                <li>category: the category of learning objectives to filter on.</li>
             </ul>
 
         <p class="section">Behaviours
             <ul class="Behaviours">
-                During a filtered state, only the learning objectives that are shown in the DOM can be manipulated through API methods that affect the DOM (e.g. deleteObjective, changeColor, editTitle, form, showDescription).
+                <li>During a filtered state, only the learning objectives that are shown in the DOM can be manipulated through API methods that affect the DOM (e.g. deleteObjective, changeColor, editTitle, form, showDescription).</i>
+                
             </ul>
     
         
@@ -293,6 +294,7 @@
         <p class="section">Behaviours
             <ul class="Behaviours">
                 <li>Add an event listener for when the user clicks on the hide/unhide list button.</li>
+                <li>Removes the popup form if it is open. </li>                
             </ul>
 
 
@@ -303,6 +305,7 @@
         <p class="section">Behaviours
             <ul class="Behaviours">
                 <li>Add an event listener for when the user clicks on the move list button.</li>
+                <li>Removes the popup form if it is open. </li>
             </ul>
 
 

@@ -532,7 +532,7 @@
             let add = document.getElementById("addButton") 
             add.addEventListener('click', userEventAdd)
 
-            return positionContainer
+           
         }
 
     
@@ -596,7 +596,7 @@
             else {
                 popupOpen = true
                 currentPopupID = objectiveNumber
-                return helperHoverObjective(objectiveNumber)
+                helperHoverObjective(objectiveNumber)
             
             }
         }
@@ -621,7 +621,7 @@
             //need to also get the delete button.
             //pass into helper: the id and the id+closeButton
             let deleteButton = document.getElementById(objectiveNumber.toString() + "closeButton")
-            return helperDeleteObjective(objectiveDelete, deleteButton)
+            helperDeleteObjective(objectiveDelete, deleteButton)
 
         }
 
