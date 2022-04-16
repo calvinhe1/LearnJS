@@ -586,40 +586,6 @@
             return numberOfObjectives
         }
 
-        obj.showDescription = function(objectiveNumber, on) {
-
-            if (!checkValidObjective(objectiveNumber)) {
-                return;
-            }
-            
-            let elem = document.getElementById(objectiveNumber)
-
-            //If it's not currently shown in the DOM, don't run.
-            if (!elem)
-                return
-
-
-            //only control if no other hovers or popups
-            if (currentPopupID != objectiveNumber && currentPopupID != -1)
-                return
-
-            if (on == 0) {
-                let elem = document.getElementById(objectiveNumber.toString() + "descriptorParent")
-                if (elem!= null)
-                    elem.parentNode.removeChild(elem)
-                popupOpen = false
-                currentPopupID = -1
-            }
-
-            else {
-                popupOpen = true
-                currentPopupID = objectiveNumber
-                helperHoverObjective(objectiveNumber)
-            
-            }
-        }
-
-
         obj.deleteObjective = function(objectiveNumber) {
 
             if (!checkValidObjective(objectiveNumber)) {

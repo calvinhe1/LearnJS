@@ -224,7 +224,7 @@
         <p class="section">Behaviours</p>
         <ul class="Behaviours">
             <li> Must turn off the form, e.g. form(ID, 0) before opening another description box or form. Do not call any other API DOM functions while the form is open (only call get methods). </li>
-            <li> Note: this method is typically used in the very end of the program for the user, to simply open the form for the user when they initially visit the page (see editing examples page). </li>
+            <li> Note: this method is typically used in the very end of the program, to simply open the form for the user when they initially visit the page (see editing examples page). </li>
         </ul>   
 
         <p class="section">Form Behaviour
@@ -238,24 +238,6 @@
                
         </ul>  
 
-        <h4>showDescription(objectiveNumber, on)</h4>
-        <p>Open the description for an objective with ID <i>objectiveNumber</i> in the list container.</p>
-
-        <br>
-
-        <p class="section">Arguments</p>
-        <ul class="Behaviours">
-            <li>objectiveNumber: an integer that is the ID of the objective to open the description box of.</li>
-            <li>on: either 0 or 1, if 1 the function opens the description box, and if 0 it closes the description box.</li>
-        </ul>
-
-        <p class="section">Behaviours</p>
-        <ul class="Behaviours">
-            <li> Must turn off the description box, e.g. showDescription(ID, 0) before opening another description box or form. Do not call any other API DOM functions while the description box is open (only call get methods)</li>
-            <li> Note: this method is strictly to see what the description box looks like on the user side for when they mouse over learning objectives. No user interactions on the list container work when the description box is open (this method acts as an image at a specific point). </li>
-        </ul>
-
-        
         
         <h4>addSearchBar()</h4>
         <p>Add a search bar to allow users to search and filter learning objectives by category.</p>
@@ -295,7 +277,7 @@
 
         <p class="section">Behaviours
             <ul class="Behaviours">
-                <li>During a filtered view, only the learning objectives that are shown in the DOM can be manipulated through API methods that affect the DOM (e.g. deleteObjective, changeColor, editTitle, form, showDescription, editCategory).</li>
+                <li>During a filtered view, only the learning objectives that are shown in the DOM can be manipulated through API methods that affect the DOM (e.g. deleteObjective, changeColor, editTitle, form, editCategory).</li>
                 <li>Calling addObjective() in a filtered view will by default set the category for that new objective to the currently searched category. </li>
                 <li>Reminder: the IDs of the learning objectives do not change during a filter, e.g. the first objective shown in the filtered view does not necessarily have an ID of 1. Recommended: make use of the getCategories() API method to determine the objective IDs (look at positions of returned array) that are currently shown in the DOM.</li>
                 <li>If the searched category is an empty string e.g. filter(""),  then all the learning objectives are shown (default view is shown). </li>
