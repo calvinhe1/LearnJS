@@ -223,9 +223,9 @@
 
         <p class="section">Behaviours</p>
         <ul class="Behaviours">
-            <li> Must turn off the description box, e.g. form(ID, 0) before opening another description box or form. Do not call any other API DOM functions while the form is open (only call get methods) </li>
+            <li> Must turn off the form, e.g. form(ID, 0) before opening another description box or form. Do not call any other API DOM functions while the form is open (only call get methods). </li>
+            <li> Note: this method is typically used in the very end of the program for the user, to simply open the form for the user when they initially visit the page (see editing examples page). </li>
         </ul>   
-
 
         <p class="section">Form Behaviour
             <ul class="Behaviours">
@@ -252,12 +252,10 @@
         <p class="section">Behaviours</p>
         <ul class="Behaviours">
             <li> Must turn off the description box, e.g. showDescription(ID, 0) before opening another description box or form. Do not call any other API DOM functions while the description box is open (only call get methods)</li>
-            <li> Note: this method is strictly to see what the description box looks like on the user side for when they mouse over learning objectives. </li>
- 
+            <li> Note: this method is strictly to see what the description box looks like on the user side for when they mouse over learning objectives. No user interactions on the list container work when the description box is open (this method acts as an image at a specific point). </li>
         </ul>
 
         
-
         
         <h4>addSearchBar()</h4>
         <p>Add a search bar to allow users to search and filter learning objectives by category.</p>
