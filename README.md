@@ -1,6 +1,9 @@
 # 1) Link to main landing page
 https://protected-woodland-24087.herokuapp.com/landingpage.html
 
+Note: can view examples and documentation by clicking on the respectively labelled buttons, and also can go back to the main landing page by clicking the LearnJS logo.
+
+
 # 2) Getting started
 
 Download the LearnJS.js and LearnJS.css files into your working directory, then link the LearnJS.js and LearnJS.css files to your webpage.
