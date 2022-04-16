@@ -106,7 +106,7 @@
 
         <p class="section">Arguments</p>
         <ul class="Behaviours">
-            <li>difficultyLevel: a string that is either "easy", "medium", or "hard".</li>
+            <li>difficultyLevel: a string that is either "easy", "intermediate", or "hard" to represent the difficulty level of the learning objective. </li>
         </ul>
 
 
@@ -131,7 +131,7 @@
      
 
         <h4>deleteObjective(objectiveNumber)</h4>
-        <p>Delete the learning objective with ID <i>objectiveNumber</i> from the list container.</p>
+        <p>Delete the learning objective with ID <i>objectiveNumber</i> from the list container. (The first learning objective shown on the list has ID 1, the second has ID 2, etc.) </p>
 
         <br>
 
@@ -156,7 +156,7 @@
         <p class="section">Arguments</p>
         <ul class="Behaviours">
             <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
-            <li>title: the name of a learning objective that is displayed on top of the learning objective figure.</li>
+            <li>title: a string and the name of a learning objective that is displayed on top of the learning objective figure.</li>
 
         </ul>
 
@@ -169,7 +169,7 @@
         <p class="section">Arguments</p>
         <ul class="Behaviours">
             <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
-            <li>description: the information of the learning objective that is displayed when a user mouses over the learning objective.</li>
+            <li>description: a string and the information of the learning objective that is displayed when a user mouses over the learning objective.</li>
 
         </ul>
 
@@ -181,7 +181,7 @@
         <p class="section">Arguments</p>
         <ul class="Behaviours">
             <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
-            <li>difficultyLevel: the difficulty level of a learning objective.</li>
+            <li>difficultyLevel: a string that is either "easy", "intermediate", or "hard" to represent the difficulty level of the learning objective. </li>
 
         </ul>
 
@@ -194,7 +194,7 @@
         <p class="section">Arguments</p>
         <ul class="Behaviours">
             <li>objectiveNumber: an integer that is the ID of the objective to be edited.</li>
-            <li>category: the category of a learning objective, to be used for searching and filtering learning objectives by category.</li>
+            <li>category: a string and the category of a learning objective, to be used for searching and filtering learning objectives by category.</li>
         </ul>
 
         <h4>changeColor(objectiveNumber, color)</h4>
@@ -254,8 +254,6 @@
             <li>Adds an event listener for when the user clicks a recommended category in the dropdown menu, acting as an enter key with the clicked category.</li>
     
         </ul>
-
-
          
         <h4>search(category)</h4>
         <p>Search for a category with the argument <i>category</i>, however, don't register the search, simply show the dropdown menu of recommended categories that partially or fully match <i>category</i>.</p>
@@ -264,11 +262,13 @@
 
         <p class="section">Arguments
             <ul class="Behaviours">
-                <li>category: the category of learning objectives to search for.</li>
+                <li>category: a string and the category of learning objectives to search for.</li>
             </ul>
-    
-    
-
+        <p class="section">Behaviours
+            <ul class="Behaviours">
+                <li>Different capitalizations of the same category are shown in the dropdown menu, however, are considered the same category.</li>
+            </ul>
+       
         <h4>filter(category)</h4>
         <p>Register in the search of <i>category</i>, remove the dropdown menu of recommended categories and show only the learning objectives that matched <i>category</i> in the list container.</p>
 
@@ -276,16 +276,19 @@
 
         <p class="section">Arguments
             <ul class="Behaviours">
-                <li>category: the category of learning objectives to filter on.</li>
+                <li>category: a string and the category of learning objectives to filter on. </li>
             </ul>
 
         <p class="section">Behaviours
             <ul class="Behaviours">
-                <li>During a filtered state, only the learning objectives that are shown in the DOM can be manipulated through API methods that affect the DOM (e.g. deleteObjective, changeColor, editTitle, form, showDescription).</i>
+                <li>During a filtered view, only the learning objectives that are shown in the DOM can be manipulated through API methods that affect the DOM (e.g. deleteObjective, changeColor, editTitle, form, showDescription, editCategory).</li>
+                <li>Calling addObjective() in a filtered view will by default set the category for that new objective to the currently searched category. </li>
+                <li>Reminder: the IDs of the learning objectives do not change during a filter, e.g. the first objective shown in the filtered view does not necessarily have an ID of 1. Recommended: make use of the getCategories() API method to determine the objective IDs (look at positions of returned array) that are currently shown in the DOM.</li>
+                <li>If the searched category is an empty string e.g. filter(""),  then all the learning objectives are shown (default view is shown). </li>
+                <li>If the category for a learning objective changes to something different than <i>category</i> during a filtered view, it is removed from the DOM in the filtered view. </li>
                 
             </ul>
     
-        
         <h4>addHideButton()</h4>
         <p>Add a button that allows for the hiding/unhiding of the list container entirely. In reality, it is removed from the DOM and re-added when unhiding. </p>
 
@@ -346,56 +349,6 @@
                         <li>An array of all the difficulty levels of the learning objectives.</li>
                     </ul>
 
-
-
-            
-    
-        
-
-
-
-        
-
-
-        
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-    
-
-        
-
-        
-        
-
-
-
-
-
-
-
-
-       
-
-
-        
 
     </body>
 

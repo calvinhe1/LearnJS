@@ -572,6 +572,16 @@
                 document.getElementById(numberOfObjectives).className = "hardObjective"
                 
             }
+
+            let searchInput = document.getElementById('searchInput')
+
+            if (!searchInput)
+                return numberOfObjectives
+            //set the category value to the category that is currently filtered.
+            categories[numberOfObjectives-1] = searchInput.value
+             
+
+
             
             return numberOfObjectives
         }
@@ -581,6 +591,14 @@
             if (!checkValidObjective(objectiveNumber)) {
                 return;
             }
+            
+            let elem = document.getElementById(objectiveNumber)
+
+            //If it's not currently shown in the DOM, don't run.
+            if (!elem)
+                return
+
+
             //only control if no other hovers or popups
             if (currentPopupID != objectiveNumber && currentPopupID != -1)
                 return
@@ -656,11 +674,11 @@
                 return;
             }
 
-            if (descriptions[objectiveNumber-1] != 'undefined') {
+            if (descriptions[objectiveNumber-1] != undefined) {
                 descriptions[objectiveNumber-1] = description
                 return
             }
-            descriptions.push(description)
+       
         }
 
         obj.editCategory = function(objectiveNumber, category="") {
@@ -669,11 +687,36 @@
                 return;
             }
 
-            if (categories[objectiveNumber-1] != 'undefined') {
-                categories[objectiveNumber-1] = category
+            let elem = document.getElementById(objectiveNumber)
+
+            //If it's not currently shown in the DOM, don't run.
+            if (!elem)
                 return
+
+            if (categories[objectiveNumber-1] != undefined) {
+                categories[objectiveNumber-1] = category
+                
             }
-            categories.push(category)
+            else
+                return
+
+            if (categories[objectiveNumber-1].toLowerCase()  != currentCategory.toLowerCase()  && currentCategory != "all") {
+                    list.removeChild(objectivesStore[objectiveNumber-1].objective)
+                    list.removeChild(objectivesStore[objectiveNumber-1].deleteButton)
+
+                filteredPosition = 1
+                    
+                for (let i=0; i<objectivesStore.length; i++) {
+                    //if user entered a blank or matches category then add back.
+                    if (categories[i].toLowerCase()  == currentCategory.toLowerCase()  || currentCategory == "all") {
+                        filteredPosition++
+                        list.appendChild(objectivesStore[i].objective)
+                        list.appendChild(objectivesStore[i].deleteButton)
+                        objectivesStore[i].position = filteredPosition-1;
+                    }
+                }
+
+            }
         }
 
 
@@ -782,6 +825,13 @@
             if (!checkValidObjective(objectiveNumber)) {
                 return;
             }
+
+            let elem = document.getElementById(objectiveNumber)
+
+            //If it's not currently shown in the DOM, don't run.
+            if (!elem)
+                return
+
 
             //only display if no other hovers or popups.
 
