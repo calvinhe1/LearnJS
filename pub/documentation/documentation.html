@@ -218,18 +218,25 @@
         <p class="section">Arguments</p>
         <ul class="Behaviours">
             <li>objectiveNumber: an integer that is the ID of the objective to open the form for. </li>
-            <li>on: either 0 or 1, if 1 the function opens the form, and if 0 it closes the form. Must close the form before performing other methods (to stay consistent with user interactions). </li>
+            <li>on: either 0 or 1, if 1 the function opens the form, and if 0 it closes the form. </li>
         </ul>
 
-        <p class="section">Form Behavior
+        <p class="section">Behaviours</p>
+        <ul class="Behaviours">
+            <li> Must turn off the description box, e.g. form(ID, 0) before opening another description box or form. Do not call any other API DOM functions while the form is open (only call get methods) </li>
+        </ul>   
+
+
+        <p class="section">Form Behaviour
             <ul class="Behaviours">
                 <li>Adds an event listener for when the user types any key in the category field, showing a dropdown of categories that partially or fully matches with what was typed in. When the enter key is pressed, the recommended choices are hidden.</li>
                 <li>Adds an event listener for when the user clicks on a recommended category in the dropdown menu in the category field, selecting the category. </li>
                 <li>Adds an event listener for users to change the difficulty level, by selecting a different option in the difficulty field.</li>
                 <li>Adds an event listener for users to submit the form of a learning objective with any changes by clicking the submit button. </li>
-                <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>
+                <li>Adds an event listener for users to close the form to remove any changes that were added in the current form by clicking the close button. </li>    
+                <li>While the form is open, users can only edit the form and submit or close it. They cannot for example add or delete learning objectives at this time. </li>
                
-        </ul>
+        </ul>  
 
         <h4>showDescription(objectiveNumber, on)</h4>
         <p>Open the description for an objective with ID <i>objectiveNumber</i> in the list container.</p>
@@ -239,8 +246,17 @@
         <p class="section">Arguments</p>
         <ul class="Behaviours">
             <li>objectiveNumber: an integer that is the ID of the objective to open the description box of.</li>
-            <li>on: either 0 or 1, if 1 the function opens the description box, and if 0 it closes the description box. Must close the box before performing other methods (to stay consistent with user interactions). <b>Note</b>: this method is strictly to see what the description box looks like on the user side for when they mouse over learning objectives. </li>
+            <li>on: either 0 or 1, if 1 the function opens the description box, and if 0 it closes the description box.</li>
         </ul>
+
+        <p class="section">Behaviours</p>
+        <ul class="Behaviours">
+            <li> Must turn off the description box, e.g. showDescription(ID, 0) before opening another description box or form. Do not call any other API DOM functions while the description box is open (only call get methods)</li>
+            <li> Note: this method is strictly to see what the description box looks like on the user side for when they mouse over learning objectives. </li>
+ 
+        </ul>
+
+        
 
         
         <h4>addSearchBar()</h4>
