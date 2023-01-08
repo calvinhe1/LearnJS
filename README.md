@@ -1,10 +1,38 @@
-# 1) Link to main landing page
-https://protected-woodland-24087.herokuapp.com/landingpage.html
+# LearnJS
+
+LearnJS is a JavaScript library that allows developers to help strengthen the learning process for users of their websites. This library provides an interactive note-taking interface that developers can apply to their websites to remind users of important learning objectives on their websites. Users themselves can make their own notes, and edit, search, and delete ideas with this library, allowing for an interactive learning mechanism.
+
+# How it works
+
+A learning objective for this library consists of a title, description, and category. Users are able to see the titles of the learning objectives when they visit the page. If they’d like to see the content of the learning objective (the description), they can hover their cursor over it on the webpage. 
+
+Additionally, each learning objective has a category, in which users can use the searching mechanism to filter learning objectives by categories to view data in groups.
+
+Users can hide the learning objectives and unhide them wherever their cursor is on the web page to allow for quick and easy access to the learning objectives.
+
+There are different colours and shapes to customize the learning objectives, to represent the user’s progress and the difficulty of the objective. The idea is for users to click on the learning objectives to track their progress while navigating the website.
+
+### Colours
+* Red = No progress currently on the learning objective
+* Yellow = Some progress currently on the learning objective
+* Green = Completed the learning objective 
+
+### Shapes
+* Circle = Easy learning objective
+* Squircle = Medium learning objective
+* Square = Hard learning objective
+
+
+Below is the landing page for this library. Examples and documentation are provided as well to give a clear picture of how to use this.
+
+
+# Link to main landing page
+https://murmuring-atoll-13136.herokuapp.com/landingpage.html
 
 Note: can view examples and documentation by clicking on the respectively labelled buttons, and also can go back to the main landing page by clicking the LearnJS logo.
 
 
-# 2) Getting started
+# Getting started
 
 Download the LearnJS.js and LearnJS.css files into your working directory, then link the LearnJS.js and LearnJS.css files to your webpage.
 
@@ -33,7 +61,6 @@ To get started with using the library, create a LearnJS object in your JS file.
 Then, add a list container to hold the learning objectives that will be added to it.
 
 
-
 Recommended: Include a hide list button, move list button, and search bar as well to improve the usability of the library (see example pages to see usefulness).
 ```javascript
 //Get LearnJS Object
@@ -52,7 +79,5 @@ learn.addHideButton()
 learn.addMoveButton()
 ```
 
-
-
-# 3) Direct link to documentation
-https://protected-woodland-24087.herokuapp.com/documentation/documentation.html
+# Docmentation
+https://murmuring-atoll-13136.herokuapp.com/documentation/documentation.html
